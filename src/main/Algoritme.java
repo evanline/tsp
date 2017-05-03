@@ -7,7 +7,7 @@ package main;
  * @author sanne
  *
  */
-public class main {
+public class Algoritme {
 
 	/**
 	 * @param args
