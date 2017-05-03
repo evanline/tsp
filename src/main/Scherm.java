@@ -13,6 +13,7 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,6 +48,10 @@ public class Scherm extends JFrame implements ActionListener{
 			JRadioButton animatiesAANRBTN = new JRadioButton("aan");
 			JRadioButton animatiesUITRBTN = new JRadioButton("uit");
 			//maak radiobuttons
+			ButtonGroup animatieBTNGRP = new ButtonGroup();
+			animatieBTNGRP.add(animatiesAANRBTN);
+			animatieBTNGRP.add(animatiesUITRBTN);
+			//maak een buttongroup en zet de animatieaan/uit buttons erin
 			//reset/start, berekenen, pauze/doorgaan
 			JButton startBTN = new JButton("Start");
 			JButton pauzeBTN = new JButton("Pauze");
@@ -96,8 +101,7 @@ public class Scherm extends JFrame implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
 		
 	}
 
