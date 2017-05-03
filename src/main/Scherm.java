@@ -33,55 +33,64 @@ public class Scherm extends JFrame implements ActionListener{
 			setSize(800, 600);
 			setLayout(new FlowLayout());
 			getContentPane().setBackground(Color.gray);
+			//standaard noodzakelijke instellingen
 			
 			JLabel algoritmeslbl = new JLabel("Algoritmes");
 			JLabel aantallbl = new JLabel("Aantal");
 			JLabel animatieslbl = new JLabel("Animaties");
-						
+			//maak labels			
 			Checkbox bruteForceCKBX = new Checkbox("Brute Force");
 			Checkbox twoOptCKBX = new Checkbox("2-Opt");
 			Checkbox nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
 			Checkbox eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
-			
+			//maak ckeckboxes
 			JRadioButton animatiesAANRBTN = new JRadioButton("aan");
 			JRadioButton animatiesUITRBTN = new JRadioButton("uit");
-			
+			//maak radiobuttons
 			//reset/start, berekenen, pauze/doorgaan
 			JButton startBTN = new JButton("Start");
 			JButton pauzeBTN = new JButton("Pauze");
 			JButton resetBTN = new JButton("Reset");
-			
-			
+			//maak knoppen
 			TextField aantalTXT = new TextField(2);
+			//maak takstvelden
 			
 			JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			JPanel animatiesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel borderPnl = new JPanel(new BorderLayout());
-			
+			JPanel settingPNL = new JPanel(new BorderLayout());
+			JPanel startPNL = new JPanel(new BorderLayout());
+			JPanel totaalPNL = new JPanel(new BorderLayout());
+			//maak jpanels
 			
 			algoritmesPNL.add(algoritmeslbl);
 			algoritmesPNL.add(bruteForceCKBX);
 			algoritmesPNL.add(twoOptCKBX);
 			algoritmesPNL.add(nearestNeighborCKBX);
 			algoritmesPNL.add(eigenAlgoritmeCKBX);
-			
-			
-			
-			add(aantallbl);
-			add(aantalTXT);
-			
-			add(animatieslbl);
-			add(animatiesAANRBTN);
-			add(animatiesUITRBTN);
-			add(startBTN);
-			add(pauzeBTN);
-			add(resetBTN);
-			
-			borderPnl.add(algoritmesPNL, BorderLayout.NORTH);
-			borderPnl.add(knoppenPNL, BorderLayout.SOUTH);
-//			getContentPane().add(algoritmesPNL);
+			//zet alles van de algoritme regel in een panel
+			aantalPNL.add(aantallbl);
+			aantalPNL.add(aantalTXT);
+			//zet alles van de aantal regel in een panel
+			animatiesPNL.add(animatieslbl);
+			animatiesPNL.add(animatiesAANRBTN);
+			animatiesPNL.add(animatiesUITRBTN);
+			//zet alles van de aninmatieregel in een panel
+			knoppenPNL.add(startBTN);
+			knoppenPNL.add(pauzeBTN);
+			knoppenPNL.add(resetBTN);
+			//zet alles van de knoppenregel in een panel
+			settingPNL.add(algoritmesPNL, BorderLayout.NORTH);
+			settingPNL.add(aantalPNL, BorderLayout.SOUTH);
+			//combineer de algoritmeregel en de aantalregel in een panel
+			startPNL.add(animatiesPNL, BorderLayout.NORTH);
+			startPNL.add(knoppenPNL, BorderLayout.SOUTH);
+			//combineer de animatieregel en knoppenregel in een panel
+			totaalPNL.add(settingPNL, BorderLayout.NORTH);
+			totaalPNL.add(startPNL, BorderLayout.SOUTH);
+			//combineer alle panels in een panel. congrats, you created a mecha
+			getContentPane().add(totaalPNL);
 			setVisible(true);
 		
 	}
