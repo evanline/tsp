@@ -83,8 +83,11 @@ public class Scherm extends JFrame implements ActionListener{
 			animatiesPNL.add(animatiesUITRBTN);
 			//zet alles van de aninmatieregel in een panel
 			knoppenPNL.add(startBTN);
+			startBTN.addActionListener(this);
 			knoppenPNL.add(pauzeBTN);
+			startBTN.addActionListener(this);
 			knoppenPNL.add(resetBTN);
+			startBTN.addActionListener(this);
 			//zet alles van de knoppenregel in een panel
 			settingPNL.add(algoritmesPNL, BorderLayout.NORTH);
 			settingPNL.add(aantalPNL, BorderLayout.SOUTH);
@@ -97,12 +100,13 @@ public class Scherm extends JFrame implements ActionListener{
 			//combineer alle panels in een panel. congrats, you created a mecha
 			getContentPane().add(totaalPNL);
 			setVisible(true);
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+//		if(e.getSource() == startBTN){
+//			
+//		}
 	}
 
 }
