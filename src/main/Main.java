@@ -9,7 +9,7 @@ import javax.swing.JFrame;
  * @author sanne
  *
  */
-public class Algoritme {
+public class Main {
 
 	/**
 	 * @param args
