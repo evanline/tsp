@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -27,23 +28,29 @@ import javax.swing.JRadioButton;
 public class Scherm extends JFrame implements ActionListener{
 
 	JLabel algoritmeslbl;
-	JLabel aantallbl;
-	JLabel animatieslbl;
-	
+	JLabel aantalArtikelenlbl;
+	JLabel aantalSimulatieslbl;		//
 	Checkbox bruteForceCKBX;
 	Checkbox twoOptCKBX;
 	Checkbox nearestNeighborCKBX;
 	Checkbox eigenAlgoritmeCKBX; 
-	
-	JRadioButton animatiesAANRBTN;
-	JRadioButton animatiesUITRBTN;
-	ButtonGroup animatieBTNGRP;
+	TextField aantaArtikelenlTXT;
+	TextField aantalSimulatiesTXT;	//
+
 	JButton startBTN;
 	JButton pauzeBTN;
 	JButton resetBTN;
-	TextField aantalTXT;
+	JButton volgendeBTN;			//
+	JButton vorigeBTN;				//
 	
 	
+	JButton modusBTN;				//
+	boolean grafisch;
+	
+	private int aantalArtikelen;
+	private int aantalSimulaties;
+	
+	ArrayList<Boolean> results;
 	
 	public Scherm() /*SK*/ { 
 			setTitle("Algoritmes voor TSP");
@@ -53,76 +60,140 @@ public class Scherm extends JFrame implements ActionListener{
 			//standaard noodzakelijke instellingen
 			
 			algoritmeslbl = new JLabel("Algoritmes");
-			aantallbl = new JLabel("Aantal");
-			animatieslbl = new JLabel("Animaties");
+			aantalArtikelenlbl = new JLabel("Aantal");
+			aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 			//maak labels			
 			bruteForceCKBX = new Checkbox("Brute Force");
 			twoOptCKBX = new Checkbox("2-Opt");
 			nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
 			eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
 			//maak ckeckboxes
-			animatiesAANRBTN = new JRadioButton("aan");
-			animatiesUITRBTN = new JRadioButton("uit");
-			//maak radiobuttons
-			animatieBTNGRP = new ButtonGroup();
-			animatieBTNGRP.add(animatiesAANRBTN);
-			animatieBTNGRP.add(animatiesUITRBTN);
-			//maak een buttongroup en zet de animatieaan/uit buttons erin
+			
 			//reset/start, berekenen, pauze/doorgaan
 			startBTN = new JButton("Start");
 			pauzeBTN = new JButton("Pauze");
 			resetBTN = new JButton("Reset");
+			volgendeBTN = new JButton("Volgende");
+			vorigeBTN = new JButton("Vorige");
 			//maak knoppen
-			aantalTXT = new TextField(2);
+			aantaArtikelenlTXT = new TextField(2);
+			aantalSimulatiesTXT = new TextField(2);
 			//maak takstvelden
 			
-			JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel animatiesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel settingPNL = new JPanel(new BorderLayout());
-			JPanel startPNL = new JPanel(new BorderLayout());
-			JPanel totaalPNL = new JPanel(new BorderLayout());
-			//maak jpanels
-			
-			algoritmesPNL.add(algoritmeslbl);
-			algoritmesPNL.add(bruteForceCKBX);
-			algoritmesPNL.add(twoOptCKBX);
-			algoritmesPNL.add(nearestNeighborCKBX);
-			algoritmesPNL.add(eigenAlgoritmeCKBX);
-			//zet alles van de algoritme regel in een panel
-			aantalPNL.add(aantallbl);
-			aantalPNL.add(aantalTXT);
-			//zet alles van de aantal regel in een panel
-			animatiesPNL.add(animatieslbl);
-			animatiesPNL.add(animatiesAANRBTN);
-			animatiesPNL.add(animatiesUITRBTN);
-			//zet alles van de aninmatieregel in een panel
-			knoppenPNL.add(startBTN);
-			startBTN.addActionListener(this);
-			knoppenPNL.add(pauzeBTN);
-			startBTN.addActionListener(this);
-			knoppenPNL.add(resetBTN);
-			startBTN.addActionListener(this);
-			//zet alles van de knoppenregel in een panel
-			settingPNL.add(algoritmesPNL, BorderLayout.NORTH);
-			settingPNL.add(aantalPNL, BorderLayout.SOUTH);
-			//combineer de algoritmeregel en de aantalregel in een panel
-			startPNL.add(animatiesPNL, BorderLayout.NORTH);
-			startPNL.add(knoppenPNL, BorderLayout.SOUTH);
-			//combineer de animatieregel en knoppenregel in een panel
-			totaalPNL.add(settingPNL, BorderLayout.NORTH);
-			totaalPNL.add(startPNL, BorderLayout.SOUTH);
-			//combineer alle panels in een panel. congrats, you created a mecha
-			getContentPane().add(totaalPNL);
+		//	graphicmodusScherm();
+			simulatiemodusScherm();
+
 			setVisible(true);
+	}
+	public void graphicmodusScherm(){
+		grafisch = true;
+		modusBTN = new JButton("Simulatiemodus");
+		
+		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel noordPNL = new JPanel(new BorderLayout());
+		JPanel zuidPNL = new JPanel(new BorderLayout());
+		JPanel totaalPNL = new JPanel(new BorderLayout());
+		//maak jpanels
+		algoritmesPNL.add(algoritmeslbl);
+		algoritmesPNL.add(bruteForceCKBX);
+		algoritmesPNL.add(twoOptCKBX);
+		algoritmesPNL.add(nearestNeighborCKBX);
+		algoritmesPNL.add(eigenAlgoritmeCKBX);
+		//zet alles van de algoritme regel in een panel
+		aantalPNL.add(aantalArtikelenlbl);
+		aantalPNL.add(aantaArtikelenlTXT);
+		//zet alles van de aantalArtikelen regel in een panel
+		
+		//zet alles van de aninmatieregel in een panel
+		knoppenPNL.add(volgendeBTN);
+		volgendeBTN.addActionListener(this);
+		knoppenPNL.add(vorigeBTN);
+		vorigeBTN.addActionListener(this);
+		knoppenPNL.add(resetBTN);
+		resetBTN.addActionListener(this);
+		//zet alles van de knoppenregel in een panel
+		noordPNL.add(modusBTN,BorderLayout.NORTH);
+		modusBTN.addActionListener(this);
+		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
+		
+		//combineer de algoritmeregel en de aantalregel in een panel
+		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
+		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
+		//combineer de animatieregel en knoppenregel in een panel
+		totaalPNL.add(noordPNL, BorderLayout.NORTH);
+		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
+		//combineer alle panels in een panel. congrats, you created a mecha
+		getContentPane().add(totaalPNL);
+	}
+	public void simulatiemodusScherm() {
+		grafisch = false;
+		modusBTN = new JButton("Grafischemodus");
+		
+		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel noordPNL = new JPanel(new BorderLayout());
+		JPanel zuidPNL = new JPanel(new BorderLayout());
+		JPanel totaalPNL = new JPanel(new BorderLayout());
+		
+		algoritmesPNL.add(algoritmeslbl);
+		algoritmesPNL.add(bruteForceCKBX);
+		algoritmesPNL.add(twoOptCKBX);
+		algoritmesPNL.add(nearestNeighborCKBX);
+		algoritmesPNL.add(eigenAlgoritmeCKBX);
+		
+		aantalPNL.add(aantalArtikelenlbl);
+		aantalPNL.add(aantaArtikelenlTXT);
+		aantalPNL.add(aantalSimulatieslbl);
+		aantalPNL.add(aantalSimulatiesTXT);
+		
+		knoppenPNL.add(startBTN);
+		startBTN.addActionListener(this);
+		knoppenPNL.add(pauzeBTN);
+		pauzeBTN.addActionListener(this);
+		knoppenPNL.add(resetBTN);
+		resetBTN.addActionListener(this);
+		
+		noordPNL.add(modusBTN,BorderLayout.NORTH);
+		modusBTN.addActionListener(this);
+		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
+		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
+		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
+		//combineer de animatieregel en knoppenregel in een panel
+		totaalPNL.add(noordPNL, BorderLayout.NORTH);
+		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
+		//combineer alle panels in een panel. congrats, you created a mecha
+		getContentPane().add(totaalPNL);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if(e.getSource() == startBTN){
-//			
-//		}
+		if (e.getSource() == modusBTN) {
+			removeAll();
+			System.out.println("modusbutton");
+			if (grafisch) {
+				simulatiemodusScherm();
+			} else {
+				graphicmodusScherm();
+			}
+		}
+		/*if(e.getSource() == startBTN){
+			System.out.println("start");
+			String restultaantal = aantaArtikelenlTXT.getText();
+			try {
+				aantalArtikelen = Integer.parseInt(restultaantal);
+			} catch (NumberFormatException e1) {
+				aantaArtikelenlTXT.setText("");
+			}
+			System.out.println(aantaArtikelenlTXT.getText());
+		} 
+		if (e.getSource() == pauzeBTN) {
+			System.out.println("pauze");
+		} else if (e.getSource() == resetBTN) {
+			System.out.println("reset");
+		}*/
 	}
 
 }
