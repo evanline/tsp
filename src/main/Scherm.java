@@ -26,9 +26,25 @@ import javax.swing.JRadioButton;
  */
 public class Scherm extends JFrame implements ActionListener{
 
-	/**
-	 * 
-	 */
+	JLabel algoritmeslbl;
+	JLabel aantallbl;
+	JLabel animatieslbl;
+	
+	Checkbox bruteForceCKBX;
+	Checkbox twoOptCKBX;
+	Checkbox nearestNeighborCKBX;
+	Checkbox eigenAlgoritmeCKBX; 
+	
+	JRadioButton animatiesAANRBTN;
+	JRadioButton animatiesUITRBTN;
+	ButtonGroup animatieBTNGRP;
+	JButton startBTN;
+	JButton pauzeBTN;
+	JButton resetBTN;
+	TextField aantalTXT;
+	
+	
+	
 	public Scherm() /*SK*/ { 
 			setTitle("Algoritmes voor TSP");
 			setSize(800, 600);
@@ -36,28 +52,28 @@ public class Scherm extends JFrame implements ActionListener{
 			getContentPane().setBackground(Color.gray);
 			//standaard noodzakelijke instellingen
 			
-			JLabel algoritmeslbl = new JLabel("Algoritmes");
-			JLabel aantallbl = new JLabel("Aantal");
-			JLabel animatieslbl = new JLabel("Animaties");
+			algoritmeslbl = new JLabel("Algoritmes");
+			aantallbl = new JLabel("Aantal");
+			animatieslbl = new JLabel("Animaties");
 			//maak labels			
-			Checkbox bruteForceCKBX = new Checkbox("Brute Force");
-			Checkbox twoOptCKBX = new Checkbox("2-Opt");
-			Checkbox nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
-			Checkbox eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
+			bruteForceCKBX = new Checkbox("Brute Force");
+			twoOptCKBX = new Checkbox("2-Opt");
+			nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
+			eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
 			//maak ckeckboxes
-			JRadioButton animatiesAANRBTN = new JRadioButton("aan");
-			JRadioButton animatiesUITRBTN = new JRadioButton("uit");
+			animatiesAANRBTN = new JRadioButton("aan");
+			animatiesUITRBTN = new JRadioButton("uit");
 			//maak radiobuttons
-			ButtonGroup animatieBTNGRP = new ButtonGroup();
+			animatieBTNGRP = new ButtonGroup();
 			animatieBTNGRP.add(animatiesAANRBTN);
 			animatieBTNGRP.add(animatiesUITRBTN);
 			//maak een buttongroup en zet de animatieaan/uit buttons erin
 			//reset/start, berekenen, pauze/doorgaan
-			JButton startBTN = new JButton("Start");
-			JButton pauzeBTN = new JButton("Pauze");
-			JButton resetBTN = new JButton("Reset");
+			startBTN = new JButton("Start");
+			pauzeBTN = new JButton("Pauze");
+			resetBTN = new JButton("Reset");
 			//maak knoppen
-			TextField aantalTXT = new TextField(2);
+			aantalTXT = new TextField(2);
 			//maak takstvelden
 			
 			JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
