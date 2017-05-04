@@ -99,16 +99,9 @@ public class Scherm extends JFrame implements ActionListener{
 			setVisible(true);
 	}
 	public void graphicmodusScherm(){
-		System.out.println("graphic");
+		System.out.println("graphic screen");
 		grafisch = true;
 		
-//		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//		JPanel noordPNL = new JPanel(new BorderLayout());
-//		JPanel zuidPNL = new JPanel(new BorderLayout());
-//		JPanel totaalPNL = new JPanel(new BorderLayout());
-		//maak jpanels
 		algoritmesPNL.add(algoritmeslbl);
 		algoritmesPNL.add(bruteForceCKBX);
 		algoritmesPNL.add(twoOptCKBX);
@@ -142,9 +135,8 @@ public class Scherm extends JFrame implements ActionListener{
 	}
 	public void simulatiemodusScherm() {
 		
-		System.out.println("simulscherm");
-		
-		
+		System.out.println("simulatie scherm");
+		grafisch = false;		
 		
 		algoritmesPNL.add(algoritmeslbl);
 		algoritmesPNL.add(bruteForceCKBX);
@@ -193,7 +185,6 @@ public class Scherm extends JFrame implements ActionListener{
 			getContentPane().remove(totaalPNL);
 			getContentPane().revalidate();
 			getContentPane().repaint();
-			
 			simulatiemodusScherm();
 		} 
 		if (e.getSource() == grafischemodusBTN) {
@@ -203,21 +194,14 @@ public class Scherm extends JFrame implements ActionListener{
 			getContentPane().repaint();
 			graphicmodusScherm();
 		}
-		/*if(e.getSource() == startBTN){
-			System.out.println("start");
-			String restultaantal = aantaArtikelenlTXT.getText();
-			try {
-				aantalArtikelen = Integer.parseInt(restultaantal);
-			} catch (NumberFormatException e1) {
-				aantaArtikelenlTXT.setText("");
-			}
-			System.out.println(aantaArtikelenlTXT.getText());
-		} 
-		if (e.getSource() == pauzeBTN) {
-			System.out.println("pauze");
-		} else if (e.getSource() == resetBTN) {
-			System.out.println("reset");
-		}*/
+		
+		if (grafisch) {
+			//het grafische scherm is geselecteerd.
+			
+		} else {
+			//het simulatiescherm is geselecteerd. 
+		}
+		
 	}
 
 }
