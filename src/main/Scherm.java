@@ -89,15 +89,19 @@ public class Scherm extends JFrame implements ActionListener{
 			aantalSimulatiesTXT = new TextField(2);
 			//maak takstvelden
 			
+			grafischemodusBTN = new JButton("Grafische modus");
+			simulatiemodusBTN = new JButton("Simulatiemodus");
+//			
+			
 			graphicmodusScherm();
 		//	simulatiemodusScherm();
 
 			setVisible(true);
 	}
 	public void graphicmodusScherm(){
+		System.out.println("graphic");
 		grafisch = true;
-		simulatiemodusBTN = new JButton("Simulatiemodus");
-//		
+		
 //		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
 //		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
 //		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -139,7 +143,7 @@ public class Scherm extends JFrame implements ActionListener{
 	public void simulatiemodusScherm() {
 		
 		System.out.println("simulscherm");
-		grafischemodusBTN = new JButton("Grafischemodus");
+		
 		
 		
 		algoritmesPNL.add(algoritmeslbl);
@@ -161,7 +165,7 @@ public class Scherm extends JFrame implements ActionListener{
 		resetBTN.addActionListener(this);
 		
 		noordPNL.add(grafischemodusBTN,BorderLayout.NORTH);
-		simulatiemodusBTN.addActionListener(this);
+		grafischemodusBTN.addActionListener(this);
 		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
 		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
 		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
@@ -171,15 +175,32 @@ public class Scherm extends JFrame implements ActionListener{
 		//combineer alle panels in een panel. congrats, you created a mecha
 		getContentPane().add(totaalPNL);
 	}
+	public void cleanup() {
+		noordPNL.removeAll();
+		algoritmesPNL.removeAll();
+		aantalPNL.removeAll();
+		knoppenPNL.removeAll();
+		noordPNL.removeAll();
+		zuidPNL.removeAll();
+		totaalPNL.removeAll();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getSource());
 		if (e.getSource() == simulatiemodusBTN) {
+			cleanup();
 			getContentPane().remove(totaalPNL);
-			//simulatiemodusScherm();
+			getContentPane().revalidate();
+			getContentPane().repaint();
 			
-		} else if (e.getSource() == grafischemodusBTN) {
+			simulatiemodusScherm();
+		} 
+		if (e.getSource() == grafischemodusBTN) {
+			cleanup();
 			getContentPane().remove(totaalPNL);
+			getContentPane().revalidate();
+			getContentPane().repaint();
 			graphicmodusScherm();
 		}
 		/*if(e.getSource() == startBTN){
