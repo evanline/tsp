@@ -36,16 +36,25 @@ public class Scherm extends JFrame implements ActionListener{
 	Checkbox eigenAlgoritmeCKBX; 
 	TextField aantaArtikelenlTXT;
 	TextField aantalSimulatiesTXT;	//
+	
+	JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel noordPNL = new JPanel(new BorderLayout());
+	JPanel zuidPNL = new JPanel(new BorderLayout());
+	JPanel totaalPNL = new JPanel(new BorderLayout());
+	
 
 	JButton startBTN;
 	JButton pauzeBTN;
 	JButton resetBTN;
 	JButton volgendeBTN;			//
 	JButton vorigeBTN;				//
+	JButton grafischemodusBTN;
 	
 	
-	JButton modusBTN;				//
-	boolean grafisch;
+	JButton simulatiemodusBTN;				//
+	boolean grafisch = true;
 	
 	private int aantalArtikelen;
 	private int aantalSimulaties;
@@ -80,21 +89,21 @@ public class Scherm extends JFrame implements ActionListener{
 			aantalSimulatiesTXT = new TextField(2);
 			//maak takstvelden
 			
-		//	graphicmodusScherm();
-			simulatiemodusScherm();
+			graphicmodusScherm();
+		//	simulatiemodusScherm();
 
 			setVisible(true);
 	}
 	public void graphicmodusScherm(){
 		grafisch = true;
-		modusBTN = new JButton("Simulatiemodus");
-		
-		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel noordPNL = new JPanel(new BorderLayout());
-		JPanel zuidPNL = new JPanel(new BorderLayout());
-		JPanel totaalPNL = new JPanel(new BorderLayout());
+		simulatiemodusBTN = new JButton("Simulatiemodus");
+//		
+//		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//		JPanel noordPNL = new JPanel(new BorderLayout());
+//		JPanel zuidPNL = new JPanel(new BorderLayout());
+//		JPanel totaalPNL = new JPanel(new BorderLayout());
 		//maak jpanels
 		algoritmesPNL.add(algoritmeslbl);
 		algoritmesPNL.add(bruteForceCKBX);
@@ -114,8 +123,8 @@ public class Scherm extends JFrame implements ActionListener{
 		knoppenPNL.add(resetBTN);
 		resetBTN.addActionListener(this);
 		//zet alles van de knoppenregel in een panel
-		noordPNL.add(modusBTN,BorderLayout.NORTH);
-		modusBTN.addActionListener(this);
+		noordPNL.add(simulatiemodusBTN,BorderLayout.NORTH);
+		simulatiemodusBTN.addActionListener(this);
 		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
 		
 		//combineer de algoritmeregel en de aantalregel in een panel
@@ -128,15 +137,10 @@ public class Scherm extends JFrame implements ActionListener{
 		getContentPane().add(totaalPNL);
 	}
 	public void simulatiemodusScherm() {
-		grafisch = false;
-		modusBTN = new JButton("Grafischemodus");
 		
-		JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel noordPNL = new JPanel(new BorderLayout());
-		JPanel zuidPNL = new JPanel(new BorderLayout());
-		JPanel totaalPNL = new JPanel(new BorderLayout());
+		System.out.println("simulscherm");
+		grafischemodusBTN = new JButton("Grafischemodus");
+		
 		
 		algoritmesPNL.add(algoritmeslbl);
 		algoritmesPNL.add(bruteForceCKBX);
@@ -156,8 +160,8 @@ public class Scherm extends JFrame implements ActionListener{
 		knoppenPNL.add(resetBTN);
 		resetBTN.addActionListener(this);
 		
-		noordPNL.add(modusBTN,BorderLayout.NORTH);
-		modusBTN.addActionListener(this);
+		noordPNL.add(grafischemodusBTN,BorderLayout.NORTH);
+		simulatiemodusBTN.addActionListener(this);
 		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
 		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
 		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
@@ -170,14 +174,13 @@ public class Scherm extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == modusBTN) {
-			removeAll();
-			System.out.println("modusbutton");
-			if (grafisch) {
-				simulatiemodusScherm();
-			} else {
-				graphicmodusScherm();
-			}
+		if (e.getSource() == simulatiemodusBTN) {
+			getContentPane().remove(totaalPNL);
+			//simulatiemodusScherm();
+			
+		} else if (e.getSource() == grafischemodusBTN) {
+			getContentPane().remove(totaalPNL);
+			graphicmodusScherm();
 		}
 		/*if(e.getSource() == startBTN){
 			System.out.println("start");
