@@ -12,6 +12,7 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -26,9 +27,40 @@ import javax.swing.JRadioButton;
  */
 public class Scherm extends JFrame implements ActionListener{
 
-	/**
-	 * 
-	 */
+	JLabel algoritmeslbl;
+	JLabel aantalArtikelenlbl;
+	JLabel aantalSimulatieslbl;		//
+	Checkbox bruteForceCKBX;
+	Checkbox twoOptCKBX;
+	Checkbox nearestNeighborCKBX;
+	Checkbox eigenAlgoritmeCKBX; 
+	TextField aantaArtikelenlTXT;
+	TextField aantalSimulatiesTXT;	//
+	
+	JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	JPanel noordPNL = new JPanel(new BorderLayout());
+	JPanel zuidPNL = new JPanel(new BorderLayout());
+	JPanel totaalPNL = new JPanel(new BorderLayout());
+	
+
+	JButton startBTN;
+	JButton pauzeBTN;
+	JButton resetBTN;
+	JButton volgendeBTN;			//
+	JButton vorigeBTN;				//
+	JButton grafischemodusBTN;
+	
+	
+	JButton simulatiemodusBTN;				//
+	boolean grafisch = true;
+	
+	private int aantalArtikelen;
+	private int aantalSimulaties;
+	
+	ArrayList<Boolean> results;
+	
 	public Scherm() /*SK*/ { 
 			setTitle("Algoritmes voor TSP");
 			setSize(800, 600);
@@ -36,77 +68,140 @@ public class Scherm extends JFrame implements ActionListener{
 			getContentPane().setBackground(Color.gray);
 			//standaard noodzakelijke instellingen
 			
-			JLabel algoritmeslbl = new JLabel("Algoritmes");
-			JLabel aantallbl = new JLabel("Aantal");
-			JLabel animatieslbl = new JLabel("Animaties");
+			algoritmeslbl = new JLabel("Algoritmes");
+			aantalArtikelenlbl = new JLabel("Aantal");
+			aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 			//maak labels			
-			Checkbox bruteForceCKBX = new Checkbox("Brute Force");
-			Checkbox twoOptCKBX = new Checkbox("2-Opt");
-			Checkbox nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
-			Checkbox eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
+			bruteForceCKBX = new Checkbox("Brute Force");
+			twoOptCKBX = new Checkbox("2-Opt");
+			nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
+			eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
 			//maak ckeckboxes
-			JRadioButton animatiesAANRBTN = new JRadioButton("aan");
-			JRadioButton animatiesUITRBTN = new JRadioButton("uit");
-			//maak radiobuttons
-			ButtonGroup animatieBTNGRP = new ButtonGroup();
-			animatieBTNGRP.add(animatiesAANRBTN);
-			animatieBTNGRP.add(animatiesUITRBTN);
-			//maak een buttongroup en zet de animatieaan/uit buttons erin
+			
 			//reset/start, berekenen, pauze/doorgaan
-			JButton startBTN = new JButton("Start");
-			JButton pauzeBTN = new JButton("Pauze");
-			JButton resetBTN = new JButton("Reset");
+			startBTN = new JButton("Start");
+			pauzeBTN = new JButton("Pauze");
+			resetBTN = new JButton("Reset");
+			volgendeBTN = new JButton("Volgende");
+			vorigeBTN = new JButton("Vorige");
 			//maak knoppen
-			TextField aantalTXT = new TextField(2);
+			aantaArtikelenlTXT = new TextField(2);
+			aantalSimulatiesTXT = new TextField(2);
 			//maak takstvelden
 			
-			JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel animatiesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-			JPanel settingPNL = new JPanel(new BorderLayout());
-			JPanel startPNL = new JPanel(new BorderLayout());
-			JPanel totaalPNL = new JPanel(new BorderLayout());
-			//maak jpanels
+			grafischemodusBTN = new JButton("Grafische modus");
+			simulatiemodusBTN = new JButton("Simulatiemodus");
+//			
 			
-			algoritmesPNL.add(algoritmeslbl);
-			algoritmesPNL.add(bruteForceCKBX);
-			algoritmesPNL.add(twoOptCKBX);
-			algoritmesPNL.add(nearestNeighborCKBX);
-			algoritmesPNL.add(eigenAlgoritmeCKBX);
-			//zet alles van de algoritme regel in een panel
-			aantalPNL.add(aantallbl);
-			aantalPNL.add(aantalTXT);
-			//zet alles van de aantal regel in een panel
-			animatiesPNL.add(animatieslbl);
-			animatiesPNL.add(animatiesAANRBTN);
-			animatiesPNL.add(animatiesUITRBTN);
-			//zet alles van de aninmatieregel in een panel
-			knoppenPNL.add(startBTN);
-			startBTN.addActionListener(this);
-			knoppenPNL.add(pauzeBTN);
-			startBTN.addActionListener(this);
-			knoppenPNL.add(resetBTN);
-			startBTN.addActionListener(this);
-			//zet alles van de knoppenregel in een panel
-			settingPNL.add(algoritmesPNL, BorderLayout.NORTH);
-			settingPNL.add(aantalPNL, BorderLayout.SOUTH);
-			//combineer de algoritmeregel en de aantalregel in een panel
-			startPNL.add(animatiesPNL, BorderLayout.NORTH);
-			startPNL.add(knoppenPNL, BorderLayout.SOUTH);
-			//combineer de animatieregel en knoppenregel in een panel
-			totaalPNL.add(settingPNL, BorderLayout.NORTH);
-			totaalPNL.add(startPNL, BorderLayout.SOUTH);
-			//combineer alle panels in een panel. congrats, you created a mecha
-			getContentPane().add(totaalPNL);
+			graphicmodusScherm();
+		//	simulatiemodusScherm();
+
 			setVisible(true);
+	}
+	public void graphicmodusScherm(){
+		System.out.println("graphic screen");
+		grafisch = true;
+		
+		algoritmesPNL.add(algoritmeslbl);
+		algoritmesPNL.add(bruteForceCKBX);
+		algoritmesPNL.add(twoOptCKBX);
+		algoritmesPNL.add(nearestNeighborCKBX);
+		algoritmesPNL.add(eigenAlgoritmeCKBX);
+		//zet alles van de algoritme regel in een panel
+		aantalPNL.add(aantalArtikelenlbl);
+		aantalPNL.add(aantaArtikelenlTXT);
+		//zet alles van de aantalArtikelen regel in een panel
+		
+		//zet alles van de aninmatieregel in een panel
+		knoppenPNL.add(volgendeBTN);
+		volgendeBTN.addActionListener(this);
+		knoppenPNL.add(vorigeBTN);
+		vorigeBTN.addActionListener(this);
+		knoppenPNL.add(resetBTN);
+		resetBTN.addActionListener(this);
+		//zet alles van de knoppenregel in een panel
+		noordPNL.add(simulatiemodusBTN,BorderLayout.NORTH);
+		simulatiemodusBTN.addActionListener(this);
+		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
+		
+		//combineer de algoritmeregel en de aantalregel in een panel
+		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
+		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
+		//combineer de animatieregel en knoppenregel in een panel
+		totaalPNL.add(noordPNL, BorderLayout.NORTH);
+		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
+		//combineer alle panels in een panel. congrats, you created a mecha
+		getContentPane().add(totaalPNL);
+	}
+	public void simulatiemodusScherm() {
+		
+		System.out.println("simulatie scherm");
+		grafisch = false;		
+		
+		algoritmesPNL.add(algoritmeslbl);
+		algoritmesPNL.add(bruteForceCKBX);
+		algoritmesPNL.add(twoOptCKBX);
+		algoritmesPNL.add(nearestNeighborCKBX);
+		algoritmesPNL.add(eigenAlgoritmeCKBX);
+		
+		aantalPNL.add(aantalArtikelenlbl);
+		aantalPNL.add(aantaArtikelenlTXT);
+		aantalPNL.add(aantalSimulatieslbl);
+		aantalPNL.add(aantalSimulatiesTXT);
+		
+		knoppenPNL.add(startBTN);
+		startBTN.addActionListener(this);
+		knoppenPNL.add(pauzeBTN);
+		pauzeBTN.addActionListener(this);
+		knoppenPNL.add(resetBTN);
+		resetBTN.addActionListener(this);
+		
+		noordPNL.add(grafischemodusBTN,BorderLayout.NORTH);
+		grafischemodusBTN.addActionListener(this);
+		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
+		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
+		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
+		//combineer de animatieregel en knoppenregel in een panel
+		totaalPNL.add(noordPNL, BorderLayout.NORTH);
+		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
+		//combineer alle panels in een panel. congrats, you created a mecha
+		getContentPane().add(totaalPNL);
+	}
+	public void cleanup() {
+		noordPNL.removeAll();
+		algoritmesPNL.removeAll();
+		aantalPNL.removeAll();
+		knoppenPNL.removeAll();
+		noordPNL.removeAll();
+		zuidPNL.removeAll();
+		totaalPNL.removeAll();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-//		if(e.getSource() == startBTN){
-//			
-//		}
+		System.out.println(e.getSource());
+		if (e.getSource() == simulatiemodusBTN) {
+			cleanup();
+			getContentPane().remove(totaalPNL);
+			getContentPane().revalidate();
+			getContentPane().repaint();
+			simulatiemodusScherm();
+		} 
+		if (e.getSource() == grafischemodusBTN) {
+			cleanup();
+			getContentPane().remove(totaalPNL);
+			getContentPane().revalidate();
+			getContentPane().repaint();
+			graphicmodusScherm();
+		}
+		
+		if (grafisch) {
+			//het grafische scherm is geselecteerd.
+			
+		} else {
+			//het simulatiescherm is geselecteerd. 
+		}
+		
 	}
 
 }
