@@ -3,14 +3,13 @@ package main;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * Created by: Sanne Klaassen
  * Date: 08/05/17.
  */
 
-public class GenereerCoordinaten {
+class GenereerCoordinaten {
 	private int aantal;
 	private ArrayList<Integer[]> lijstCoordinaten = new ArrayList<>();
 	private HashSet<Integer> hashbaar;
@@ -38,9 +37,10 @@ public class GenereerCoordinaten {
 				System.out.print(y);
 				System.out.println("");
 			}
-
-
 		}
+	}
+	public ArrayList<Integer[]> getLijstCoordinaten() {
+		return lijstCoordinaten;
 	}
 }
 
