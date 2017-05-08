@@ -20,10 +20,14 @@ import org.xml.sax.SAXException;
  * Date: 08-May-17.
  */
 
-public class XMLReaderDOM
+class XMLReaderDOM
 {
-	public static void run()
+	/**
+	 * Starts the xml convertion.
+	 */
+	static ArrayList<Order> run()
 	{
+		// file path to the xml file
 		String filePath = "src/main/bestelling.xml";
 		File xmlFile = new File(filePath);
 
@@ -35,9 +39,10 @@ public class XMLReaderDOM
 			dbuilder = dbFactory.newDocumentBuilder();
 			Document doc = dbuilder.parse(xmlFile);
 			doc.getDocumentElement().normalize();
+			//file is now loaded into the memory (do not use large files)
 
+			// Separate the list on this xml tag.
 			NodeList nodeList = doc.getElementsByTagName("bestelling");
-
 			List <Order> orderList = new ArrayList <>();
 
 			for (int i = 0; i < nodeList.getLength(); i++)
@@ -45,17 +50,22 @@ public class XMLReaderDOM
 				orderList.add(getOrder(nodeList.item(i)));
 			}
 
-			for (Order ord : orderList)
-			{
-				System.out.println(ord.toString());
-			}
+			ArrayList <Order> orders = new ArrayList<>();
+			orders.addAll(orderList);
+			return orders;
 		}
 		catch (SAXException | ParserConfigurationException | IOException e1)
 		{
 			e1.printStackTrace();
 		}
+		return null;
 	}
 
+	/**
+	 * extracts the information from the xml file.
+	 * @param node the selected peace of the xml (bestelling)
+	 * @return Order object.
+	 */
 	private static Order getOrder(Node node)
 	{
 		Order ord = new Order ();
@@ -63,6 +73,7 @@ public class XMLReaderDOM
 		{
 			Element element = (Element) node;
 
+			//add the values of the tags to the object.
 			ord.setOrderId(Integer.parseInt(getTagValue("ordernummer", element)));
 			ord.setName(getTagValue("voornaam", element));
 			ord.setSurName(getTagValue("achternaam", element));
@@ -80,9 +91,16 @@ public class XMLReaderDOM
 			ord.setArticleId(articleId);
 		}
 
+		// return object
 		return ord;
 	}
 
+	/**
+	 * gets the tag's value
+	 * @param tag tag name
+	 * @param element node element list
+	 * @return Value of the tag
+	 */
 	private static String getTagValue (String tag, Element element)
 	{
 		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
