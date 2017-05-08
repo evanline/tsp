@@ -3,22 +3,19 @@
  */
 package main;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
- * @author sanne
+ * @author sanne & Ian Hildebrand
  *
  */
 public class Main {
 
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scherm scherm = new Scherm();
-		scherm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		scherm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		XMLReaderDOM.run();
 	}
 
 	
