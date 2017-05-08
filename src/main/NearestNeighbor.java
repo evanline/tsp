@@ -1,19 +1,10 @@
-/**
- * 
- */
 package main;
 
 /**
- * @author sanne
- *
+ * Created by: Ian Hildebrand
+ * Date: 08-May-17.
  */
-public class NearestNeighbor {
-
-	/**
-	 * 
-	 */
-	public NearestNeighbor() {
-		// TODO Auto-generated constructor stub
-	}
-
+public class NearestNeighbor
+{
+	//stuff
 }
