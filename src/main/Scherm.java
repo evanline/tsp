@@ -32,39 +32,43 @@ import org.omg.CORBA.PRIVATE_MEMBER;
  */
 public class Scherm extends JFrame implements ActionListener {
 
-	JLabel algoritmeslbl;
-	JLabel aantalArtikelenlbl;
-	JLabel aantalSimulatieslbl; //
-	Checkbox bruteForceCKBX;
-	Checkbox twoOptCKBX;
-	Checkbox nearestNeighborCKBX;
-	Checkbox eigenAlgoritmeCKBX;
-	TextField aantaArtikelenlTXT;
-	TextField aantalSimulatiesTXT; //
+	private JLabel algoritmeslbl;
+	private JLabel aantalArtikelenlbl;
+	private JLabel aantalSimulatieslbl; //
+	private Checkbox bruteForceCKBX;
+	private Checkbox twoOptCKBX;
+	private Checkbox nearestNeighborCKBX;
+	private Checkbox eigenAlgoritmeCKBX;
+	private TextField aantaArtikelenlTXT;
+	private TextField aantalSimulatiesTXT; //
 
-	JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	JPanel noordPNL = new JPanel(new BorderLayout());
-	JPanel zuidPNL = new JPanel(new BorderLayout());
-	JPanel totaalPNL = new JPanel(new BorderLayout());
+	private JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	private JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	private JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	private JPanel noordPNL = new JPanel(new BorderLayout());
+	private JPanel zuidPNL = new JPanel(new BorderLayout());
+	private JPanel totaalPNL = new JPanel(new BorderLayout());
 
-	JButton startBTN;
-	JButton pauzeBTN;
-	JButton resetBTN;
-	JButton volgendeBTN; //
-	JButton vorigeBTN; //
-	JButton grafischemodusBTN;
+	private JButton startBTN;
+	private JButton pauzeBTN;
+	private JButton resetBTN;
+	private JButton volgendeBTN; //
+	private	JButton vorigeBTN; //
+	private JButton grafischemodusBTN;
 
-	JButton simulatiemodusBTN; //
-	boolean grafisch = true;
+	private JButton simulatiemodusBTN; //
+	private boolean grafisch = true;
 
 	boolean bruteForce = false;
 	boolean twoOpt = false;
 	boolean nearestNeighbor = false;
 	boolean eigenAlg = false;
 
-	private int aantalArtikelen;
+	private static int aantalArtikelen = 0;
+
+	public static int getAantalArtikelen() {
+		return aantalArtikelen;
+	}
 	private int aantalSimulaties;
 
 	enum Algorimen {
@@ -113,8 +117,9 @@ public class Scherm extends JFrame implements ActionListener {
 		//
 
 		graphicmodusScherm();
+		grafisch = true;
 		// simulatiemodusScherm();
-
+		// grafisch = false;
 		setVisible(true);
 	}
 
@@ -231,18 +236,17 @@ public class Scherm extends JFrame implements ActionListener {
 					if (bruteForceCKBX.getState()) {
 						algoritmenArrayList.add(Algorimen.BRUTEFORCE);
 					}
-
 					if (twoOptCKBX.getState()) {
 						algoritmenArrayList.add(Algorimen.TWOOPT);
 					}
-
 					if (nearestNeighborCKBX.getState()) {
 						algoritmenArrayList.add(Algorimen.NEARESTNEIGHBOR);
 					}
 					if (eigenAlgoritmeCKBX.getState()) {
 						algoritmenArrayList.add(Algorimen.EIGENALG);
 					}
-					
+
+
 
 				} else if (e.getSource() == volgendeBTN && volgendeBTN.getText() == "Volgende") {
 					System.out.println("volgende");
@@ -255,17 +259,15 @@ public class Scherm extends JFrame implements ActionListener {
 					System.out.println("error: unknown source");
 				}
 
-			} else {
+			} else if (grafisch == false) {
 				// het simulatiescherm is geselecteerd.
 				if (e.getSource() == startBTN) {
 					System.out.println("start");
-					 /* 
-					 * String aantal = aantaArtikelenlTXT.getText();
-					 * aantalArtikelen = 0; try { aantalArtikelen =
-					 * Integer.parseInt(aantal); } catch (NumberFormatException
-					 * e1) { aantaArtikelenlTXT.setText(""); }
-					 * System.out.println(aantalArtikelen);
-					 */
+
+					  String aantal = aantaArtikelenlTXT.getText();
+					  aantalArtikelen = 0; try { aantalArtikelen = Integer.parseInt(aantal); } catch (NumberFormatException e1) { aantaArtikelenlTXT.setText(""); }
+					  System.out.println(aantalArtikelen);
+
 				} else if (e.getSource() == pauzeBTN) {
 					System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {

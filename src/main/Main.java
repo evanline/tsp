@@ -16,6 +16,7 @@ public class Main {
 		Scherm scherm = new Scherm();
 		scherm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		XMLReaderDOM.run();
+		GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 	}
 
 	
