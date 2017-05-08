@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
 
 public class XMLReaderDOM
 {
-	public static void main(String[] args)
+	public static void run()
 	{
 		String filePath = "src/main/bestelling.xml";
 		File xmlFile = new File(filePath);
@@ -36,11 +36,9 @@ public class XMLReaderDOM
 			Document doc = dbuilder.parse(xmlFile);
 			doc.getDocumentElement().normalize();
 
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
-
 			NodeList nodeList = doc.getElementsByTagName("bestelling");
 
-			List <Order> orderList = new ArrayList <Order>();
+			List <Order> orderList = new ArrayList <>();
 
 			for (int i = 0; i < nodeList.getLength(); i++)
 			{
@@ -74,10 +72,12 @@ public class XMLReaderDOM
 			ord.setDate(getTagValue("datum", element));
 
 			NodeList artids = element.getElementsByTagName("artikelnr");
-			ArrayList <Integer> articleId = new ArrayList<Integer>();
+			ArrayList <Integer> articleId = new ArrayList<>();
 			for (int i = 0; i < artids.getLength(); i++) {
 				articleId.add(Integer.parseInt(artids.item(i).getTextContent()));
 			}
+
+			ord.setArticleId(articleId);
 		}
 
 		return ord;
@@ -86,7 +86,7 @@ public class XMLReaderDOM
 	private static String getTagValue (String tag, Element element)
 	{
 		NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
-		Node node = (Node) nodeList.item(0);
+		Node node = nodeList.item(0);
 		return node.getNodeValue();
 	}
 }
