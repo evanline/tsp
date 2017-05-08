@@ -6,7 +6,7 @@ package main;
 import javax.swing.*;
 
 /**
- * @author sanne & Ian Hildebrand
+ * @author Sanne Klaassen & Ian Hildebrand
  *
  */
 public class Main {
