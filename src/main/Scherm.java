@@ -58,7 +58,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 	JButton simulatiemodusBTN; //
 	boolean grafisch = true;
-	
+
 	boolean bruteForce = false;
 	boolean twoOpt = false;
 	boolean nearestNeighbor = false;
@@ -66,9 +66,12 @@ public class Scherm extends JFrame implements ActionListener {
 
 	private int aantalArtikelen;
 	private int aantalSimulaties;
-	
-	ArrayList<Boolean> algoritmen;
 
+	enum Algorimen {
+		BRUTEFORCE, TWOOPT, NEARESTNEIGHBOR, EIGENALG
+	}
+
+	ArrayList<Algorimen> algoritmenArrayList = new ArrayList<>();
 
 	public Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
@@ -89,17 +92,24 @@ public class Scherm extends JFrame implements ActionListener {
 
 		// reset/start, berekenen, pauze/doorgaan
 		startBTN = new JButton("Start");
+		startBTN.addActionListener(this);
 		pauzeBTN = new JButton("Pauze");
+		pauzeBTN.addActionListener(this);
 		resetBTN = new JButton("Reset");
+		resetBTN.addActionListener(this);
 		volgendeBTN = new JButton("Start");
+		volgendeBTN.addActionListener(this);
 		vorigeBTN = new JButton("Vorige");
+		vorigeBTN.addActionListener(this);
 		// maak knoppen
 		aantaArtikelenlTXT = new TextField(2);
 		aantalSimulatiesTXT = new TextField(2);
 		// maak takstvelden
 
 		grafischemodusBTN = new JButton("Grafische modus");
+		grafischemodusBTN.addActionListener(this);
 		simulatiemodusBTN = new JButton("Simulatiemodus");
+		simulatiemodusBTN.addActionListener(this);
 		//
 
 		graphicmodusScherm();
@@ -114,7 +124,7 @@ public class Scherm extends JFrame implements ActionListener {
 		grafisch = true;
 
 		algoritmesPNL.add(algoritmeslbl);
-		algoritmesPNL.add(bruteForceCKBX);    
+		algoritmesPNL.add(bruteForceCKBX);
 		algoritmesPNL.add(twoOptCKBX);
 		algoritmesPNL.add(nearestNeighborCKBX);
 		algoritmesPNL.add(eigenAlgoritmeCKBX);
@@ -125,14 +135,10 @@ public class Scherm extends JFrame implements ActionListener {
 
 		// zet alles van de aninmatieregel in een panel
 		knoppenPNL.add(volgendeBTN);
-		volgendeBTN.addActionListener(this);
 		knoppenPNL.add(vorigeBTN);
-		vorigeBTN.addActionListener(this);
 		knoppenPNL.add(resetBTN);
-		resetBTN.addActionListener(this);
 		// zet alles van de knoppenregel in een panel
 		noordPNL.add(simulatiemodusBTN, BorderLayout.NORTH);
-		simulatiemodusBTN.addActionListener(this);
 		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
 
 		// combineer de algoritmeregel en de aantalregel in een panel
@@ -163,14 +169,10 @@ public class Scherm extends JFrame implements ActionListener {
 		aantalPNL.add(aantalSimulatiesTXT);
 
 		knoppenPNL.add(startBTN);
-		startBTN.addActionListener(this);
 		knoppenPNL.add(pauzeBTN);
-		pauzeBTN.addActionListener(this);
 		knoppenPNL.add(resetBTN);
-		resetBTN.addActionListener(this);
 
 		noordPNL.add(grafischemodusBTN, BorderLayout.NORTH);
-		grafischemodusBTN.addActionListener(this);
 		noordPNL.add(algoritmesPNL, BorderLayout.SOUTH);
 		zuidPNL.add(aantalPNL, BorderLayout.NORTH);
 		zuidPNL.add(knoppenPNL, BorderLayout.SOUTH);
@@ -210,13 +212,13 @@ public class Scherm extends JFrame implements ActionListener {
 				getContentPane().repaint();
 				graphicmodusScherm();
 			}
-		}  else {
+		} else {
 			if (grafisch) {
 				// het grafische scherm is geselecteerd
 				if (e.getSource() == volgendeBTN && volgendeBTN.getText() == "Start") {
 					System.out.println("Start");
 					volgendeBTN.setText("Volgende");
-					
+
 					String aantal = aantaArtikelenlTXT.getText();
 					aantalArtikelen = 0;
 					try {
@@ -225,16 +227,21 @@ public class Scherm extends JFrame implements ActionListener {
 						aantaArtikelenlTXT.setText("");
 					}
 					System.out.println(aantalArtikelen);
-				
-					Boolean bruteForce = bruteForceCKBX.getState();
-					///algoritmen.add(bruteForce);
-					Boolean TwoOpt = twoOptCKBX.getState();
-					//algoritmen.add(TwoOpt);
-					Boolean nearestNeighbor = nearestNeighborCKBX.getState();
-					//algoritmen.add(nearestNeighbor);
-					Boolean eigenAlg = eigenAlgoritmeCKBX.getState();
-					//algoritmen.add(eigenAlg);		
-					
+
+					if (bruteForceCKBX.getState()) {
+						algoritmenArrayList.add(Algorimen.BRUTEFORCE);
+					}
+
+					if (twoOptCKBX.getState()) {
+						algoritmenArrayList.add(Algorimen.TWOOPT);
+					}
+
+					if (nearestNeighborCKBX.getState()) {
+						algoritmenArrayList.add(Algorimen.NEARESTNEIGHBOR);
+					}
+					if (eigenAlgoritmeCKBX.getState()) {
+						algoritmenArrayList.add(Algorimen.EIGENALG);
+					}
 					
 
 				} else if (e.getSource() == volgendeBTN && volgendeBTN.getText() == "Volgende") {
@@ -251,17 +258,14 @@ public class Scherm extends JFrame implements ActionListener {
 			} else {
 				// het simulatiescherm is geselecteerd.
 				if (e.getSource() == startBTN) {
-			/*		System.out.println("start");
-
-					String aantal = aantaArtikelenlTXT.getText();
-					aantalArtikelen = 0;
-					try {
-						aantalArtikelen = Integer.parseInt(aantal);
-					} catch (NumberFormatException e1) {
-						aantaArtikelenlTXT.setText("");
-					}
-					System.out.println(aantalArtikelen);
-*/
+					System.out.println("start");
+					 /* 
+					 * String aantal = aantaArtikelenlTXT.getText();
+					 * aantalArtikelen = 0; try { aantalArtikelen =
+					 * Integer.parseInt(aantal); } catch (NumberFormatException
+					 * e1) { aantaArtikelenlTXT.setText(""); }
+					 * System.out.println(aantalArtikelen);
+					 */
 				} else if (e.getSource() == pauzeBTN) {
 					System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
