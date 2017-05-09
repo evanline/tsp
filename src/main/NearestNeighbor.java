@@ -8,6 +8,8 @@ import java.util.*;
  */
 class NearestNeighbor
 {
+	private ArrayList<Integer[]> path = new ArrayList<>();
+
 	NearestNeighbor()
 	{
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten(10);
@@ -17,7 +19,7 @@ class NearestNeighbor
 		Integer[] nearest = new Integer[]{1,1};
 		int stuff = list.size();
 
-		ArrayList<Integer[]> path = new ArrayList<>();
+
 		Integer[] currentPos = startPoint;
 		while (stuff != path.size())
 		{
@@ -36,11 +38,16 @@ class NearestNeighbor
 			list.remove(nearest);
 			currentPos = nearest;
 		}
+	}
 
-			for (Integer[] i : path)
-			{
-				System.out.println(Arrays.toString(i));
-			}
-
+	@Override
+	public String toString()
+	{
+		StringBuilder pathyeey = new StringBuilder("path:");
+		for (Integer[] i : path)
+		{
+			pathyeey.append(Arrays.toString(i));
+		}
+		return String.valueOf(pathyeey);
 	}
 }
