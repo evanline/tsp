@@ -14,14 +14,13 @@ class GenereerCoordinaten {
 	private HashSet<Integer> hashbaar = new HashSet<>();
 	private ArrayList<HashSet> hashes = new ArrayList<>();
 
-	GenereerCoordinaten() {
-//	aantal = Scherm.getAantalArtikelen();
-		int aantal = 3;
+	GenereerCoordinaten(int i)
+	{
 		int max = 6;
 		int min = 1;
 		Boolean dubbelecoordinaat = false;
 
-		while (lijstCoordinaten.size() < aantal) {
+		while (lijstCoordinaten.size() < i) {
 			Random rand = new Random();
 			Integer x = rand.nextInt(max - min + 1) + min;
 			Integer y = rand.nextInt(max - min + 1) + min;
@@ -37,6 +36,11 @@ class GenereerCoordinaten {
 				lijstCoordinaten.add(new Integer[] {x,y});
 			}
 		}
+	}
+
+	GenereerCoordinaten()
+	{
+		this(3);
 	}
 	ArrayList<Integer[]> getLijstCoordinaten() {
 		return lijstCoordinaten;

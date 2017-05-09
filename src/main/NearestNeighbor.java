@@ -1,7 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Created by: Ian Hildebrand
@@ -9,28 +8,24 @@ import java.util.Arrays;
  */
 class NearestNeighbor
 {
-	private GenereerCoordinaten coordinaten;
-	private ArrayList<Integer[]> list;
-	private final Boolean DEV = true;
-	private final Integer[] startPoint = new Integer[]{1, 1};
-	private Integer[] currentPos = startPoint;
-	private ArrayList<Integer[]> path = new ArrayList<>();
-
 	NearestNeighbor()
 	{
-		coordinaten = new GenereerCoordinaten();
-		list = coordinaten.getLijstCoordinaten();
-		if (DEV) System.out.println("starting from:" + Arrays.toString(startPoint));
+		GenereerCoordinaten coordinaten = new GenereerCoordinaten(10);
+		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
+		Integer[] startPoint = new Integer[]{1, 1};
 
-		double Ndistance = -1;
 		Integer[] nearest = new Integer[]{1,1};
+		int stuff = list.size();
 
-		while (list.size() != path.size())
+		ArrayList<Integer[]> path = new ArrayList<>();
+		Integer[] currentPos = startPoint;
+		while (stuff != path.size())
 		{
+			double Ndistance = -1;
+
 			for (Integer[] i : list)
 			{
 				double dist = Math.sqrt((Math.pow((Math.abs(i[0] - currentPos[0]) ), 2) + Math.pow(Math.abs(i[1] - currentPos[1]), 2)));
-				if (path.contains(i) || i == currentPos) continue; //TODO: WORK DAMMIT
 				if (dist < Ndistance || Ndistance == -1)
 				{
 					Ndistance = dist;
@@ -38,27 +33,14 @@ class NearestNeighbor
 				}
 			}
 			path.add(nearest);
+			list.remove(nearest);
 			currentPos = nearest;
 		}
 
-		if (DEV)
-		{
-			for (Integer[] i : list)
-			{
-				System.out.println(Arrays.toString(i));
-
-			}
-		}
-
-		System.out.println("---------------------------------------------");
-
-		if (DEV)
-		{
 			for (Integer[] i : path)
 			{
 				System.out.println(Arrays.toString(i));
 			}
-		}
-	}
 
+	}
 }
