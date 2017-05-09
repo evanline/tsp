@@ -238,6 +238,7 @@ public class Scherm extends JFrame implements ActionListener {
 						c.setEnabled(false);
 					}
 
+
 /*volgende*/	} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
 					System.out.println("volgende");
 /*vorige*/		} else if (e.getSource() == vorigeBTN) {
