@@ -12,19 +12,20 @@ import java.util.Random;
 class GenereerCoordinaten {
 	private int aantal;
 	private ArrayList<Integer[]> lijstCoordinaten = new ArrayList<>();
-	private HashSet<Integer> hashbaar;
+	private HashSet<Integer> hashbaar = new HashSet<>();
 	private ArrayList<HashSet> hashes = new ArrayList<>();
 
 	public GenereerCoordinaten() {
 //	aantal = Scherm.getAantalArtikelen();
 		aantal = 3;
-
 		Boolean dubbelecoordinaat = false;
+
 		while (lijstCoordinaten.size() < aantal) {
 			Random rand = new Random();
 			Integer x = rand.nextInt(6);
 			Integer y = rand.nextInt(6);
-			hashbaar = new HashSet<>(x, y);
+			hashbaar.add(x);
+			hashbaar.add(y);
 
 			for (HashSet h : hashes) {
 				if (hashbaar == h) {

@@ -1,8 +1,4 @@
-/**
- * TODO: 
- * zorgen dat aniaties aan/uit buttons niet tegelijk aan kunnen en dat als je de een selecteerd, de andere uit gaat
- * als de animaties aan staan, button 'start' 'stop' laten weergeven en als de animatie klaar is, 'reset' laten weergeven
- */
+
 package main;
 
 import java.awt.BorderLayout;
@@ -12,19 +8,13 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Objects;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-
-import org.omg.CORBA.PRIVATE_MEMBER;
 
 /**
  * @author sanne
@@ -59,25 +49,19 @@ public class Scherm extends JFrame implements ActionListener {
 	private JButton simulatiemodusBTN; //
 	private boolean grafisch = true;
 
-	boolean bruteForce = false;
-	boolean twoOpt = false;
-	boolean nearestNeighbor = false;
-	boolean eigenAlg = false;
-
 	private static int aantalArtikelen = 0;
 
-	public static int getAantalArtikelen() {
-		return aantalArtikelen;
-	}
-	private int aantalSimulaties;
 
-	enum Algorimen {
+	private int aantalSimulaties;
+	private ArrayList<Checkbox> algoritmen = new ArrayList<>();
+
+	enum Algoritmenenum {
 		BRUTEFORCE, TWOOPT, NEARESTNEIGHBOR, EIGENALG
 	}
 
-	ArrayList<Algorimen> algoritmenArrayList = new ArrayList<>();
+	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
 
-	public Scherm() /* SK */ {
+	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
 		setSize(800, 600);
 		setLayout(new FlowLayout());
@@ -92,7 +76,13 @@ public class Scherm extends JFrame implements ActionListener {
 		twoOptCKBX = new Checkbox("2-Opt");
 		nearestNeighborCKBX = new Checkbox("Nearest Neighbor");
 		eigenAlgoritmeCKBX = new Checkbox("Eigen Algoritme");
-		// maak ckeckboxes
+
+
+		algoritmen.add(bruteForceCKBX);
+		algoritmen.add(twoOptCKBX);
+		algoritmen.add(nearestNeighborCKBX);
+		algoritmen.add(eigenAlgoritmeCKBX);
+		// maak ckeckboxes en zet ze in een array
 
 		// reset/start, berekenen, pauze/doorgaan
 		startBTN = new JButton("Start");
@@ -123,16 +113,16 @@ public class Scherm extends JFrame implements ActionListener {
 		setVisible(true);
 	}
 
-	public void graphicmodusScherm() /* SK */ {
+	private void graphicmodusScherm() /* SK */ {
 		setTitle("Algoritmes voor TSP (Grafische modus)");
 		System.out.println("graphic screen");
 		grafisch = true;
 
-		algoritmesPNL.add(algoritmeslbl);
-		algoritmesPNL.add(bruteForceCKBX);
-		algoritmesPNL.add(twoOptCKBX);
-		algoritmesPNL.add(nearestNeighborCKBX);
-		algoritmesPNL.add(eigenAlgoritmeCKBX);
+		for (Checkbox c:algoritmen) {
+			algoritmesPNL.add(c);
+		}
+
+
 		// zet alles van de algoritme regel in een panel
 		aantalPNL.add(aantalArtikelenlbl);
 		aantalPNL.add(aantaArtikelenlTXT);
@@ -156,17 +146,14 @@ public class Scherm extends JFrame implements ActionListener {
 		getContentPane().add(totaalPNL);
 	}
 
-	public void simulatiemodusScherm() /* SK */ {
+	private void simulatiemodusScherm() /* SK */ {
 
 		setTitle("Algoritmes voor TSP (Simulatie modus)");
 		System.out.println("simulatie scherm");
 		grafisch = false;
-
-		algoritmesPNL.add(algoritmeslbl);
-		algoritmesPNL.add(bruteForceCKBX);
-		algoritmesPNL.add(twoOptCKBX);
-		algoritmesPNL.add(nearestNeighborCKBX);
-		algoritmesPNL.add(eigenAlgoritmeCKBX);
+		for (Checkbox c:algoritmen) {
+			algoritmesPNL.add(c);
+		}
 
 		aantalPNL.add(aantalArtikelenlbl);
 		aantalPNL.add(aantaArtikelenlTXT);
@@ -188,7 +175,7 @@ public class Scherm extends JFrame implements ActionListener {
 		getContentPane().add(totaalPNL);
 	}
 
-	public void cleanup() {
+	private void cleanup() {
 		noordPNL.removeAll();
 		algoritmesPNL.removeAll();
 		aantalPNL.removeAll();
@@ -196,6 +183,7 @@ public class Scherm extends JFrame implements ActionListener {
 		noordPNL.removeAll();
 		zuidPNL.removeAll();
 		totaalPNL.removeAll();
+		algoritmenArrayList.clear();
 	}
 
 	@Override
@@ -220,7 +208,7 @@ public class Scherm extends JFrame implements ActionListener {
 		} else {
 			if (grafisch) {
 				// het grafische scherm is geselecteerd
-				if (e.getSource() == volgendeBTN && volgendeBTN.getText() == "Start") {
+				if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Start")) {
 					System.out.println("Start");
 					volgendeBTN.setText("Volgende");
 
@@ -234,32 +222,38 @@ public class Scherm extends JFrame implements ActionListener {
 					System.out.println(aantalArtikelen);
 
 					if (bruteForceCKBX.getState()) {
-						algoritmenArrayList.add(Algorimen.BRUTEFORCE);
+						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
 					}
 					if (twoOptCKBX.getState()) {
-						algoritmenArrayList.add(Algorimen.TWOOPT);
+						algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 					}
 					if (nearestNeighborCKBX.getState()) {
-						algoritmenArrayList.add(Algorimen.NEARESTNEIGHBOR);
+						algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 					}
 					if (eigenAlgoritmeCKBX.getState()) {
-						algoritmenArrayList.add(Algorimen.EIGENALG);
+						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
 					}
 
+					for (Checkbox c:algoritmen) {
+						c.setEnabled(false);
+					}
 
-
-				} else if (e.getSource() == volgendeBTN && volgendeBTN.getText() == "Volgende") {
+/*volgende*/	} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
 					System.out.println("volgende");
-				} else if (e.getSource() == vorigeBTN) {
+/*vorige*/		} else if (e.getSource() == vorigeBTN) {
 					System.out.println("vorige");
-				} else if (e.getSource() == resetBTN) {
+/*reset*/		} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					volgendeBTN.setText("Start");
+					for (Checkbox c:algoritmen) {
+						c.setEnabled(true);
+					}
+					aantaArtikelenlTXT.setText("");
 				} else {
 					System.out.println("error: unknown source");
 				}
 
-			} else if (grafisch == false) {
+			} else if (!grafisch) {
 				// het simulatiescherm is geselecteerd.
 				if (e.getSource() == startBTN) {
 					System.out.println("start");
@@ -270,10 +264,30 @@ public class Scherm extends JFrame implements ActionListener {
 					  String aantalSimul = aantalSimulatiesTXT.getText();
 					  aantalSimulaties = 0; try { aantalSimulaties = Integer.parseInt(aantalSimul); } catch (NumberFormatException e1) { aantalSimulatiesTXT.setText("");}
 					System.out.println(aantalSimulaties);
+
+					if (bruteForceCKBX.getState()) {
+						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
+					}
+					if (twoOptCKBX.getState()) {
+						algoritmenArrayList.add(Algoritmenenum.TWOOPT);
+					}
+					if (nearestNeighborCKBX.getState()) {
+						algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
+					}
+					if (eigenAlgoritmeCKBX.getState()) {
+						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
+					}
+
+					  for (Checkbox c:algoritmen) {
+						c.setEnabled(false);
+					}
 				} else if (e.getSource() == pauzeBTN) {
 					System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
+					for (Checkbox c:algoritmen) {
+						c.setEnabled(true);
+					}
 				} else {
 					System.out.println("error: unknown source");
 				}
@@ -281,4 +295,14 @@ public class Scherm extends JFrame implements ActionListener {
 		}
 	}
 
+	public ArrayList<Algoritmenenum> getAlgoritmenArrayList() {
+		return algoritmenArrayList;
+	}
+
+	public int getAantalSimulaties() {
+		return aantalSimulaties;
+	}
+	public static int getAantalArtikelen() {
+		return aantalArtikelen;
+	}
 }
