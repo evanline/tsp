@@ -53,7 +53,7 @@ class NearestNeighbor implements AlgorithmInterface
 
 	@Override
 	public double getRunTime() {
-		return (double)(endTime - startTime) / 1000;
+		return (double)(endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
 	@Override

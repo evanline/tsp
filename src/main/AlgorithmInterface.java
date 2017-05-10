@@ -14,7 +14,7 @@ public interface AlgorithmInterface {
 
 	/**
 	 * get the time it took to run the algorithm
-	 * @return time in seconds
+	 * @return time in nanoseconds
 	 */
 	double getRunTime();
 }
