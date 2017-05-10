@@ -21,19 +21,25 @@ import javax.swing.*;
  */
 @SuppressWarnings("serial")
 public class Graph  extends JPanel{
-	private static final int MAX_SCORE = 20; //hoogste getal op de y-as. TODO: maak hier een berekening van
+	private int MAX_SCORE = 1; //hoogste getal op de y-as.
 	private static final int PREF_W = 800; //breedte tenzij anders nodig
-	private static final int PREF_H = 650; //hoogte tenzij anders nodig //TODO: maak dit statisch, pas ipv dit de schaal aan
+	private static final int PREF_H = 650; //hoogte tenzij anders nodig //TODO: maak dit statisch? (ik kijk wel als dit in scherm staat wat handig is)
 	private static final int BORDER_GAP = 30; //nodig bij schaal berekening ed.
 	private static final Color GRAPH_COLOR = new Color(11, 177, 7,180); //kleur lijnen
 	private static final Color GRAPH_POINT_COLOR = new Color(65, 7, 9, 180); //kleur punten
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f); //vorm lijn(breedte lijn)
 	private static final int GRAPH_POINT_WIDTH = 12; //grootte punten
-	private static final int Y_HATCH_CNT = 10; //hoeveelheid streepjes op y-as
+	private static final int Y_HATCH_CNT = 40; //hoeveelheid streepjes op y-as
 	private List<Integer> yAs; //lijst getallen op de y-as
 
 	public Graph(List<Integer> yAs) {
 		this.yAs = yAs;
+		for (Integer i : yAs){
+			i++;
+			if ( i > MAX_SCORE){
+				MAX_SCORE = i;
+			}
+		}
 	}
 
 	@Override
@@ -45,7 +51,7 @@ public class Graph  extends JPanel{
 
 		//schaal om te vermenigvuldigen, omdat het anders te klein wordt
 		double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (yAs.size() - 1);
-		double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE - 1);
+		double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE);
 
 		//maak een lijst punten voor op de grafiek
 		List<Point> graphPoints = new ArrayList<>();
@@ -55,9 +61,10 @@ public class Graph  extends JPanel{
 			graphPoints.add(new Point(x1, y1));
 		}
 
-		// create x and y axes
-		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
-		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
+
+		// create x and y axes //todo: zorg ervoor dat alle punten erop komen, ook 0.
+		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);	//y-as
+		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);  //x-as
 
 		// create hatch marks for y axis.
 		for (int i = 0; i < Y_HATCH_CNT; i++) {
@@ -118,12 +125,4 @@ public class Graph  extends JPanel{
 		frame.setLocationByPlatform(true);
 		frame.setVisible(true);
 	}
-
-	/*public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGui();
-			}
-		});
-	} */
 }

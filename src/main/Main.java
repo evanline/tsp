@@ -18,8 +18,6 @@ public class Main {
 		ArrayList<Order> orders;
 		orders = XMLReaderDOM.run();
 		assert orders != null : "No orders found!";
-
-
 		System.out.println(new NearestNeighbor());
 
 		List<Integer> yAs = new ArrayList<>();

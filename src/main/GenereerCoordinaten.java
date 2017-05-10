@@ -10,19 +10,22 @@ import java.util.Random;
  */
 
 class GenereerCoordinaten {
+	private int aantal;
 	private ArrayList<Integer[]> lijstCoordinaten = new ArrayList<>();
 	private HashSet<Integer> hashbaar = new HashSet<>();
 	private ArrayList<HashSet> hashes = new ArrayList<>();
 
-	GenereerCoordinaten(int i)
-	{
-		final int max = 6;
+	public GenereerCoordinaten() {
+//	aantal = Scherm.getAantalArtikelen();
+		aantal = 3;
 		Boolean dubbelecoordinaat = false;
 
-		while (lijstCoordinaten.size() < i) {
+		while (lijstCoordinaten.size() < aantal) {
 			Random rand = new Random();
-			Integer x = rand.nextInt(max);
-			Integer y = rand.nextInt(max);
+			Integer x = rand.nextInt(6);
+			x++;
+			Integer y = rand.nextInt(6);
+			y++;
 			hashbaar.add(x);
 			hashbaar.add(y);
 
@@ -31,17 +34,15 @@ class GenereerCoordinaten {
 					dubbelecoordinaat = true;
 				}
 			}
-			if (!dubbelecoordinaat) {
+			if (dubbelecoordinaat == false) {
 				lijstCoordinaten.add(new Integer[] {x,y});
+				System.out.print(x + ", ");
+				System.out.print(y);
+				System.out.println("");
 			}
 		}
 	}
-
-	GenereerCoordinaten()
-	{
-		this(3);
-	}
-	ArrayList<Integer[]> getLijstCoordinaten() {
+	public ArrayList<Integer[]> getLijstCoordinaten() {
 		return lijstCoordinaten;
 	}
 }
