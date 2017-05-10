@@ -220,6 +220,7 @@ public class Scherm extends JFrame implements ActionListener {
 						aantaArtikelenlTXT.setText("");
 					}
 					System.out.println(aantalArtikelen);
+					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 
 					if (bruteForceCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
@@ -262,6 +263,7 @@ public class Scherm extends JFrame implements ActionListener {
 					  String aantal = aantaArtikelenlTXT.getText();
 					  aantalArtikelen = 0; try { aantalArtikelen = Integer.parseInt(aantal); } catch (NumberFormatException e1) { aantaArtikelenlTXT.setText(""); }
 					  System.out.println(aantalArtikelen);
+					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 					  String aantalSimul = aantalSimulatiesTXT.getText();
 					  aantalSimulaties = 0; try { aantalSimulaties = Integer.parseInt(aantalSimul); } catch (NumberFormatException e1) { aantalSimulatiesTXT.setText("");}
 					System.out.println(aantalSimulaties);
