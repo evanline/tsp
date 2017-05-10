@@ -63,7 +63,8 @@ public class Scherm extends JFrame implements ActionListener {
 
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
-		setSize(800, 600);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 		setLayout(new FlowLayout());
 		getContentPane().setBackground(Color.gray);
 		// standaard noodzakelijke instellingen

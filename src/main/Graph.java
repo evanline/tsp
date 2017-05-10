@@ -23,7 +23,7 @@ import javax.swing.*;
 public class Graph  extends JPanel{
 	private double MAX_SCORE = 1; //hoogste getal op de y-as.
 	private static final int PREF_W = 800; //breedte tenzij anders nodig
-	private static final int PREF_H = 650; //hoogte tenzij anders nodig //TODO: maak dit statisch? (ik kijk wel als dit in scherm staat wat handig is)
+	private static final int PREF_H = 650; //hoogte tenzij anders nodig
 	private static final int BORDER_GAP = 30; //nodig bij schaal berekening ed.
 	private static final Color GRAPH_COLOR = new Color(11, 177, 7,180); //kleur lijnen
 	private static final Color GRAPH_POINT_COLOR = new Color(65, 7, 9, 180); //kleur punten
@@ -119,7 +119,7 @@ public class Graph  extends JPanel{
 
 
 		Graph mainPanel = new Graph(yAs);
-		//grafiek staat momenteel in een eigen window. TODO: grafiek in scherm zetten. (bovenstaande functie)
+		//grafiek staat momenteel in een eigen window.
 		JFrame frame = new JFrame("DrawGraph");
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.getContentPane().add(mainPanel);
