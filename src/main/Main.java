@@ -26,7 +26,13 @@ public class Main {
 		for (Integer i = 0; i < 10; i++){
 			yAs.add(i);
 		}
-		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
+
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					Graph.createAndShowGui(yAs);
+				}
+			});
+
 
 	}
 

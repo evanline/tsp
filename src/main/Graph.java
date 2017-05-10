@@ -42,6 +42,7 @@ public class Graph  extends JPanel{
 		}
 	}
 
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		//idk, ziet er noodzakelijk uit.
