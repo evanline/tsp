@@ -49,6 +49,7 @@ public class Graph  extends JPanel{
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setBackground(Color.darkGray);
 
 		//schaal om te vermenigvuldigen, omdat het anders te klein wordt
 		double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (yAs.size() - 1);
@@ -114,16 +115,16 @@ public class Graph  extends JPanel{
 		return new Dimension(PREF_W, PREF_H);
 	}
 
-	public static void createAndShowGui(List<Integer> yAs) {
+/*	public static void createAndShowGui(List<Integer> yAs) {
 
 
 		Graph mainPanel = new Graph(yAs);
 		//grafiek staat momenteel in een eigen window. TODO: grafiek in scherm zetten. (bovenstaande functie)
 		JFrame frame = new JFrame("DrawGraph");
 //		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(mainPanel);
-		frame.pack();
-		frame.setLocationByPlatform(true);
-		frame.setVisible(true);
-	}
+//		frame.getContentPane().add(mainPanel);
+//		frame.pack();
+//		frame.setLocationByPlatform(true);
+//		frame.setVisible(true);
+	}*/
 }

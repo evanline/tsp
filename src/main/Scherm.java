@@ -9,12 +9,10 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  * @author sanne
@@ -38,6 +36,8 @@ public class Scherm extends JFrame implements ActionListener {
 	private JPanel noordPNL = new JPanel(new BorderLayout());
 	private JPanel zuidPNL = new JPanel(new BorderLayout());
 	private JPanel totaalPNL = new JPanel(new BorderLayout());
+	private JPanel grafiekPNL = new JPanel(new BorderLayout());
+	private JPanel nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL = new JPanel(new BorderLayout());
 
 	private JButton startBTN;
 	private JButton pauzeBTN;
@@ -171,8 +171,27 @@ public class Scherm extends JFrame implements ActionListener {
 		// combineer de animatieregel en knoppenregel in een panel
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
-		// combineer alle panels in een panel. congrats, you created a mecha
-		getContentPane().add(totaalPNL);
+		List<Integer> yAs = new ArrayList<>();
+		for (Integer i = 0; i < 10; i++){
+			yAs.add(i);
+		}
+//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
+		Graph mainPanel = new Graph(yAs);
+		grafiekPNL.add(mainPanel, BorderLayout.WEST);
+
+		List<Integer> yAs2 = new ArrayList<>();
+		for (Integer i = 10; i > 0; i--){
+			yAs2.add(i);
+		}
+//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
+		Graph mainPanel2 = new Graph(yAs2);
+		grafiekPNL.add(mainPanel2, BorderLayout.EAST);
+		grafiekPNL.setBackground(Color.darkGray);
+
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(totaalPNL, BorderLayout.NORTH);
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(grafiekPNL, BorderLayout.SOUTH);
+
+		getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 	}
 
 	private void cleanup() {

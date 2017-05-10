@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Main {
 
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Scherm scherm = new Scherm();
@@ -22,16 +23,10 @@ public class Main {
 		assert orders != null : "No orders found!";
 		System.out.println(new NearestNeighbor());
 
-		List<Integer> yAs = new ArrayList<>();
-		for (Integer i = 0; i < 10; i++){
-			yAs.add(i);
-		}
 
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					Graph.createAndShowGui(yAs);
-				}
-			});
+
+
+
 
 
 	}
