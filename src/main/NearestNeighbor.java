@@ -10,12 +10,11 @@ class NearestNeighbor implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
-	private long startTime;
-	private long endTime;
+	private double timeSpend;
 
 	NearestNeighbor()
 	{
-		startTime = System.nanoTime();
+		long startTime = System.nanoTime();
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
 		Integer[] startPoint = new Integer[]{1, 1};
@@ -43,7 +42,8 @@ class NearestNeighbor implements AlgorithmInterface
 			list.remove(nearest);
 			currentPos = nearest;
 		}
-		endTime = System.nanoTime();
+		long endTime = System.nanoTime();
+		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
 	public ArrayList<Integer[]> getPath()
@@ -58,7 +58,7 @@ class NearestNeighbor implements AlgorithmInterface
 
 	@Override
 	public double getRunTime() {
-		return (double)(endTime - startTime) / (1 * Math.pow(10, 6));
+		return timeSpend;
 	}
 
 	@Override
