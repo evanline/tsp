@@ -10,44 +10,40 @@ import java.util.Random;
  */
 
 class GenereerCoordinaten {
-	private int aantal;
 	private ArrayList<Integer[]> lijstCoordinaten = new ArrayList<>();
-	private HashSet<Integer> hashbaar = new HashSet<>();
-	private ArrayList<HashSet> hashes = new ArrayList<>();
 
-	public GenereerCoordinaten() {
-	aantal = Scherm.getAantalArtikelen();
-	int max = 6;
-	if (aantal >  max*max){
-		max = (int) Math.sqrt(aantal) + 1;
-	}
-
+	GenereerCoordinaten()
+	{
+		int aantal = Scherm.getAantalArtikelen();
+		if (aantal <= 0) aantal = 3;
+		int max = 6;
+		if (aantal > Math.pow(max, 2)) max = (int) Math.sqrt(aantal)+1;
 		Boolean dubbelecoordinaat = false;
 
 		while (lijstCoordinaten.size() < aantal) {
+			HashSet<Integer> hashbaar = new HashSet<>();
+
 			Random rand = new Random();
 			Integer x = rand.nextInt(max);
-			x++;
 			Integer y = rand.nextInt(max);
-			y++;
 			hashbaar.add(x);
 			hashbaar.add(y);
 
+
+			ArrayList<HashSet> hashes = new ArrayList<>();
 			for (HashSet h : hashes) {
 				if (hashbaar == h) {
 					dubbelecoordinaat = true;
 				}
 			}
-			if (dubbelecoordinaat == false) {
+			if (!dubbelecoordinaat) {
 				lijstCoordinaten.add(new Integer[] {x,y});
-				System.out.print(x + ", ");
-				System.out.print(y);
-				System.out.println("");
+				hashes.add(hashbaar);
 			}
 		}
 	}
-	public ArrayList<Integer[]> getLijstCoordinaten() {
+
+	ArrayList<Integer[]> getLijstCoordinaten() {
 		return lijstCoordinaten;
 	}
 }
-
