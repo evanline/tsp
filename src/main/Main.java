@@ -17,22 +17,16 @@ public class Main {
 //		XMLReaderDOM.run();
 //
 
-/*		ArrayList<Order> orders;
+		ArrayList<Order> orders;
 		orders = XMLReaderDOM.run();
 		assert orders != null : "No orders found!";
-*/
-		List<Integer> yAs = new ArrayList<Integer>();
-		for (Integer i = 0; i < 40; i++){
+		System.out.println(new NearestNeighbor());
 
+		List<Integer> yAs = new ArrayList<>();
+		for (Integer i = 0; i < 10; i++){
 			yAs.add(i);
 		}
-		System.out.println(yAs.size());
-
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				Graph.createAndShowGui(yAs);
-			}
-		});
+		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
 
 	}
 
