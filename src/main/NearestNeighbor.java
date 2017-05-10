@@ -12,7 +12,7 @@ class NearestNeighbor
 
 	NearestNeighbor()
 	{
-		GenereerCoordinaten coordinaten = new GenereerCoordinaten(10);
+		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
 		Integer[] startPoint = new Integer[]{1, 1};
 
