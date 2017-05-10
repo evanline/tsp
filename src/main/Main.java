@@ -19,6 +19,7 @@ public class Main {
 		assert orders != null : "No orders found!";
 		System.out.println(new NearestNeighbor());
 		System.out.println(new NearestNeighbor().getTotalDistance());
+		System.out.println(new NearestNeighbor().getRunTime());
 
 
 
