@@ -46,6 +46,11 @@ class NearestNeighbor implements AlgorithmInterface
 		endTime = System.nanoTime();
 	}
 
+	public ArrayList<Integer[]> getPath()
+	{
+		return path;
+	}
+
 	@Override
 	public double getTotalDistance() {
 		return totalDistance;
