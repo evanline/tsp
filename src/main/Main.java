@@ -11,11 +11,8 @@ import java.util.List;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Scherm scherm = new Scherm();
 		scherm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//		XMLReaderDOM.run();
-//
 
 		ArrayList<Order> orders;
 		orders = XMLReaderDOM.run();
@@ -26,15 +23,6 @@ public class Main {
 		for (Integer i = 0; i < 10; i++){
 			yAs.add(i);
 		}
-
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					Graph.createAndShowGui(yAs);
-				}
-			});
-
-
+		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
 	}
-
-	
 }
