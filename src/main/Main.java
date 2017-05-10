@@ -27,6 +27,7 @@ public class Main {
 			yAs.add(i);
 		}
 		System.out.println(yAs.size());
+
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Graph.createAndShowGui(yAs);
