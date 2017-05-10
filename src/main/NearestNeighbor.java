@@ -21,8 +21,6 @@ class NearestNeighbor implements AlgorithmInterface
 
 		Integer[] nearest = new Integer[]{0,0};
 		int stuff = list.size();
-
-
 		Integer[] currentPos = startPoint;
 		while (stuff != path.size())
 		{
