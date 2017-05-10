@@ -6,9 +6,10 @@ import java.util.*;
  * Created by: Ian Hildebrand
  * Date: 08-May-17.
  */
-class NearestNeighbor
+class NearestNeighbor implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
+	private double totalDistance;
 
 	NearestNeighbor()
 	{
@@ -35,9 +36,20 @@ class NearestNeighbor
 				}
 			}
 			path.add(nearest);
+			totalDistance += Ndistance;
 			list.remove(nearest);
 			currentPos = nearest;
 		}
+	}
+
+	@Override
+	public double getTotalDistance() {
+		return totalDistance;
+	}
+
+	@Override
+	public double getRunTime() {
+		return 0;
 	}
 
 	@Override

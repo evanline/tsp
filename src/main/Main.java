@@ -18,6 +18,7 @@ public class Main {
 		orders = XMLReaderDOM.run();
 		assert orders != null : "No orders found!";
 		System.out.println(new NearestNeighbor());
+		System.out.println(new NearestNeighbor().getTotalDistance());
 
 		List<Integer> yAs = new ArrayList<>();
 		for (Integer i = 0; i < 10; i++){
