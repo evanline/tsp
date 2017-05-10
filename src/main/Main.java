@@ -14,17 +14,19 @@ public class Main {
 		// TODO Auto-generated method stub
 		Scherm scherm = new Scherm();
 		scherm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		XMLReaderDOM.run();
-		GenereerCoordinaten coordinaat = new GenereerCoordinaten();
+//		XMLReaderDOM.run();
+//		GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 
-		ArrayList<Order> orders;
+/*		ArrayList<Order> orders;
 		orders = XMLReaderDOM.run();
 		assert orders != null : "No orders found!";
-
+*/
 		List<Integer> yAs = new ArrayList<Integer>();
-		for (Integer i = 0; i < 10; i++){
+		for (Integer i = 0; i < 40; i++){
+
 			yAs.add(i);
 		}
+		System.out.println(yAs.size());
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Graph.createAndShowGui(yAs);

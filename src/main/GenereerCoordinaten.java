@@ -23,7 +23,9 @@ class GenereerCoordinaten {
 		while (lijstCoordinaten.size() < aantal) {
 			Random rand = new Random();
 			Integer x = rand.nextInt(6);
+			x++;
 			Integer y = rand.nextInt(6);
+			y++;
 			hashbaar.add(x);
 			hashbaar.add(y);
 
