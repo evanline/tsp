@@ -16,14 +16,13 @@ class GenereerCoordinaten {
 
 	GenereerCoordinaten(int i)
 	{
-		int max = 6;
-		int min = 1;
+		final int max = 6;
 		Boolean dubbelecoordinaat = false;
 
 		while (lijstCoordinaten.size() < i) {
 			Random rand = new Random();
-			Integer x = rand.nextInt(max - min + 1) + min;
-			Integer y = rand.nextInt(max - min + 1) + min;
+			Integer x = rand.nextInt(max);
+			Integer y = rand.nextInt(max);
 			hashbaar.add(x);
 			hashbaar.add(y);
 
