@@ -21,7 +21,7 @@ import javax.swing.*;
  */
 @SuppressWarnings("serial")
 public class Graph  extends JPanel{
-	private int MAX_SCORE = 1; //hoogste getal op de y-as.
+	private double MAX_SCORE = 1; //hoogste getal op de y-as.
 	private static final int PREF_W = 800; //breedte tenzij anders nodig
 	private static final int PREF_H = 650; //hoogte tenzij anders nodig //TODO: maak dit statisch? (ik kijk wel als dit in scherm staat wat handig is)
 	private static final int BORDER_GAP = 30; //nodig bij schaal berekening ed.
@@ -30,11 +30,11 @@ public class Graph  extends JPanel{
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f); //vorm lijn(breedte lijn)
 	private static final int GRAPH_POINT_WIDTH = 12; //grootte punten
 	private static final int Y_HATCH_CNT = 40; //hoeveelheid streepjes op y-as
-	private List<Integer> yAs; //lijst getallen op de y-as
+	private List<Double> yAs; //lijst getallen op de y-as
 
-	public Graph(List<Integer> yAs) {
+	public Graph(List<Double> yAs) {
 		this.yAs = yAs;
-		for (Integer i : yAs){
+		for (double i : yAs){
 			i++;
 			if ( i > MAX_SCORE){
 				MAX_SCORE = i;

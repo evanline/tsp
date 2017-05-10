@@ -171,20 +171,20 @@ public class Scherm extends JFrame implements ActionListener {
 		// combineer de animatieregel en knoppenregel in een panel
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
-		List<Integer> yAs = new ArrayList<>();
-		for (Integer i = 0; i < 10; i++){
-			yAs.add(i);
+		List<Double > pathlengthes = new ArrayList<>();
+		List<Double > tijden = new ArrayList<>();
+		for (int i = 0; i < 10; i++){
+			NearestNeighbor j = new NearestNeighbor();
+
+			pathlengthes.add(j.getTotalDistance());
+			tijden.add(j.getRunTime());
 		}
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
-		Graph mainPanel = new Graph(yAs);
+//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
+		Graph mainPanel = new Graph(pathlengthes);
 		grafiekPNL.add(mainPanel, BorderLayout.WEST);
 
-		List<Integer> yAs2 = new ArrayList<>();
-		for (Integer i = 10; i > 0; i--){
-			yAs2.add(i);
-		}
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(yAs));
-		Graph mainPanel2 = new Graph(yAs2);
+//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
+		Graph mainPanel2 = new Graph(tijden);
 		grafiekPNL.add(mainPanel2, BorderLayout.EAST);
 		grafiekPNL.setBackground(Color.darkGray);
 
