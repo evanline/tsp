@@ -14,6 +14,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		Scherm scherm = new Scherm();
 		scherm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//		XMLReaderDOM.run();
+//
 
 		ArrayList<Order> orders;
 		orders = XMLReaderDOM.run();

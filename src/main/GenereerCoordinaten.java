@@ -16,15 +16,19 @@ class GenereerCoordinaten {
 	private ArrayList<HashSet> hashes = new ArrayList<>();
 
 	public GenereerCoordinaten() {
-//	aantal = Scherm.getAantalArtikelen();
-		aantal = 3;
+	aantal = Scherm.getAantalArtikelen();
+	int max = 6;
+	if (aantal >  max*max){
+		max = (int) Math.sqrt(aantal) + 1;
+	}
+
 		Boolean dubbelecoordinaat = false;
 
 		while (lijstCoordinaten.size() < aantal) {
 			Random rand = new Random();
-			Integer x = rand.nextInt(6);
+			Integer x = rand.nextInt(max);
 			x++;
-			Integer y = rand.nextInt(6);
+			Integer y = rand.nextInt(max);
 			y++;
 			hashbaar.add(x);
 			hashbaar.add(y);
