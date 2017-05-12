@@ -71,6 +71,10 @@ public class Scherm extends JFrame implements ActionListener {
 	private List<Double> tijden2 = new ArrayList<>();
 	private List<Double> tijden3 = new ArrayList<>();
 	private List<Double> tijden4 = new ArrayList<>();
+	Double totaleRekentijd1;
+	Double totaleRekentijd2;
+	Double totaleRekentijd3;
+	Double totaleRekentijd4;
 
 	Graph padlengteGraph;
 	Graph berekentijdGraph;
@@ -318,6 +322,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 							//		pathlengthes1.add(j.getTotalDistance());
 							//		tijden1.add(j.getRunTime());
+							//		totaleRekentijd1 = totaleRekentijd1 + (j.getRunTime());
 							//		} else {
 							//			pathlengthes1.add(0.0);
 							//			tijden1.add(0.0);
@@ -332,6 +337,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 							//		pathlengthes2.add(j.getTotalDistance());
 							//		tijden2.add(j.getRunTime());
+							//		totaleRekentijd2 = totaleRekentijd2 + (j.getRunTime());
 							//		} else {
 							//			pathlengthes2.add(0.0);
 							//			tijden2.add(0.0);
@@ -346,6 +352,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 									pathlengthes3.add(j.getTotalDistance());
 									tijden3.add(j.getRunTime());
+//									totaleRekentijd3 = totaleRekentijd3 + (j.getRunTime()); //TODO
 								} else {
 									pathlengthes3.add(0.0);
 									tijden3.add(0.0);
@@ -360,6 +367,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 							//		pathlengthes4.add(j.getTotalDistance());
 							//		tijden4.add(j.getRunTime());
+							//		totaleRekentijd4 = totaleRekentijd4 + (j.getRunTime());
 							//		} else {
 							//			pathlengthes4.add(0.0);
 							//			tijden4.add(0.0);
