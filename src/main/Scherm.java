@@ -172,7 +172,7 @@ public class Scherm extends JFrame implements ActionListener {
 		aantalPNL.add(aantalSimulatiesTXT);
 
 		knoppenPNL.add(startBTN);
-		knoppenPNL.add(pauzeBTN);
+//		knoppenPNL.add(pauzeBTN);
 		knoppenPNL.add(resetBTN);
 
 		noordPNL.add(grafischemodusBTN, BorderLayout.NORTH);
@@ -348,8 +348,8 @@ public class Scherm extends JFrame implements ActionListener {
 
 					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 
-				} else if (e.getSource() == pauzeBTN) {
-					System.out.println("pauze");
+			//	} else if (e.getSource() == pauzeBTN) {
+			//		System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					for (Checkbox c : algoritmen) {
