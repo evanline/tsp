@@ -25,7 +25,7 @@ public class Scherm extends JFrame implements ActionListener {
 	private JLabel aantalArtikelenlbl;
 	private JLabel aantalSimulatieslbl; //
 	private JLabel padlengte = new JLabel("Padlengte");
-	private JLabel berekentijd = new JLabel("Berekentijd");
+	private JLabel berekentijd = new JLabel("Berekentijd (miliseconden)");
 	private Checkbox bruteForceCKBX;
 	private Checkbox twoOptCKBX;
 	private Checkbox nearestNeighborCKBX;

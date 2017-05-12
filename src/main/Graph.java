@@ -76,6 +76,9 @@ public class Graph  extends JPanel{
 
 		// create hatch marks for y axis.
 		for (int i = 0; i < Y_HATCH_CNT; i++) {
+			if (Y_HATCH_CNT > 100){
+				i = i + 9;
+			}
 			int x0 = BORDER_GAP;
 			int x1 = GRAPH_POINT_WIDTH + BORDER_GAP;
 			int x2 = GRAPH_POINT_WIDTH - (BORDER_GAP/4);
@@ -95,6 +98,12 @@ public class Graph  extends JPanel{
 		// and for x axis
 
 		for (int i = 0; i < yAs.size() - 1; i++) {
+			if (yAs.size() > 10 && yAs.size() < 100){
+				i++;
+			} else if (yAs.size() >100){
+				i = i+9;
+			}
+
 			int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (yAs.size() - 1) + BORDER_GAP;
 			int x1 = x0;
 			int y0 = getHeight() - BORDER_GAP;
