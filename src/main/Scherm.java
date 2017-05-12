@@ -24,6 +24,8 @@ public class Scherm extends JFrame implements ActionListener {
 	private JLabel algoritmeslbl;
 	private JLabel aantalArtikelenlbl;
 	private JLabel aantalSimulatieslbl; //
+	private JLabel padlengte = new JLabel("Padlengte");
+	private JLabel berekentijd = new JLabel("Berekentijd");
 	private Checkbox bruteForceCKBX;
 	private Checkbox twoOptCKBX;
 	private Checkbox nearestNeighborCKBX;
@@ -39,6 +41,8 @@ public class Scherm extends JFrame implements ActionListener {
 	private JPanel totaalPNL = new JPanel(new BorderLayout());
 	private JPanel grafiekPNL = new JPanel(new BorderLayout());
 	private JPanel nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL = new JPanel(new BorderLayout());
+	private JPanel padgrafiekPNL = new JPanel(new BorderLayout());
+	private JPanel tijdgrafiekPNL = new JPanel(new BorderLayout());
 
 	private JButton startBTN;
 	private JButton pauzeBTN;
@@ -178,12 +182,6 @@ public class Scherm extends JFrame implements ActionListener {
 		// combineer de animatieregel en knoppenregel in een panel
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
-
-
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
-
-		grafiekPNL.setBackground(Color.darkGray);
-		grafiekPNL.setBackground(DARK_GRAY);
 
 		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(totaalPNL, BorderLayout.NORTH);
 		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(grafiekPNL, BorderLayout.SOUTH);
@@ -332,11 +330,16 @@ public class Scherm extends JFrame implements ActionListener {
 						}
 					}
 					Graph padlengteGraph = new Graph(pathlengthes);
-					grafiekPNL.add(padlengteGraph, BorderLayout.WEST);
+					padgrafiekPNL.add(padlengte);
+					padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
+
+					grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
 
 //		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
 					Graph berekentijdGraph = new Graph(tijden);
-					grafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
+					tijdgrafiekPNL.add(berekentijd);
+					tijdgrafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
+					grafiekPNL.add(tijdgrafiekPNL, BorderLayout.EAST);
 
 
 					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
@@ -357,6 +360,10 @@ public class Scherm extends JFrame implements ActionListener {
 					grafiekPNL.removeAll();
 					getContentPane().revalidate();
 					getContentPane().repaint();
+					aantalSimulaties = 0;
+					aantalSimulatiesTXT.setText("");
+					aantalArtikelen = 0;
+					aantaArtikelenlTXT.setText("");
 				} else {
 					System.out.println("error: unknown source");
 				}
