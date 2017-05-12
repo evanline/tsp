@@ -45,10 +45,27 @@ public class Graph extends JPanel {
 		this.algoritme2 = algoritme2;
 		this.algoritme3 = algoritme3;
 		this.algoritme3 = algoritme3;
-		alleAlgoritmen.add(algoritme1);
-		alleAlgoritmen.add(algoritme2);
-		alleAlgoritmen.add(algoritme3);
-		alleAlgoritmen.add(algoritme4);
+		System.out.println("checkpoint, Graph constructor");
+		Boolean geenalgoritmen = true;
+		if (!algoritme1.isEmpty()) {
+			alleAlgoritmen.add(algoritme1);
+			geenalgoritmen = false;
+		}
+		if (!algoritme2.isEmpty()) {
+			alleAlgoritmen.add(algoritme2);
+			geenalgoritmen = false;
+		}
+		if (!algoritme3.isEmpty()) {
+			alleAlgoritmen.add(algoritme3);
+			geenalgoritmen = false;
+		}
+		if (!algoritme4.isEmpty()) {
+			alleAlgoritmen.add(algoritme4);
+			geenalgoritmen = false;
+		}
+		if (geenalgoritmen){
+			System.out.println("GEEN ALGORITMEN");
+		}
 		for (List<Double> algoritme : alleAlgoritmen) {
 
 			for (Double i : algoritme) {

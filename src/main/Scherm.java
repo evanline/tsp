@@ -14,8 +14,6 @@ import java.util.Objects;
 
 import javax.swing.*;
 
-import static java.awt.Color.DARK_GRAY;
-
 /**
  * @author sanne
  */
@@ -65,8 +63,14 @@ public class Scherm extends JFrame implements ActionListener {
 	}
 
 	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
-	List<Double> pathlengthes = new ArrayList<>();
-	List<Double> tijden = new ArrayList<>();
+	List<Double> pathlengthes1 = new ArrayList<>();
+	List<Double> pathlengthes2 = new ArrayList<>();
+	List<Double> pathlengthes3 = new ArrayList<>();
+	List<Double> pathlengthes4 = new ArrayList<>();
+	List<Double> tijden1 = new ArrayList<>();
+	List<Double> tijden2 = new ArrayList<>();
+	List<Double> tijden3 = new ArrayList<>();
+	List<Double> tijden4 = new ArrayList<>();
 
 	Graph padlengteGraph;
 	Graph berekentijdGraph;
@@ -301,17 +305,37 @@ public class Scherm extends JFrame implements ActionListener {
 
 					if (bruteForceCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
+						/*
+						for (int i = 0; i < aantalSimulaties + 1; i++) {
+							if (!(i == 0)) {
+								BruteForce j = new BruteForce();
+
+								pathlengthes1.add(j.getTotalDistance());
+								tijden1.add(j.getRunTime());
+							} else {
+								pathlengthes1.add(0.0);
+								tijden1.add(0.0);
+							}
+						}
+						 */
+					}
+					Boolean geenalgoritmen = true;
+					for (Checkbox c : algoritmen) {
+						if (c.getState()) {
+							geenalgoritmen = false;
+							System.out.println("checkpoint geen algoritmen leeg");
+						}
 					}
 					if (twoOptCKBX.getState()) {
 						for (int i = 0; i < aantalSimulaties + 1; i++) {
 							if (!(i == 0)) {
-								NearestNeighbor j = new NearestNeighbor();
+								TwoOpt j = new TwoOpt();
 
-								pathlengthes.add(j.getTotalDistance());
-								tijden.add(j.getRunTime());
+								pathlengthes2.add(j.getTotalDistance());
+								tijden2.add(j.getRunTime());
 							} else {
-								pathlengthes.add(0.0);
-								tijden.add(0.0);
+								pathlengthes2.add(0.0);
+								tijden2.add(0.0);
 							}
 						}
 					}
@@ -320,46 +344,58 @@ public class Scherm extends JFrame implements ActionListener {
 							if (!(i == 0)) {
 								NearestNeighbor j = new NearestNeighbor();
 
-								pathlengthes.add(j.getTotalDistance());
-								tijden.add(j.getRunTime());
+								pathlengthes3.add(j.getTotalDistance());
+								tijden3.add(j.getRunTime());
 							} else {
-								pathlengthes.add(0.0);
-								tijden.add(0.0);
+								pathlengthes3.add(0.0);
+								tijden3.add(0.0);
 							}
 						}
+						System.out.println("checkpoint");
 					}
 					if (eigenAlgoritmeCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
+						/*
+						for (int i = 0; i < aantalSimulaties + 1; i++) {
+							if (!(i == 0)) {
+								EigenAlgoritme j = new EigenAlgoritme();
+
+								pathlengthes4.add(j.getTotalDistance());
+								tijden4.add(j.getRunTime());
+							} else {
+								pathlengthes4.add(0.0);
+								tijden4.add(0.0);
+							}
+						}
+						 */
 					}
+					if (!geenalgoritmen) {
+						for (Checkbox c : algoritmen) {
+							c.setEnabled(false);
+						}
+						aantalSimulatiesTXT.setEnabled(false);
+						aantaArtikelenlTXT.setEnabled(false);
+						grafiekPNL.removeAll();
 
-					for (Checkbox c : algoritmen) {
-						c.setEnabled(false);
+
+						Graph padlengteGraph = new Graph(pathlengthes1, pathlengthes2, pathlengthes3, pathlengthes4);
+						padgrafiekPNL.add(padlengte);
+						padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
+
+						grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
+//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes1));
+						Graph berekentijdGraph = new Graph(tijden1, tijden2, tijden3, tijden4);
+						tijdgrafiekPNL.add(berekentijd);
+						tijdgrafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
+						grafiekPNL.add(tijdgrafiekPNL, BorderLayout.EAST);
+
+
+						getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
+						getContentPane().revalidate();
+						getContentPane().repaint();
+
+						getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 					}
-					aantalSimulatiesTXT.setEnabled(false);
-					aantaArtikelenlTXT.setEnabled(false);
-					grafiekPNL.removeAll();
-
-
-
-
-					Graph padlengteGraph = new Graph(pathlengthes);
-					padgrafiekPNL.add(padlengte);
-					padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
-
-					grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
-					Graph berekentijdGraph = new Graph(tijden);
-					tijdgrafiekPNL.add(berekentijd);
-					tijdgrafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
-					grafiekPNL.add(tijdgrafiekPNL, BorderLayout.EAST);
-
-
-					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
-					getContentPane().revalidate();
-					getContentPane().repaint();
-
-					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
-
 					//	} else if (e.getSource() == pauzeBTN) {
 					//		System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
