@@ -70,6 +70,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 	Graph padlengteGraph;
 	Graph berekentijdGraph;
+	Double totaleBerekentijd;
 
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
@@ -80,7 +81,7 @@ public class Scherm extends JFrame implements ActionListener {
 		// standaard noodzakelijke instellingen
 
 		algoritmeslbl = new JLabel("Algoritmes");
-		aantalArtikelenlbl = new JLabel("Aantal");
+		aantalArtikelenlbl = new JLabel("Aantal Artikelen");
 		aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 		// maak labels
 		bruteForceCKBX = new Checkbox("Brute Force");
@@ -317,6 +318,12 @@ public class Scherm extends JFrame implements ActionListener {
 					aantalSimulatiesTXT.setEnabled(false);
 					aantaArtikelenlTXT.setEnabled(false);
 					grafiekPNL.removeAll();
+					grafiekPNL.add( ); // TODO gif plaatje hier
+
+					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
+					getContentPane().revalidate();
+					getContentPane().repaint();
+					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 
 					for (int i = 0; i < aantalSimulaties + 1; i++) {
 						if (!(i == 0)) {
@@ -329,12 +336,12 @@ public class Scherm extends JFrame implements ActionListener {
 							tijden.add(0.0);
 						}
 					}
+					grafiekPNL.removeAll();
 					Graph padlengteGraph = new Graph(pathlengthes);
 					padgrafiekPNL.add(padlengte);
 					padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
 
 					grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
-
 //		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
 					Graph berekentijdGraph = new Graph(tijden);
 					tijdgrafiekPNL.add(berekentijd);
