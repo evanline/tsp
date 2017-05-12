@@ -14,6 +14,8 @@ import java.util.Objects;
 
 import javax.swing.*;
 
+import static java.awt.Color.DARK_GRAY;
+
 /**
  * @author sanne
  *
@@ -60,7 +62,11 @@ public class Scherm extends JFrame implements ActionListener {
 	}
 
 	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
+	List<Double > pathlengthes = new ArrayList<>();
+	List<Double > tijden = new ArrayList<>();
 
+	Graph padlengteGraph;
+	Graph berekentijdGraph;
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -172,22 +178,12 @@ public class Scherm extends JFrame implements ActionListener {
 		// combineer de animatieregel en knoppenregel in een panel
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
-		List<Double > pathlengthes = new ArrayList<>();
-		List<Double > tijden = new ArrayList<>();
-		for (int i = 0; i < 10; i++){
-			NearestNeighbor j = new NearestNeighbor();
 
-			pathlengthes.add(j.getTotalDistance());
-			tijden.add(j.getRunTime());
-		}
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
-		Graph mainPanel = new Graph(pathlengthes);
-		grafiekPNL.add(mainPanel, BorderLayout.WEST);
 
 //		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
-		Graph mainPanel2 = new Graph(tijden);
-		grafiekPNL.add(mainPanel2, BorderLayout.EAST);
+
 		grafiekPNL.setBackground(Color.darkGray);
+		grafiekPNL.setBackground(DARK_GRAY);
 
 		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(totaalPNL, BorderLayout.NORTH);
 		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(grafiekPNL, BorderLayout.SOUTH);
@@ -204,6 +200,7 @@ public class Scherm extends JFrame implements ActionListener {
 		zuidPNL.removeAll();
 		totaalPNL.removeAll();
 		algoritmenArrayList.clear();
+		grafiekPNL.removeAll();
 	}
 
 	@Override
@@ -283,10 +280,12 @@ public class Scherm extends JFrame implements ActionListener {
 					  String aantal = aantaArtikelenlTXT.getText();
 					  aantalArtikelen = 0; try { aantalArtikelen = Integer.parseInt(aantal); } catch (NumberFormatException e1) { aantaArtikelenlTXT.setText(""); }
 					  System.out.println(aantalArtikelen);
+
 					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 					  String aantalSimul = aantalSimulatiesTXT.getText();
 					  aantalSimulaties = 0; try { aantalSimulaties = Integer.parseInt(aantalSimul); } catch (NumberFormatException e1) { aantalSimulatiesTXT.setText("");}
 					System.out.println(aantalSimulaties);
+
 
 					if (bruteForceCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
@@ -304,6 +303,30 @@ public class Scherm extends JFrame implements ActionListener {
 					  for (Checkbox c:algoritmen) {
 						c.setEnabled(false);
 					}
+					aantalSimulatiesTXT.setEnabled(false);
+					aantaArtikelenlTXT.setEnabled(false);
+					grafiekPNL.removeAll();
+
+					for (int i = 0; i < aantalSimulaties; i++){
+						NearestNeighbor j = new NearestNeighbor();
+
+						pathlengthes.add(j.getTotalDistance());
+						tijden.add(j.getRunTime());
+					}
+					Graph padlengteGraph = new Graph(pathlengthes);
+					grafiekPNL.add(padlengteGraph, BorderLayout.WEST);
+
+//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
+					Graph berekentijdGraph = new Graph(tijden);
+					grafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
+
+
+					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
+					getContentPane().revalidate();
+					getContentPane().repaint();
+
+					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
+
 				} else if (e.getSource() == pauzeBTN) {
 					System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
@@ -311,6 +334,11 @@ public class Scherm extends JFrame implements ActionListener {
 					for (Checkbox c:algoritmen) {
 						c.setEnabled(true);
 					}
+					aantalSimulatiesTXT.setEnabled(true);
+					aantaArtikelenlTXT.setEnabled(true);
+					grafiekPNL.removeAll();
+					getContentPane().revalidate();
+					getContentPane().repaint();
 				} else {
 					System.out.println("error: unknown source");
 				}
