@@ -84,7 +84,7 @@ public class Scherm extends JFrame implements ActionListener {
 		// standaard noodzakelijke instellingen
 
 		algoritmeslbl = new JLabel("Algoritmes");
-		aantalArtikelenlbl = new JLabel("Aantal");
+		aantalArtikelenlbl = new JLabel("Aantal Artikelen");
 		aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 		// maak labels
 		bruteForceCKBX = new Checkbox("Brute Force");
