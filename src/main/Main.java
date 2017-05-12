@@ -12,8 +12,9 @@ public class Main {
 		Scherm scherm = new Scherm();
 		scherm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		ArrayList<Order> orders;
-		orders = XMLReaderDOM.run();
-		assert orders != null : "No orders found!";
+		ArrayList<Order> orderList;
+		XMLReaderDOM orders1 = new XMLReaderDOM("src/main/bestelling.xml");
+		XMLReaderDOM orders2 = new XMLReaderDOM();
+		orderList = orders1.getOrderList();
 	}
 }

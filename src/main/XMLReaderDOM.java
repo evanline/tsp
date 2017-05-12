@@ -22,14 +22,25 @@ import org.xml.sax.SAXException;
 
 class XMLReaderDOM
 {
+	private ArrayList<Order> orderList = new ArrayList<>();
+
 	/**
-	 * Starts the xml convertion.
+	 * will run XMLReaderDOM with "src/main/bestelling.xml" as path.
 	 */
-	static ArrayList<Order> run()
+	XMLReaderDOM()
+	{
+		this("src/main/bestelling.xml");
+	}
+
+	/**
+	 * this will read the XML file
+	 * @param pathToFile
+	 * The path to the file it needs to read.
+	 */
+	XMLReaderDOM(String pathToFile)
 	{
 		// file path to the xml file
-		String filePath = "src/main/bestelling.xml";
-		File xmlFile = new File(filePath);
+		File xmlFile = new File(pathToFile);
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dbuilder;
@@ -52,13 +63,21 @@ class XMLReaderDOM
 
 			ArrayList <Order> orders = new ArrayList<>();
 			orders.addAll(orderList);
-			return orders;
+			this.orderList = orders;
 		}
 		catch (SAXException | ParserConfigurationException | IOException e1)
 		{
 			e1.printStackTrace();
 		}
-		return null;
+	}
+
+	/**
+	 * This returns the information that was in the XML file.
+	 * @return ArrayList<Order>
+	 * A list with all information that was in the XML file.
+	 */
+	ArrayList<Order> getOrderList() {
+		return orderList;
 	}
 
 	/**
