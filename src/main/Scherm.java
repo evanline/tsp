@@ -8,6 +8,8 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -318,7 +320,8 @@ public class Scherm extends JFrame implements ActionListener {
 					aantalSimulatiesTXT.setEnabled(false);
 					aantaArtikelenlTXT.setEnabled(false);
 					grafiekPNL.removeAll();
-					grafiekPNL.add( ); // TODO gif plaatje hier
+
+
 
 					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 					getContentPane().revalidate();
