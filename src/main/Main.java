@@ -16,5 +16,7 @@ public class Main {
 		XMLReaderDOM orders1 = new XMLReaderDOM("src/main/bestelling.xml");
 		XMLReaderDOM orders2 = new XMLReaderDOM();
 		orderList = orders1.getOrderList();
+
+		System.out.println(new TwoOpt());
 	}
 }

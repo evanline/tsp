@@ -17,12 +17,9 @@ class NearestNeighbor implements AlgorithmInterface
 		long startTime = System.nanoTime();
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
-		Integer[] startPoint = new Integer[]{0, 0};
-
 		Integer[] nearest = new Integer[]{0,0};
-		int stuff = list.size();
-		Integer[] currentPos = startPoint;
-		while (stuff != path.size())
+		Integer[] currentPos = new Integer[]{0, 0};
+		while (list.size() != path.size())
 		{
 			double Ndistance = -1;
 
