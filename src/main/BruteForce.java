@@ -17,11 +17,25 @@ public class BruteForce implements AlgorithmInterface
 		long startTime = System.nanoTime();
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
-		int maxOptions = list.size();
+		long maxOptions = factorial(list.size());
+
+		while (path.size() < maxOptions)
+		{
+
+		}
 
 
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
+	}
+
+	public static long factorial(int N)
+	{
+		long multi = 1;
+		for (int i = 1; i <= N; i++) {
+			multi = multi * i;
+		}
+		return multi;
 	}
 
 	@Override
