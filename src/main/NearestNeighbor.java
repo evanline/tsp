@@ -29,6 +29,7 @@ class NearestNeighbor implements AlgorithmInterface
 			for (Integer[] i : list)
 			{
 				double dist = Math.sqrt((Math.pow((Math.abs(i[0] - currentPos[0]) ), 2) + Math.pow(Math.abs(i[1] - currentPos[1]), 2)));
+				// √((|x - y|)² + (|a - i|)²)
 				if (dist < Ndistance || Ndistance == -1)
 				{
 					Ndistance = dist;
