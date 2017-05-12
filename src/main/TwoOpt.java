@@ -13,7 +13,7 @@ public class TwoOpt implements AlgorithmInterface
 	private double totalDistance;
 	private double timeSpend;
 
-	public TwoOpt() {
+	TwoOpt() {
 		long startTime = System.nanoTime();
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
