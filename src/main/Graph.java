@@ -29,7 +29,7 @@ public class Graph  extends JPanel{
 	private static final Color GRAPH_POINT_COLOR = new Color(65, 7, 9, 180); //kleur punten
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f); //vorm lijn(breedte lijn)
 	private static final int GRAPH_POINT_WIDTH = 12; //grootte punten
-	private static final int Y_HATCH_CNT = 40; //hoeveelheid streepjes op y-as
+	private Double Y_HATCH_CNT = 40.00; //hoeveelheid streepjes op y-as
 	private List<Double> yAs; //lijst getallen op de y-as
 
 	public Graph(List<Double> yAs) {
@@ -39,6 +39,11 @@ public class Graph  extends JPanel{
 			if ( i > MAX_SCORE){
 				MAX_SCORE = i;
 			}
+		}
+		if (MAX_SCORE > 6) {
+			Y_HATCH_CNT = (MAX_SCORE / 2);
+		} else {
+			Y_HATCH_CNT = 5.0;
 		}
 	}
 
@@ -65,7 +70,7 @@ public class Graph  extends JPanel{
 		}
 
 
-		// create x and y axes //todo: zorg ervoor dat alle punten erop komen, ook 0.
+		// create x and y axes
 		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);	//y-as
 		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);  //x-as
 
@@ -73,10 +78,19 @@ public class Graph  extends JPanel{
 		for (int i = 0; i < Y_HATCH_CNT; i++) {
 			int x0 = BORDER_GAP;
 			int x1 = GRAPH_POINT_WIDTH + BORDER_GAP;
-			int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
+			int x2 = GRAPH_POINT_WIDTH - (BORDER_GAP/4);
+			int y0 = (int) (getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP));
 			int y1 = y0;
 			g2.drawLine(x0, y0, x1, y1);
+
+			String i1 = Integer.toString((int) ((i+1) * (MAX_SCORE/Y_HATCH_CNT)));
+			g2.drawString(i1, x2, y0);
 		}
+		/*
+		int b = getHeight() - (BORDER_GAP/4);
+		int a = (getWidth() - BORDER_GAP*2) / (9+BORDER_GAP);
+		g2.drawString("    Simulatie:", a, b);
+		 */
 
 		// and for x axis
 
