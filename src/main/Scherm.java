@@ -70,6 +70,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 	Graph padlengteGraph;
 	Graph berekentijdGraph;
+	Double totaleBerekentijd;
 
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
@@ -80,7 +81,7 @@ public class Scherm extends JFrame implements ActionListener {
 		// standaard noodzakelijke instellingen
 
 		algoritmeslbl = new JLabel("Algoritmes");
-		aantalArtikelenlbl = new JLabel("Aantal");
+		aantalArtikelenlbl = new JLabel("Aantal Artikelen");
 		aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 		// maak labels
 		bruteForceCKBX = new Checkbox("Brute Force");
@@ -302,10 +303,30 @@ public class Scherm extends JFrame implements ActionListener {
 						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
 					}
 					if (twoOptCKBX.getState()) {
-						algoritmenArrayList.add(Algoritmenenum.TWOOPT);
+						for (int i = 0; i < aantalSimulaties + 1; i++) {
+							if (!(i == 0)) {
+								NearestNeighbor j = new NearestNeighbor();
+
+								pathlengthes.add(j.getTotalDistance());
+								tijden.add(j.getRunTime());
+							} else {
+								pathlengthes.add(0.0);
+								tijden.add(0.0);
+							}
+						}
 					}
 					if (nearestNeighborCKBX.getState()) {
-						algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
+						for (int i = 0; i < aantalSimulaties + 1; i++) {
+							if (!(i == 0)) {
+								NearestNeighbor j = new NearestNeighbor();
+
+								pathlengthes.add(j.getTotalDistance());
+								tijden.add(j.getRunTime());
+							} else {
+								pathlengthes.add(0.0);
+								tijden.add(0.0);
+							}
+						}
 					}
 					if (eigenAlgoritmeCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
@@ -318,23 +339,14 @@ public class Scherm extends JFrame implements ActionListener {
 					aantaArtikelenlTXT.setEnabled(false);
 					grafiekPNL.removeAll();
 
-					for (int i = 0; i < aantalSimulaties + 1; i++) {
-						if (!(i == 0)) {
-							NearestNeighbor j = new NearestNeighbor();
 
-							pathlengthes.add(j.getTotalDistance());
-							tijden.add(j.getRunTime());
-						} else {
-							pathlengthes.add(0.0);
-							tijden.add(0.0);
-						}
-					}
+
+
 					Graph padlengteGraph = new Graph(pathlengthes);
 					padgrafiekPNL.add(padlengte);
 					padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
 
 					grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
-
 //		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
 					Graph berekentijdGraph = new Graph(tijden);
 					tijdgrafiekPNL.add(berekentijd);
@@ -348,8 +360,8 @@ public class Scherm extends JFrame implements ActionListener {
 
 					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 
-			//	} else if (e.getSource() == pauzeBTN) {
-			//		System.out.println("pauze");
+					//	} else if (e.getSource() == pauzeBTN) {
+					//		System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					for (Checkbox c : algoritmen) {
