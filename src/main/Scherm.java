@@ -18,7 +18,6 @@ import static java.awt.Color.DARK_GRAY;
 
 /**
  * @author sanne
- *
  */
 public class Scherm extends JFrame implements ActionListener {
 
@@ -45,7 +44,7 @@ public class Scherm extends JFrame implements ActionListener {
 	private JButton pauzeBTN;
 	private JButton resetBTN;
 	private JButton volgendeBTN; //
-	private	JButton vorigeBTN; //
+	private JButton vorigeBTN; //
 	private JButton grafischemodusBTN;
 
 	private JButton simulatiemodusBTN; //
@@ -62,11 +61,12 @@ public class Scherm extends JFrame implements ActionListener {
 	}
 
 	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
-	List<Double > pathlengthes = new ArrayList<>();
-	List<Double > tijden = new ArrayList<>();
+	List<Double> pathlengthes = new ArrayList<>();
+	List<Double> tijden = new ArrayList<>();
 
 	Graph padlengteGraph;
 	Graph berekentijdGraph;
+
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -125,7 +125,7 @@ public class Scherm extends JFrame implements ActionListener {
 		System.out.println("graphic screen");
 		grafisch = true;
 
-		for (Checkbox c:algoritmen) {
+		for (Checkbox c : algoritmen) {
 			algoritmesPNL.add(c);
 		}
 
@@ -158,7 +158,7 @@ public class Scherm extends JFrame implements ActionListener {
 		setTitle("Algoritmes voor TSP (Simulatie modus)");
 		System.out.println("simulatie scherm");
 		grafisch = false;
-		for (Checkbox c:algoritmen) {
+		for (Checkbox c : algoritmen) {
 			algoritmesPNL.add(c);
 		}
 
@@ -252,19 +252,22 @@ public class Scherm extends JFrame implements ActionListener {
 						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
 					}
 
-					for (Checkbox c:algoritmen) {
+					for (Checkbox c : algoritmen) {
 						c.setEnabled(false);
 					}
 
 
-/*volgende*/	} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
+/*volgende*/
+				} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
 					System.out.println("volgende");
-/*vorige*/		} else if (e.getSource() == vorigeBTN) {
+/*vorige*/
+				} else if (e.getSource() == vorigeBTN) {
 					System.out.println("vorige");
-/*reset*/		} else if (e.getSource() == resetBTN) {
+/*reset*/
+				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					volgendeBTN.setText("Start");
-					for (Checkbox c:algoritmen) {
+					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
 					aantaArtikelenlTXT.setText("");
@@ -277,13 +280,23 @@ public class Scherm extends JFrame implements ActionListener {
 				if (e.getSource() == startBTN) {
 					System.out.println("start");
 
-					  String aantal = aantaArtikelenlTXT.getText();
-					  aantalArtikelen = 0; try { aantalArtikelen = Integer.parseInt(aantal); } catch (NumberFormatException e1) { aantaArtikelenlTXT.setText(""); }
-					  System.out.println(aantalArtikelen);
+					String aantal = aantaArtikelenlTXT.getText();
+					aantalArtikelen = 0;
+					try {
+						aantalArtikelen = Integer.parseInt(aantal);
+					} catch (NumberFormatException e1) {
+						aantaArtikelenlTXT.setText("");
+					}
+					System.out.println(aantalArtikelen);
 
 					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
-					  String aantalSimul = aantalSimulatiesTXT.getText();
-					  aantalSimulaties = 0; try { aantalSimulaties = Integer.parseInt(aantalSimul); } catch (NumberFormatException e1) { aantalSimulatiesTXT.setText("");}
+					String aantalSimul = aantalSimulatiesTXT.getText();
+					aantalSimulaties = 0;
+					try {
+						aantalSimulaties = Integer.parseInt(aantalSimul);
+					} catch (NumberFormatException e1) {
+						aantalSimulatiesTXT.setText("");
+					}
 					System.out.println(aantalSimulaties);
 
 
@@ -300,18 +313,23 @@ public class Scherm extends JFrame implements ActionListener {
 						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
 					}
 
-					  for (Checkbox c:algoritmen) {
+					for (Checkbox c : algoritmen) {
 						c.setEnabled(false);
 					}
 					aantalSimulatiesTXT.setEnabled(false);
 					aantaArtikelenlTXT.setEnabled(false);
 					grafiekPNL.removeAll();
 
-					for (int i = 0; i < aantalSimulaties; i++){
-						NearestNeighbor j = new NearestNeighbor();
+					for (int i = 0; i < aantalSimulaties + 1; i++) {
+						if (!(i == 0)) {
+							NearestNeighbor j = new NearestNeighbor();
 
-						pathlengthes.add(j.getTotalDistance());
-						tijden.add(j.getRunTime());
+							pathlengthes.add(j.getTotalDistance());
+							tijden.add(j.getRunTime());
+						} else {
+							pathlengthes.add(0.0);
+							tijden.add(0.0);
+						}
 					}
 					Graph padlengteGraph = new Graph(pathlengthes);
 					grafiekPNL.add(padlengteGraph, BorderLayout.WEST);
@@ -331,7 +349,7 @@ public class Scherm extends JFrame implements ActionListener {
 					System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
-					for (Checkbox c:algoritmen) {
+					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
 					aantalSimulatiesTXT.setEnabled(true);
@@ -353,6 +371,7 @@ public class Scherm extends JFrame implements ActionListener {
 	public int getAantalSimulaties() {
 		return aantalSimulaties;
 	}
+
 	public static int getAantalArtikelen() {
 		return aantalArtikelen;
 	}

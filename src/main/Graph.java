@@ -58,9 +58,10 @@ public class Graph  extends JPanel{
 		//maak een lijst punten voor op de grafiek
 		List<Point> graphPoints = new ArrayList<>();//TODO: zorgen dat x niet bij 0 maar 1 begint
 		for (int i = 0; i < yAs.size(); i++) {
+			if(!(i==0)){
 			int x1 = (int) (i * xScale + BORDER_GAP);
 			int y1 = (int) ((MAX_SCORE - yAs.get(i)) * yScale + BORDER_GAP);
-			graphPoints.add(new Point(x1, y1));
+			graphPoints.add(new Point(x1, y1));}
 		}
 
 
@@ -90,7 +91,7 @@ public class Graph  extends JPanel{
 			String i1 = Integer.toString(i+1);
 			g2.drawString(i1, x0, y2);
 		}
-		int b = getHeight() - (BORDER_GAP/2);
+		int b = getHeight() - (BORDER_GAP/4);
 		int a = (getWidth() - BORDER_GAP*2) / (9+BORDER_GAP);
 		g2.drawString("    Simulatie:", a, b);
 
