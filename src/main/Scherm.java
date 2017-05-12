@@ -8,8 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -72,7 +70,6 @@ public class Scherm extends JFrame implements ActionListener {
 
 	Graph padlengteGraph;
 	Graph berekentijdGraph;
-	Double totaleBerekentijd;
 
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
@@ -83,7 +80,7 @@ public class Scherm extends JFrame implements ActionListener {
 		// standaard noodzakelijke instellingen
 
 		algoritmeslbl = new JLabel("Algoritmes");
-		aantalArtikelenlbl = new JLabel("Aantal Artikelen");
+		aantalArtikelenlbl = new JLabel("Aantal");
 		aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 		// maak labels
 		bruteForceCKBX = new Checkbox("Brute Force");
@@ -321,13 +318,6 @@ public class Scherm extends JFrame implements ActionListener {
 					aantaArtikelenlTXT.setEnabled(false);
 					grafiekPNL.removeAll();
 
-
-
-					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
-					getContentPane().revalidate();
-					getContentPane().repaint();
-					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
-
 					for (int i = 0; i < aantalSimulaties + 1; i++) {
 						if (!(i == 0)) {
 							NearestNeighbor j = new NearestNeighbor();
@@ -339,12 +329,12 @@ public class Scherm extends JFrame implements ActionListener {
 							tijden.add(0.0);
 						}
 					}
-					grafiekPNL.removeAll();
 					Graph padlengteGraph = new Graph(pathlengthes);
 					padgrafiekPNL.add(padlengte);
 					padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
 
 					grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
+
 //		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes));
 					Graph berekentijdGraph = new Graph(tijden);
 					tijdgrafiekPNL.add(berekentijd);
