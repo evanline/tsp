@@ -56,7 +56,7 @@ public class Graph  extends JPanel{
 		double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_SCORE);
 
 		//maak een lijst punten voor op de grafiek
-		List<Point> graphPoints = new ArrayList<>();
+		List<Point> graphPoints = new ArrayList<>();//TODO: zorgen dat x niet bij 0 maar 1 begint
 		for (int i = 0; i < yAs.size(); i++) {
 			int x1 = (int) (i * xScale + BORDER_GAP);
 			int y1 = (int) ((MAX_SCORE - yAs.get(i)) * yScale + BORDER_GAP);
@@ -78,13 +78,21 @@ public class Graph  extends JPanel{
 		}
 
 		// and for x axis
+
 		for (int i = 0; i < yAs.size() - 1; i++) {
 			int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (yAs.size() - 1) + BORDER_GAP;
 			int x1 = x0;
 			int y0 = getHeight() - BORDER_GAP;
 			int y1 = y0 - GRAPH_POINT_WIDTH;
+			int y2 = y0 + (GRAPH_POINT_WIDTH);
 			g2.drawLine(x0, y0, x1, y1);
+
+			String i1 = Integer.toString(i+1);
+			g2.drawString(i1, x0, y2);
 		}
+		int b = getHeight() - (BORDER_GAP/2);
+		int a = (getWidth() - BORDER_GAP*2) / (9+BORDER_GAP);
+		g2.drawString("    Simulatie:", a, b);
 
 		//teken de lijnen
 		Stroke oldStroke = g2.getStroke();
