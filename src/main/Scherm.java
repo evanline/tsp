@@ -14,8 +14,8 @@ import java.util.Objects;
 
 import javax.swing.*;
 
-/**
- * @author sanne
+/*
+ * Created by: Sanne Klaassen
  */
 public class Scherm extends JFrame implements ActionListener {
 
@@ -257,8 +257,6 @@ public class Scherm extends JFrame implements ActionListener {
 					for (Checkbox c : algoritmen) {
 						c.setEnabled(false);
 					}
-
-
 /*volgende*/
 				} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
 					System.out.println("volgende");
@@ -288,7 +286,6 @@ public class Scherm extends JFrame implements ActionListener {
 						if (c.getState()) {
 							geenAlgoritme = false;
 						}
-
 					}
 					if (!geenAlgoritme) {
 						String aantal = aantaArtikelenlTXT.getText();
@@ -329,20 +326,20 @@ public class Scherm extends JFrame implements ActionListener {
 						}
 						if (twoOptCKBX.getState()) {
 							algoritmenArrayList.add(Algoritmenenum.TWOOPT);
-						//	for (int i = 0; i < aantalSimulaties + 1; i++) {
+							//	for (int i = 0; i < aantalSimulaties + 1; i++) {
 							//	if (!(i == 0)) {
 							//		TwoOpt j = new TwoOpt();
 
 							//		pathlengthes2.add(j.getTotalDistance());
 							//		tijden2.add(j.getRunTime());
-						//		} else {
-						//			pathlengthes2.add(0.0);
-						//			tijden2.add(0.0);
-						//		}
-						//	}
+							//		} else {
+							//			pathlengthes2.add(0.0);
+							//			tijden2.add(0.0);
+							//		}
+							//	}
 						}
 						if (nearestNeighborCKBX.getState()) {
-						//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
+							//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
 									NearestNeighbor j = new NearestNeighbor();
@@ -369,8 +366,6 @@ public class Scherm extends JFrame implements ActionListener {
 							//		}
 							//	}
 						}
-//
-
 
 						Graph padlengteGraph = new Graph(pathlengthes1, pathlengthes2, pathlengthes3, pathlengthes4);
 						padgrafiekPNL.add(padlengte);

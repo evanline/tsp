@@ -19,7 +19,6 @@ import javax.swing.*;
  * basis voor code gecopieerd van: (TODO: in verslag)
  * http://stackoverflow.com/questions/8693342/drawing-a-simple-line-graph-in-java
  */
-@SuppressWarnings("serial")
 public class Graph extends JPanel {
 	private double MAX_SCORE = 1; //hoogste getal op de y-as.
 	private static final int PREF_W = 800; //breedte tenzij anders nodig
@@ -58,7 +57,7 @@ public class Graph extends JPanel {
 		int size2 = 1;
 		if (algoritme2.isEmpty()) {
 			algoritme2.add(0.0);
-		}  else {
+		} else {
 			size2 = algoritme2.size();
 		}
 		for (double i : algoritme2) {
@@ -102,6 +101,7 @@ public class Graph extends JPanel {
 	}
 
 	private Graphics2D g2;
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		//idk, ziet er noodzakelijk uit.
@@ -188,7 +188,7 @@ public class Graph extends JPanel {
 
 	private List<Point> maakGrafiekpunten(List<Double> a) {
 		List<Point> graphPoints = new ArrayList<>();
-			for (int i = 0; i < a.size(); i++) {
+		for (int i = 0; i < a.size(); i++) {
 			if (!(i == 0)) {
 				int x1 = (int) (i * xScale + BORDER_GAP);
 				int y1 = (int) ((MAX_SCORE - a.get(i)) * yScale + BORDER_GAP);
@@ -197,7 +197,8 @@ public class Graph extends JPanel {
 		}
 		return graphPoints;
 	}
-	private void tekenlijn(List<Point> graphPoints ){
+
+	private void tekenlijn(List<Point> graphPoints) {
 		for (int i = 0; i < graphPoints.size() - 1; i++) {
 			int x1 = graphPoints.get(i).x;
 			int y1 = graphPoints.get(i).y;
@@ -206,7 +207,8 @@ public class Graph extends JPanel {
 			g2.drawLine(x1, y1, x2, y2);
 		}
 	}
-	private void tekenpunten(List<Point> graphPoints){
+
+	private void tekenpunten(List<Point> graphPoints) {
 		for (Point graphPoint : graphPoints) {
 			int x = graphPoint.x - GRAPH_POINT_WIDTH / 2;
 			int y = graphPoint.y - GRAPH_POINT_WIDTH / 2;
