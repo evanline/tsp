@@ -8,8 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -305,10 +303,30 @@ public class Scherm extends JFrame implements ActionListener {
 						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
 					}
 					if (twoOptCKBX.getState()) {
-						algoritmenArrayList.add(Algoritmenenum.TWOOPT);
+						for (int i = 0; i < aantalSimulaties + 1; i++) {
+							if (!(i == 0)) {
+								NearestNeighbor j = new NearestNeighbor();
+
+								pathlengthes.add(j.getTotalDistance());
+								tijden.add(j.getRunTime());
+							} else {
+								pathlengthes.add(0.0);
+								tijden.add(0.0);
+							}
+						}
 					}
 					if (nearestNeighborCKBX.getState()) {
-						algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
+						for (int i = 0; i < aantalSimulaties + 1; i++) {
+							if (!(i == 0)) {
+								NearestNeighbor j = new NearestNeighbor();
+
+								pathlengthes.add(j.getTotalDistance());
+								tijden.add(j.getRunTime());
+							} else {
+								pathlengthes.add(0.0);
+								tijden.add(0.0);
+							}
+						}
 					}
 					if (eigenAlgoritmeCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.EIGENALG);
@@ -323,23 +341,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 
 
-					getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
-					getContentPane().revalidate();
-					getContentPane().repaint();
-					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 
-					for (int i = 0; i < aantalSimulaties + 1; i++) {
-						if (!(i == 0)) {
-							NearestNeighbor j = new NearestNeighbor();
-
-							pathlengthes.add(j.getTotalDistance());
-							tijden.add(j.getRunTime());
-						} else {
-							pathlengthes.add(0.0);
-							tijden.add(0.0);
-						}
-					}
-					grafiekPNL.removeAll();
 					Graph padlengteGraph = new Graph(pathlengthes);
 					padgrafiekPNL.add(padlengte);
 					padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
@@ -358,8 +360,8 @@ public class Scherm extends JFrame implements ActionListener {
 
 					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 
-			//	} else if (e.getSource() == pauzeBTN) {
-			//		System.out.println("pauze");
+					//	} else if (e.getSource() == pauzeBTN) {
+					//		System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					for (Checkbox c : algoritmen) {
