@@ -348,8 +348,8 @@ public class Scherm extends JFrame implements ActionListener {
 
 					getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 
-					//	} else if (e.getSource() == pauzeBTN) {
-					//		System.out.println("pauze");
+			//	} else if (e.getSource() == pauzeBTN) {
+			//		System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					for (Checkbox c : algoritmen) {
