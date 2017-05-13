@@ -1,29 +1,24 @@
 
 package main;
 
-import java.awt.BorderLayout;
-import java.awt.Checkbox;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.TextField;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import javax.swing.*;
-
 /*
  * Created by: Sanne Klaassen
  */
 public class Scherm extends JFrame implements ActionListener {
 
-	private JLabel algoritmeslbl;
 	private JLabel aantalArtikelenlbl;
 	private JLabel aantalSimulatieslbl; //
 	private JLabel padlengte = new JLabel("Padlengte");
 	private JLabel berekentijd = new JLabel("Berekentijd (miliseconden)");
+	private JLabel legenda = new JLabel("Legenda: ");
 	private Checkbox bruteForceCKBX;
 	private Checkbox twoOptCKBX;
 	private Checkbox nearestNeighborCKBX;
@@ -31,16 +26,18 @@ public class Scherm extends JFrame implements ActionListener {
 	private TextField aantaArtikelenlTXT;
 	private TextField aantalSimulatiesTXT; //
 
-	private JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	private JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	private JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	private JPanel algoritmesPNL = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel aantalPNL = new JPanel(new FlowLayout(FlowLayout.CENTER));
+	private JPanel knoppenPNL = new JPanel(new FlowLayout(FlowLayout.CENTER));
 	private JPanel noordPNL = new JPanel(new BorderLayout());
 	private JPanel zuidPNL = new JPanel(new BorderLayout());
 	private JPanel totaalPNL = new JPanel(new BorderLayout());
 	private JPanel grafiekPNL = new JPanel(new BorderLayout());
-	private JPanel nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL = new JPanel(new BorderLayout());
 	private JPanel padgrafiekPNL = new JPanel(new BorderLayout());
 	private JPanel tijdgrafiekPNL = new JPanel(new BorderLayout());
+	private JPanel legendaPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	private JPanel nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL = new JPanel(new BorderLayout());
+	private JPanel ditIsEchtDeLaatstePanelPNL = new JPanel(new BorderLayout());
 
 	private JButton startBTN;
 	private JButton pauzeBTN;
@@ -71,13 +68,13 @@ public class Scherm extends JFrame implements ActionListener {
 	private List<Double> tijden2 = new ArrayList<>();
 	private List<Double> tijden3 = new ArrayList<>();
 	private List<Double> tijden4 = new ArrayList<>();
-	Double totaleRekentijd1;
-	Double totaleRekentijd2;
-	Double totaleRekentijd3;
-	Double totaleRekentijd4;
+//	Double totaleRekentijd1;
+//	Double totaleRekentijd2;
+//	Double totaleRekentijd3;
+//	Double totaleRekentijd4;
 
-	Graph padlengteGraph;
-	Graph berekentijdGraph;
+//	Graph padlengteGraph;
+//	Graph berekentijdGraph;
 
 	Scherm() /* SK */ {
 		setTitle("Algoritmes voor TSP");
@@ -87,7 +84,7 @@ public class Scherm extends JFrame implements ActionListener {
 		getContentPane().setBackground(Color.gray);
 		// standaard noodzakelijke instellingen
 
-		algoritmeslbl = new JLabel("Algoritmes");
+//		JLabel algoritmeslbl = new JLabel("Algoritmes");
 		aantalArtikelenlbl = new JLabel("Aantal Artikelen");
 		aantalSimulatieslbl = new JLabel("Aantal Simulaties");
 		// maak labels
@@ -191,8 +188,11 @@ public class Scherm extends JFrame implements ActionListener {
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
 
+		ditIsEchtDeLaatstePanelPNL.add(legendaPNL, BorderLayout.NORTH);
+		ditIsEchtDeLaatstePanelPNL.add(grafiekPNL, BorderLayout.SOUTH);
+
 		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(totaalPNL, BorderLayout.NORTH);
-		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(grafiekPNL, BorderLayout.SOUTH);
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(ditIsEchtDeLaatstePanelPNL, BorderLayout.SOUTH);
 
 		getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 	}
@@ -313,7 +313,11 @@ public class Scherm extends JFrame implements ActionListener {
 						aantalSimulatiesTXT.setEnabled(false);
 						aantaArtikelenlTXT.setEnabled(false);
 						grafiekPNL.removeAll();
+						legendaPNL.removeAll();
 
+						legendaPNL.add(legenda);
+						Legenda legendaOBJ = new Legenda(bruteForceCKBX, twoOptCKBX, nearestNeighborCKBX, eigenAlgoritmeCKBX);
+						legendaPNL.add(legendaOBJ);
 						if (bruteForceCKBX.getState()) {
 							algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
 							//	for (int i = 0; i < aantalSimulaties + 1; i++) {
@@ -423,7 +427,8 @@ public class Scherm extends JFrame implements ActionListener {
 		return aantalSimulaties;
 	}
 
-	public static int getAantalArtikelen() {
+	static int getAantalArtikelen() {
 		return aantalArtikelen;
 	}
+
 }

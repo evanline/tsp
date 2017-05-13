@@ -1,16 +1,9 @@
 package main;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Stroke;
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
 
 /**
  * Created by: Sanne Klaassen
@@ -39,6 +32,21 @@ public class Graph extends JPanel {
 	private double xScale;
 	private double yScale;
 	private int MAX_SIZE = 1;
+	public static Color getGraphColor1() {
+		return GRAPH_COLOR1;
+	}
+
+	public static Color getGraphColor2() {
+		return GRAPH_COLOR2;
+	}
+
+	public static Color getGraphColor3() {
+		return GRAPH_COLOR3;
+	}
+
+	public static Color getGraphColor4() {
+		return GRAPH_COLOR4;
+	}
 
 	Graph(List<Double> algoritme1, List<Double> algoritme2, List<Double> algoritme3, List<Double> algoritme4) {
 		this.algoritme1 = algoritme1;
