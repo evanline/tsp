@@ -207,6 +207,9 @@ public class Scherm extends JFrame implements ActionListener {
 		totaalPNL.removeAll();
 		algoritmenArrayList.clear();
 		grafiekPNL.removeAll();
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.removeAll();
+		ditIsEchtDeLaatstePanelPNL.removeAll();
+		legendaPNL.removeAll();
 	}
 
 	@Override
