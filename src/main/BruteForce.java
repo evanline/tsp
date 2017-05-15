@@ -12,19 +12,20 @@ public class BruteForce implements AlgorithmInterface
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
 	private double timeSpend;
+	private long count;
 
 	BruteForce() {
 		long startTime = System.nanoTime();
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
-		Integer[] currentPos = new Integer[]{0, 0};
 
-		for (Integer[] i : list)
+		if (list.size() <= 10)
 		{
-			double dist = Math.sqrt((Math.pow((Math.abs(i[0] - currentPos[0]) ), 2) + Math.pow(Math.abs(i[1] - currentPos[1]), 2))); // √((|x - y|)² + (|a - i|)²)
-			path.add(i);
-			totalDistance += dist;
-			currentPos = i;
+
+		}
+		else
+		{
+			System.out.println("Calculation over 3.5Mil\nTo many calculations!");
 		}
 
 		long endTime = System.nanoTime();
