@@ -16,8 +16,8 @@ public class Scherm extends JFrame implements ActionListener {
 
 	private JLabel aantalArtikelenlbl;
 	private JLabel aantalSimulatieslbl; //
-	private JLabel padlengte = new JLabel("Padlengte");
-	private JLabel berekentijd = new JLabel("Berekentijd (miliseconden)");
+	private JLabel padlengte = new JLabel("Padlengte:");
+	private JLabel berekentijd = new JLabel("Berekentijd (miliseconden):");
 	private JLabel legenda = new JLabel("Legenda: ");
 	private Checkbox bruteForceCKBX;
 	private Checkbox twoOptCKBX;
@@ -283,6 +283,7 @@ public class Scherm extends JFrame implements ActionListener {
 				// het simulatiescherm is geselecteerd.
 				if (e.getSource() == startBTN) {
 					System.out.println("start");
+
 
 					Boolean geenAlgoritme = true;
 					for (Checkbox c : algoritmen) {
