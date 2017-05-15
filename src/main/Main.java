@@ -18,15 +18,16 @@ public class Main {
 		XMLReaderDOM orders2 = new XMLReaderDOM();
 		orderList = orders1.getOrderList();
 
-		ArrayList<ArrayList<Integer[]>> a = dsf.bruteForce(new GenereerCoordinaten().getLijstCoordinaten());
+		BruteForce b = new BruteForce();
+		ArrayList<Integer[]> a = b.getPath();
 
-		for (ArrayList<Integer[]> i : a)
+		for (Integer[] i : a)
 		{
-			System.out.println("list");
-			for (Integer[] l : i)
-			{
-				System.out.println(Arrays.toString(l));
-			}
+			System.out.println(Arrays.toString(i));
 		}
+
+		System.out.println(b.getRunTime());
+		System.out.println(b.getTotalDistance());
+		System.out.println(Brutal.getCount());
 	}
 }
