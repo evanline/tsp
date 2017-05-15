@@ -11,12 +11,14 @@ class NearestNeighbor implements AlgorithmInterface
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
 	private double timeSpend;
+	private ArrayList<ArrayList<Integer[]>> ARRAYSEPTION = new ArrayList<>();
 
 	NearestNeighbor()
 	{
 		long startTime = System.nanoTime();
 		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
 		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
+
 		Integer[] startPoint = new Integer[]{0, 0};
 
 		Integer[] nearest = new Integer[]{0,0};
@@ -25,9 +27,10 @@ class NearestNeighbor implements AlgorithmInterface
 		while (stuff != path.size())
 		{
 			double Ndistance = -1;
-
+			ArrayList<Integer[]> ARRAYSEPTIONINTESIFYS = new ArrayList<>();
 			for (Integer[] i : list)
 			{
+				ARRAYSEPTIONINTESIFYS.add(i);
 				double dist = Math.sqrt((Math.pow((Math.abs(i[0] - currentPos[0]) ), 2) + Math.pow(Math.abs(i[1] - currentPos[1]), 2)));
 				// √((|x - y|)² + (|a - i|)²)
 				if (dist < Ndistance || Ndistance == -1)
@@ -40,6 +43,7 @@ class NearestNeighbor implements AlgorithmInterface
 			totalDistance += Ndistance;
 			list.remove(nearest);
 			currentPos = nearest;
+			ARRAYSEPTION.add(ARRAYSEPTIONINTESIFYS);
 		}
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
@@ -48,6 +52,11 @@ class NearestNeighbor implements AlgorithmInterface
 	public ArrayList<Integer[]> getPath()
 	{
 		return path;
+	}
+
+	public ArrayList<ArrayList<Integer[]>> getARRAYSEPTION()
+	{
+		return ARRAYSEPTION;
 	}
 
 	@Override
