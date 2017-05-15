@@ -138,7 +138,6 @@ public class Scherm extends JFrame implements ActionListener {
 			algoritmesPNL.add(c);
 		}
 
-
 		// zet alles van de algoritme regel in een panel
 		aantalPNL.add(aantalArtikelenlbl);
 		aantalPNL.add(aantaArtikelenlTXT);
@@ -246,7 +245,7 @@ public class Scherm extends JFrame implements ActionListener {
 						aantaArtikelenlTXT.setText("");
 					}
 					System.out.println(aantalArtikelen);
-					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
+//					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 
 					if (bruteForceCKBX.getState()) {
 						algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
