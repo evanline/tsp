@@ -6,7 +6,7 @@ import java.util.Arrays;
 import static main.Brutal.bruteForce;
 
 /**
- * Created by: Ian Hildebrand
+ * Created by: Ian Hildebrand & Sjoerd Dekker
  * Date: 15-May-17.
  */
 public class BruteForce implements AlgorithmInterface
