@@ -27,7 +27,7 @@ public class GrafischeGeneratie extends JPanel {
 	private Integer xScale = 175;
 	private Integer yScale = 175;
 	private List<Point> graphpoints = new ArrayList<>();
-	private int stapnummer=0;
+	private int stapnummer = 0;
 	private ArrayList<ArrayList<Integer[]>> allemogelijkheden = new ArrayList<>();
 
 	public GrafischeGeneratie(ArrayList<Integer[]> coordinaat, int stapnummer, ArrayList<ArrayList<Integer[]>> allemogelijkheden) {
@@ -47,7 +47,7 @@ public class GrafischeGeneratie extends JPanel {
 		g2.setBackground(Color.darkGray);
 
 		//schaal om te vermenigvuldigen, omdat het anders te klein wordt
-		xScale = ( getWidth() - 2 * BORDER_GAP) / (X_HATCH_CNT);
+		xScale = (getWidth() - 2 * BORDER_GAP) / (X_HATCH_CNT);
 		yScale = (getHeight() - 2 * BORDER_GAP) / (MAX_SCORE);
 
 		graphpoints = maakGrafiekpunten(coordinaat);
@@ -87,10 +87,26 @@ public class GrafischeGeneratie extends JPanel {
 
 		g2.setStroke(GRAPH_STROKE);
 		g2.setColor(GRAPH_COLOR2);
+		List<Point> b = ;
+		if (stapnummer < 1) {
+			int w = BORDER_GAP;
+			int e = getHeight() - BORDER_GAP;
+			b = new ArrayList<>();
+			b.add(new Point(w, e));
+		} else if (stapnummer - 1 < allemogelijkheden.size()){
+			b = maakGrafiekpunten(allemogelijkheden.get(stapnummer - 1));
+		}
 
-		List<Point> b = maakGrafiekpunten(allemogelijkheden.get(stapnummer));
-		int x1 = graphpoints.get(stapnummer).x;
-		int y1 = graphpoints.get(stapnummer).y;
+		int x1;
+		int y1;
+		if (stapnummer < 2) {
+			x1 = BORDER_GAP;
+			y1 = getHeight() - BORDER_GAP;
+		} else {
+			x1 = graphpoints.get(stapnummer).x;
+			y1 = graphpoints.get(stapnummer).y;
+		}
+
 		tekenlijn(b, x1, y1);
 		g2.setColor(GRAPH_COLOR1);
 		tekenlijnGoed(graphpoints, stapnummer);
@@ -109,7 +125,7 @@ public class GrafischeGeneratie extends JPanel {
 	private java.util.List<Point> maakGrafiekpunten(ArrayList<Integer[]> a) {
 		java.util.List<Point> graphPoints = new ArrayList<>();
 		for (Integer[] e : a) {
-			int x1 =  (e[0] * xScale + BORDER_GAP);
+			int x1 = (e[0] * xScale + BORDER_GAP);
 			int y1 = ((5 - e[1]) * yScale + BORDER_GAP);
 			graphPoints.add(new Point(x1, y1));
 		}
@@ -135,6 +151,7 @@ public class GrafischeGeneratie extends JPanel {
 			g2.fillOval(x, y, GRAPH_POINT_WIDTH, GRAPH_POINT_WIDTH);
 		}
 	}
+
 	private void tekenlijn(List<Point> graphPoints, int a, int b) {
 
 		for (int i = 0; i < graphPoints.size(); i++) {
@@ -143,7 +160,7 @@ public class GrafischeGeneratie extends JPanel {
 			int x1 = a;
 			int y1 = b;
 
-				g2.drawLine(x1, y1, x2, y2);
+			g2.drawLine(x1, y1, x2, y2);
 		}
 	}
 }
