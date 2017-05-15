@@ -28,10 +28,12 @@ public class GrafischeGeneratie extends JPanel {
 	private Integer yScale = 175;
 	private List<Point> graphpoints = new ArrayList<>();
 	private int stapnummer=0;
+	private ArrayList<ArrayList<Integer[]>> allemogelijkheden = new ArrayList<>();
 
-	public GrafischeGeneratie(ArrayList<Integer[]> coordinaat, int stapnummer) {
+	public GrafischeGeneratie(ArrayList<Integer[]> coordinaat, int stapnummer, ArrayList<ArrayList<Integer[]>> allemogelijkheden) {
 		this.coordinaat = coordinaat;
 		this.stapnummer = stapnummer;
+		this.allemogelijkheden = allemogelijkheden;
 	}
 
 	private Graphics2D g2;
@@ -82,8 +84,15 @@ public class GrafischeGeneratie extends JPanel {
 			g2.drawString(i1, x0, y2);
 		}
 		Stroke oldStroke = g2.getStroke();
-		g2.setColor(GRAPH_COLOR1);
+
 		g2.setStroke(GRAPH_STROKE);
+		g2.setColor(GRAPH_COLOR2);
+
+		List<Point> b = maakGrafiekpunten(allemogelijkheden.get(stapnummer));
+		int x1 = graphpoints.get(stapnummer).x;
+		int y1 = graphpoints.get(stapnummer).y;
+		tekenlijn(b, x1, y1);
+		g2.setColor(GRAPH_COLOR1);
 		tekenlijnGoed(graphpoints, stapnummer);
 		g2.setStroke(oldStroke);
 		g2.setColor(GRAPH_POINT_COLOR);
@@ -99,8 +108,6 @@ public class GrafischeGeneratie extends JPanel {
 
 	private java.util.List<Point> maakGrafiekpunten(ArrayList<Integer[]> a) {
 		java.util.List<Point> graphPoints = new ArrayList<>();
-		System.out.println("checkpoint");
-
 		for (Integer[] e : a) {
 			int x1 =  (e[0] * xScale + BORDER_GAP);
 			int y1 = ((5 - e[1]) * yScale + BORDER_GAP);
@@ -121,23 +128,22 @@ public class GrafischeGeneratie extends JPanel {
 		}
 	}
 
-		//	for (int i = 0; i < j - 1; i++) {
-	//		g2.setColor(GRAPH_COLOR1);
-	//		int x1 = graphpoints.get(i).x;
-	//		int y1 = graphpoints.get(i).y;
-	//		int x2 = graphpoints.get(i + 1).x;
-	//		int y2 = graphpoints.get(i + 1).y;
-	//		System.out.println(x1+", "+y1+", "+x2+", "+y2);
-	//		g2.drawLine(x1, y1, x2, y2);
-	//		System.out.println("teken lijn");
-	//	}
-//	}
-
 	private void tekenpunten(java.util.List<Point> graphPoints) {
 		for (Point graphPoint : graphPoints) {
 			int x = graphPoint.x - GRAPH_POINT_WIDTH / 2;
 			int y = graphPoint.y - GRAPH_POINT_WIDTH / 2;
 			g2.fillOval(x, y, GRAPH_POINT_WIDTH, GRAPH_POINT_WIDTH);
+		}
+	}
+	private void tekenlijn(List<Point> graphPoints, int a, int b) {
+
+		for (int i = 0; i < graphPoints.size(); i++) {
+			int x2 = graphPoints.get(i).x;
+			int y2 = graphPoints.get(i).y;
+			int x1 = a;
+			int y1 = b;
+
+				g2.drawLine(x1, y1, x2, y2);
 		}
 	}
 }

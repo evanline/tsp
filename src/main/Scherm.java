@@ -245,12 +245,12 @@ public class Scherm extends JFrame implements ActionListener {
 					System.out.println("Start");
 					Boolean geenSelectie = true;
 
-					for (Checkbox c : algoritmen){
-						if (c.getState()){
+					for (Checkbox c : algoritmen) {
+						if (c.getState()) {
 							geenSelectie = false;
 						}
 					}
-					if(!geenSelectie) {
+					if (!geenSelectie) {
 						volgendeBTN.setText("Volgende");
 
 						String aantal = aantaArtikelenlTXT.getText();
@@ -271,7 +271,7 @@ public class Scherm extends JFrame implements ActionListener {
 /*volgende*/
 				} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
 					System.out.println("volgende");
-					stapnummer ++;
+					stapnummer++;
 
 					tekendingenpofzo();
 /*vorige*/
@@ -331,33 +331,33 @@ public class Scherm extends JFrame implements ActionListener {
 						legendaPNL.add(legendaOBJ);
 						if (bruteForceCKBX.getState()) {
 							algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
-								for (int i = 0; i < aantalSimulaties + 1; i++) {
+							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
 									BruteForce j = new BruteForce();
 
 									pathlengthes1.add(j.getTotalDistance());
 									tijden1.add(j.getRunTime());
-							//		totaleRekentijd1 = totaleRekentijd1 + (j.getRunTime());
-									} else {
-										pathlengthes1.add(0.0);
-										tijden1.add(0.0);
-									}
+									//		totaleRekentijd1 = totaleRekentijd1 + (j.getRunTime());
+								} else {
+									pathlengthes1.add(0.0);
+									tijden1.add(0.0);
 								}
+							}
 						}
 						if (twoOptCKBX.getState()) {
 							algoritmenArrayList.add(Algoritmenenum.TWOOPT);
-								for (int i = 0; i < aantalSimulaties + 1; i++) {
+							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
 									TwoOpt j = new TwoOpt();
 
 									pathlengthes2.add(j.getTotalDistance());
 									tijden2.add(j.getRunTime());
-							//		totaleRekentijd2 = totaleRekentijd2 + (j.getRunTime());
-									} else {
-										pathlengthes2.add(0.0);
-										tijden2.add(0.0);
-									}
+									//		totaleRekentijd2 = totaleRekentijd2 + (j.getRunTime());
+								} else {
+									pathlengthes2.add(0.0);
+									tijden2.add(0.0);
 								}
+							}
 						}
 						if (nearestNeighborCKBX.getState()) {
 							//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
@@ -376,18 +376,18 @@ public class Scherm extends JFrame implements ActionListener {
 						}
 						if (eigenAlgoritmeCKBX.getState()) {
 							algoritmenArrayList.add(Algoritmenenum.EIGENALG);
-								for (int i = 0; i < aantalSimulaties + 1; i++) {
+							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
 									EigenAlgoritme j = new EigenAlgoritme();
 
 									pathlengthes4.add(j.getTotalDistance());
 									tijden4.add(j.getRunTime());
-							//		totaleRekentijd4 = totaleRekentijd4 + (j.getRunTime());
-									} else {
-										pathlengthes4.add(0.0);
-										tijden4.add(0.0);
-									}
+									//		totaleRekentijd4 = totaleRekentijd4 + (j.getRunTime());
+								} else {
+									pathlengthes4.add(0.0);
+									tijden4.add(0.0);
 								}
+							}
 						}
 
 						Graph padlengteGraph = new Graph(pathlengthes1, pathlengthes2, pathlengthes3, pathlengthes4);
@@ -430,7 +430,7 @@ public class Scherm extends JFrame implements ActionListener {
 		}
 	}
 
-	private void tekendingenpofzo(){
+	private void tekendingenpofzo() {
 		System.out.println(stapnummer);
 		eersteGrafischePanelPNL.removeAll();
 		if (bruteForceCKBX.getState()) {
@@ -444,10 +444,10 @@ public class Scherm extends JFrame implements ActionListener {
 			if (stapnummer == 0) {
 				nearestNeighbor = new NearestNeighbor();
 			}
-				for (Integer[] g : nearestNeighbor.getPath()) {
-					System.out.println(Arrays.toString(g));
-				}
-				grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer);
+			for (Integer[] g : nearestNeighbor.getPath()) {
+				System.out.println(Arrays.toString(g));
+			}
+			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, nearestNeighbor.getARRAYSEPTION());
 
 			eersteGrafischePanelPNL.add(grafiesch3);
 		}
