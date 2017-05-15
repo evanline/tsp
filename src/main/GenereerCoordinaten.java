@@ -15,7 +15,7 @@ class GenereerCoordinaten {
 	GenereerCoordinaten()
 	{
 		int aantal = Scherm.getAantalArtikelen();
-		if (aantal <= 0) aantal = 3;
+		if (aantal <= 0) aantal = 9;
 		int max = 6;
 		if (aantal > Math.pow(max, 2)) max = (int) Math.sqrt(aantal)+1;
 		Boolean dubbelecoordinaat = false;
