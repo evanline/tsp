@@ -13,6 +13,7 @@ import java.util.List;
  * http://stackoverflow.com/questions/8693342/drawing-a-simple-line-graph-in-java
  */
 public class Graph extends JPanel {
+	private static Graphics2D g2;
 	private double MAX_SCORE = 1; //hoogste getal op de y-as.
 	private static final int PREF_W = 800; //breedte tenzij anders nodig
 	private static final int PREF_H = 650; //hoogte tenzij anders nodig
@@ -108,7 +109,7 @@ public class Graph extends JPanel {
 		MAX_SIZE = Math.max(MAX_SIZE, size4);
 	}
 
-	private Graphics2D g2;
+
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -206,7 +207,7 @@ public class Graph extends JPanel {
 		return graphPoints;
 	}
 
-	private void tekenlijn(List<Point> graphPoints) {
+	private static void tekenlijn(List<Point> graphPoints) {
 		for (int i = 0; i < graphPoints.size() - 1; i++) {
 			int x1 = graphPoints.get(i).x;
 			int y1 = graphPoints.get(i).y;
