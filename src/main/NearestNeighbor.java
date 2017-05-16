@@ -13,10 +13,9 @@ class NearestNeighbor implements AlgorithmInterface
 	private double timeSpend;
 	private ArrayList<ArrayList<Integer[]>> ARRAYSEPTION = new ArrayList<>();
 
-	NearestNeighbor()
+	NearestNeighbor(ArrayList<Integer[]> list)
 	{
 		long startTime = System.nanoTime();
-		ArrayList<Integer[]> list = new GenereerCoordinaten().getLijstCoordinaten();
 
 		Integer[] startPoint = new Integer[]{0, 0};
 
@@ -48,12 +47,12 @@ class NearestNeighbor implements AlgorithmInterface
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
-	public ArrayList<Integer[]> getPath()
+	ArrayList<Integer[]> getPath()
 	{
 		return path;
 	}
 
-	public ArrayList<ArrayList<Integer[]>> getARRAYSEPTION()
+	ArrayList<ArrayList<Integer[]>> getARRAYSEPTION()
 	{
 		return ARRAYSEPTION;
 	}

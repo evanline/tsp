@@ -13,10 +13,8 @@ public class TwoOpt implements AlgorithmInterface
 	private double totalDistance;
 	private double timeSpend;
 
-	TwoOpt() {
+	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
-		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
-		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
 		Integer[] currentPos = new Integer[]{0, 0};
 
 		for (Integer[] i : list)
