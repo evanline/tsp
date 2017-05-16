@@ -10,15 +10,14 @@ import java.util.Arrays;
 public class BruteForce implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
-	private ArrayList<ArrayList<Integer[]>> returnValue = new ArrayList<>();
 
 	private double totalDistance;
 	private double timeSpend;
 
-	BruteForce() {
+	BruteForce(ArrayList<Integer[]> coordinates) {
 		long startTime = System.nanoTime();
 
-		returnValue = runBruteForce(new GenereerCoordinaten().getLijstCoordinaten());
+		ArrayList<ArrayList<Integer[]>> returnValue = runBruteForce(coordinates);
 		double shortestRouteLength = -1d;
 		for (ArrayList<Integer[]> i : returnValue)
 		{
@@ -46,11 +45,6 @@ public class BruteForce implements AlgorithmInterface
 		return path;
 	}
 
-	public ArrayList<ArrayList<Integer[]>> getReturnValue()
-	{
-		return returnValue;
-	}
-
 	@Override
 	public double getTotalDistance() {
 		return totalDistance;
@@ -74,7 +68,7 @@ public class BruteForce implements AlgorithmInterface
 
 	private static long count = 0;
 	// return all possible location orders from an ArrayList with locations
-	static ArrayList<ArrayList<Integer[]>> runBruteForce(ArrayList<Integer[]> original)
+	private static ArrayList<ArrayList<Integer[]>> runBruteForce(ArrayList<Integer[]> original)
 	{
 		// only if the original array is empty
 		if (original.size() == 0)

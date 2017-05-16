@@ -13,10 +13,8 @@ public class EigenAlgoritme implements AlgorithmInterface
 	private double totalDistance;
 	private double timeSpend;
 
-	EigenAlgoritme() {
+	EigenAlgoritme(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
-		GenereerCoordinaten coordinaten = new GenereerCoordinaten();
-		ArrayList<Integer[]> list = coordinaten.getLijstCoordinaten();
 		Integer[] currentPos = new Integer[]{0, 0};
 
 		for (Integer[] i : list)
