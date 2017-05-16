@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 
 /**
- * Created by: Ian Hildebrand
+ * Created by: Ian Hildebrand & Sjoerd Dekker(hulp)
  * Date: 15-May-17.
  */
 class Brutal
@@ -15,7 +15,6 @@ class Brutal
 		// only if the original array is empty
 		if (original.size() == 0)
 		{
-
 			// create/add/return an empty result
 			ArrayList<ArrayList<Integer[]>> result = new ArrayList<>();
 			result.add(new ArrayList<>());
