@@ -333,7 +333,7 @@ public class Scherm extends JFrame implements ActionListener {
 							algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
 							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
-									BruteForce j = new BruteForce();
+									BruteForce j = new BruteForce(); //TODO hier
 
 									pathlengthes1.add(j.getTotalDistance());
 									tijden1.add(j.getRunTime());
@@ -348,7 +348,7 @@ public class Scherm extends JFrame implements ActionListener {
 							algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
-									TwoOpt j = new TwoOpt();
+									TwoOpt j = new TwoOpt();//TODO hier
 
 									pathlengthes2.add(j.getTotalDistance());
 									tijden2.add(j.getRunTime());
@@ -363,7 +363,7 @@ public class Scherm extends JFrame implements ActionListener {
 							//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
-									NearestNeighbor j = new NearestNeighbor();
+									NearestNeighbor j = new NearestNeighbor();//TODO hier
 
 									pathlengthes3.add(j.getTotalDistance());
 									tijden3.add(j.getRunTime());
@@ -378,7 +378,7 @@ public class Scherm extends JFrame implements ActionListener {
 							algoritmenArrayList.add(Algoritmenenum.EIGENALG);
 							for (int i = 0; i < aantalSimulaties + 1; i++) {
 								if (!(i == 0)) {
-									EigenAlgoritme j = new EigenAlgoritme();
+									EigenAlgoritme j = new EigenAlgoritme();//TODO hier
 
 									pathlengthes4.add(j.getTotalDistance());
 									tijden4.add(j.getRunTime());
@@ -442,7 +442,7 @@ public class Scherm extends JFrame implements ActionListener {
 		if (nearestNeighborCKBX.getState()) {
 			algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 			if (stapnummer == 0) {
-				nearestNeighbor = new NearestNeighbor();
+				nearestNeighbor = new NearestNeighbor(); //TODO hier
 			}
 			for (Integer[] g : nearestNeighbor.getPath()) {
 				System.out.println(Arrays.toString(g));
