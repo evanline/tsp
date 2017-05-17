@@ -10,5 +10,7 @@ public class Main {
 	public static void main(String[] args)
 	{
 		new Scherm().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+		System.out.println(new TwoOpt(new GenereerCoordinaten().getLijstCoordinaten()));
 	}
 }

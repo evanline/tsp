@@ -10,19 +10,50 @@ import java.util.Arrays;
 public class TwoOpt implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
-	private double totalDistance;
+	private double totalDistance = -1;
+	private double newTotalDistance;
 	private double timeSpend;
 
 	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
+		boolean lol = true;
+		path = list;
 
+		while (lol)
+		{
+			ArrayList<Integer[]> tempList = runTwoOpt(new ArrayList<>(path));
+			if (newTotalDistance < totalDistance || totalDistance == -1)
+			{
+				totalDistance =  newTotalDistance;
+				path = tempList;
+			}
+			else
+			{
+				lol = false;
+			}
+		}
+
+		long endTime = System.nanoTime();
+		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
+	}
+
+	private double calculateDistance(Integer[] a,Integer[] b)
+	{
+		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
+	}
+
+	private ArrayList<Integer[]> runTwoOpt (ArrayList<Integer[]> list)
+	{
+		System.out.println("hello!!");
+		newTotalDistance = 0;
+		ArrayList<Integer[]> tpath = new ArrayList<>();
 		for (int i = -1; i < list.size();)
 		{
 			if ((i+4) > list.size())
 			{
 				for(int b = 1; (b+i) < list.size(); b++)
 				{
-					path.add(list.get(i+b));
+					tpath.add(list.get(i+b));
 				}
 				break;
 			}
@@ -48,29 +79,22 @@ public class TwoOpt implements AlgorithmInterface
 
 			if(costR1 > costR2)
 			{
-				path.add(x);
-				path.add(u);
-				path.add(y);
-				path.add(v);
-				totalDistance += costR1;
+				tpath.add(x);
+				tpath.add(u);
+				tpath.add(y);
+				tpath.add(v);
+				newTotalDistance += costR1;
 			}
 			else
 			{
-				path.add(x);
-				path.add(y);
-				path.add(u);
-				path.add(v);
-				totalDistance += costR2;
+				tpath.add(x);
+				tpath.add(y);
+				tpath.add(u);
+				tpath.add(v);
+				newTotalDistance += costR2;
 			}
 		}
-
-		long endTime = System.nanoTime();
-		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
-	}
-
-	private double calculateDistance(Integer[] a,Integer[] b)
-	{
-		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
+		return tpath;
 	}
 
 	public ArrayList<Integer[]> getPath()
