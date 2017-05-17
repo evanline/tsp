@@ -15,14 +15,18 @@ public class EigenAlgoritme implements AlgorithmInterface
 
 	EigenAlgoritme(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
-		Integer[] currentPos = new Integer[]{0, 0};
 
-		for (Integer[] i : list)
+		if (list.size() > 9)
 		{
-			double dist = Math.sqrt((Math.pow((Math.abs(i[0] - currentPos[0]) ), 2) + Math.pow(Math.abs(i[1] - currentPos[1]), 2))); // √((|x - y|)² + (|a - i|)²)
-			path.add(i);
-			totalDistance += dist;
-			currentPos = i;
+			NearestNeighbor nn = new NearestNeighbor(list);
+			path = nn.getPath();
+			totalDistance = nn.getTotalDistance();
+		}
+		else
+		{
+			BruteForce nn = new BruteForce(list);
+			path = nn.getPath();
+			totalDistance = nn.getTotalDistance();
 		}
 
 		long endTime = System.nanoTime();

@@ -40,7 +40,7 @@ public class BruteForce implements AlgorithmInterface
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
-	public ArrayList<Integer[]> getPath()
+	ArrayList<Integer[]> getPath()
 	{
 		return path;
 	}
