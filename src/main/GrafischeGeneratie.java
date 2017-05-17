@@ -16,12 +16,14 @@ public class GrafischeGeneratie extends JPanel {
 	private static final Color GRAPH_COLOR1 = new Color(11, 180, 7, 255); //kleur lijnen
 	private static final Color GRAPH_COLOR2 = new Color(119, 0, 9, 247);
 	private static final Color GRAPH_COLOR3 = new Color(144, 84, 0, 247);
+	private static final Color GRAPH_COLORa = new Color(182, 31, 167, 247);
+	private static final Color GRAPH_COLORb = new Color(35, 168, 163, 247);
 	private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 0, 148); //kleur punten
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f); //vorm lijn(breedte lijn)
 	private static final int GRAPH_POINT_WIDTH = 12; //grootte punten
 	private ArrayList<Integer[]> coordinaat;
-	private Integer xScale = 175;
-	private Integer yScale = 175;
+	private static Integer xScale = 175;
+	private static Integer yScale = 175;
 	private int stapnummer = 0;
 	private ArrayList<ArrayList<Integer[]>> allemogelijkheden = Scherm.lijst1;
 	private List<Point> graphpoints = new ArrayList<>();
@@ -36,7 +38,7 @@ public class GrafischeGeneratie extends JPanel {
 		this.algoritme = algoritme;
 	}
 
-	private Graphics2D g2;
+	private static Graphics2D g2;
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -144,7 +146,7 @@ public class GrafischeGeneratie extends JPanel {
 		return new Dimension(PREF_W, PREF_H);
 	}
 
-	private List<Point> maakGrafiekpunten(ArrayList<Integer[]> a) {
+	private static List<Point> maakGrafiekpunten(ArrayList<Integer[]> a) {
 		List<Point> graphPoints = new ArrayList<>();
 		for (Integer[] e : a) {
 			int x1 = (e[0] * xScale + BORDER_GAP);
@@ -189,4 +191,36 @@ public class GrafischeGeneratie extends JPanel {
 			g2.drawLine(a, b, x2, y2);
 		}
 	}
+	public static void tekenmogelijkheden(Integer[] a, Integer[] b, Integer[] c, Integer[] d){
+		ArrayList<Integer[]> punten = new ArrayList<>();
+		punten.add(a);
+		punten.add(b);
+		punten.add(c);
+		punten.add(d);
+		List<Point> coords = maakGrafiekpunten(punten);
+		g2.setStroke(GRAPH_STROKE);
+		g2.setColor(GRAPH_COLORa);
+		int x1 = coords.get(1).x;
+		int y1 = coords.get(1).y;
+		int x2 = coords.get(2).x;
+		int y2 = coords.get(2).y;
+		g2.drawLine(x1, y1, x2, y2);
+		x1 = coords.get(3).x;
+		y1 = coords.get(3).y;
+		x2 = coords.get(4).x;
+		y2 = coords.get(4).y;
+		g2.drawLine(x1, y1, x2, y2);
+		g2.setColor(GRAPH_COLORb);
+		x1 = coords.get(1).x;
+		y1 = coords.get(1).y;
+		x2 = coords.get(3).x;
+		y2 = coords.get(3).y;
+		g2.drawLine(x1, y1, x2, y2);
+		x1 = coords.get(2).x;
+		y1 = coords.get(2).y;
+		x2 = coords.get(4).x;
+		y2 = coords.get(4).y;
+		g2.drawLine(x1, y1, x2, y2);
+	}
+
 }
