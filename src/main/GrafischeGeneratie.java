@@ -15,6 +15,7 @@ public class GrafischeGeneratie extends JPanel {
 	private static final int BORDER_GAP = 50; //nodig bij schaal berekening ed.
 	private static final Color GRAPH_COLOR1 = new Color(11, 180, 7, 255); //kleur lijnen
 	private static final Color GRAPH_COLOR2 = new Color(119, 0, 9, 247);
+	private static final Color GRAPH_COLOR3 = new Color(144, 84, 0, 247);
 	private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 0, 148); //kleur punten
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f); //vorm lijn(breedte lijn)
 	private static final int GRAPH_POINT_WIDTH = 12; //grootte punten
@@ -22,15 +23,17 @@ public class GrafischeGeneratie extends JPanel {
 	private Integer xScale = 175;
 	private Integer yScale = 175;
 	private int stapnummer = 0;
-	private ArrayList<ArrayList<Integer[]>> allemogelijkheden = new ArrayList<>();
+	private ArrayList<ArrayList<Integer[]>> allemogelijkheden = Scherm.lijst1;
+	private List<Point> graphpoints = new ArrayList<>();
+	int algoritme;
 
-	GrafischeGeneratie(ArrayList<Integer[]> coordinaat, int stapnummer, ArrayList<ArrayList<Integer[]>> allemogelijkheden) {
+	GrafischeGeneratie(ArrayList<Integer[]> coordinaat, int stapnummer, int algoritme) {
 		this.coordinaat = coordinaat;
 		this.stapnummer = stapnummer;
-		this.allemogelijkheden = allemogelijkheden;
 		if (stapnummer > coordinaat.size()){
 			this.stapnummer = coordinaat.size();
 		}
+		this.algoritme = algoritme;
 	}
 
 	private Graphics2D g2;
@@ -51,11 +54,7 @@ public class GrafischeGeneratie extends JPanel {
 
 		// create x and y axes
 		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);    //y-as
-
-		g2.drawLine(getWidth() - BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);  //x-as
-
-		g2.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
 
 		// create hatch marks for y axis.
 		Integer y_HATCH_CNT = 5;
@@ -82,7 +81,30 @@ public class GrafischeGeneratie extends JPanel {
 			g2.drawString(i1, x0, y2);
 		}
 
-		List<Point> graphpoints = maakGrafiekpunten(coordinaat);
+		graphpoints = maakGrafiekpunten(coordinaat);
+		switch (algoritme){
+			case 2 :
+				twoopt();
+			break;
+			case 3 :
+				neareseneighbor();
+			break;
+		}
+
+	}
+	private void twoopt(){
+		Stroke oldStroke = g2.getStroke();
+		g2.setStroke(GRAPH_STROKE);
+		g2.setColor(GRAPH_COLOR3);
+
+		tekenlijnandersOMDATJAVA(graphpoints);
+		g2.setStroke(oldStroke);
+		g2.setColor(GRAPH_POINT_COLOR);
+		tekenpunten(graphpoints);
+
+	}
+
+	private void neareseneighbor(){
 		List<Point> b = null;
 		if (stapnummer < 1) {
 			int e = getHeight() - BORDER_GAP;
@@ -106,17 +128,15 @@ public class GrafischeGeneratie extends JPanel {
 			y1 = graphpoints.get(stapnummer - 1).y;
 		}
 
-
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(GRAPH_STROKE);
 		g2.setColor(GRAPH_COLOR2);
 		tekenlijn(b, x1, y1);
 		g2.setColor(GRAPH_COLOR1);
-		tekenlijnGoed(graphpoints);
+		tekenlijn(graphpoints);
 		g2.setStroke(oldStroke);
 		g2.setColor(GRAPH_POINT_COLOR);
 		tekenpunten(graphpoints);
-
 	}
 
 	@Override
@@ -124,9 +144,8 @@ public class GrafischeGeneratie extends JPanel {
 		return new Dimension(PREF_W, PREF_H);
 	}
 
-
-	private java.util.List<Point> maakGrafiekpunten(ArrayList<Integer[]> a) {
-		java.util.List<Point> graphPoints = new ArrayList<>();
+	private List<Point> maakGrafiekpunten(ArrayList<Integer[]> a) {
+		List<Point> graphPoints = new ArrayList<>();
 		for (Integer[] e : a) {
 			int x1 = (e[0] * xScale + BORDER_GAP);
 			int y1 = ((5 - e[1]) * yScale + BORDER_GAP);
@@ -134,36 +153,22 @@ public class GrafischeGeneratie extends JPanel {
 		}
 		return graphPoints;
 	}
-/*
-	private void tekenlijnGoed(List<Point> gp) {
-		int x1;
-		int y1;
-		if (stapnummer < 1) {
-			x1 = BORDER_GAP;
-			y1 = getHeight() - BORDER_GAP;
-		} else if (stapnummer >= gp.size()) {
-			int a = gp.size() - 1;
-			x1 = gp.get(a).x;
-			y1 = gp.get(a).y;
-		} else {
-			x1 = gp.get(stapnummer).x;
-			y1 = gp.get(stapnummer).y;
-		}
-			int x2 = gp.get(stapnummer).x;
-			int y2 = gp.get(stapnummer).y;
-
-			g2.drawLine(x1, y1, x2, y2);
-
-	}*/
-
-
-	private void tekenlijnGoed(List<Point> gp) {
-		System.out.println("teken lijn " + stapnummer);
+	private void tekenlijn(List<Point> graphPoints) {
 		for (int i = 0; i < stapnummer - 1; i++) {
-			int x1 = gp.get(i).x;
-			int y1 = gp.get(i).y;
-			int x2 = gp.get(i + 1).x;
-			int y2 = gp.get(i + 1).y;
+			int x1 = graphPoints.get(i).x;
+			int y1 = graphPoints.get(i).y;
+			int x2 = graphPoints.get(i + 1).x;
+			int y2 = graphPoints.get(i + 1).y;
+			g2.drawLine(x1, y1, x2, y2);
+		}
+	}
+
+	 private void tekenlijnandersOMDATJAVA(List<Point> graphPoints) {
+		for (int i = 0; i < graphPoints.size() - 1; i++) {
+			int x1 = graphPoints.get(i).x;
+			int y1 = graphPoints.get(i).y;
+			int x2 = graphPoints.get(i + 1).x;
+			int y2 = graphPoints.get(i + 1).y;
 			g2.drawLine(x1, y1, x2, y2);
 		}
 	}

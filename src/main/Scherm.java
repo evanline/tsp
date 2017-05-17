@@ -70,6 +70,9 @@ public class Scherm extends JFrame implements ActionListener {
 
 	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
 
+	static ArrayList<ArrayList<Integer[]>> lijst1;
+
+
 
 	GrafischeGeneratie grafiesch1;
 	GrafischeGeneratie grafiesch2;
@@ -414,7 +417,8 @@ public class Scherm extends JFrame implements ActionListener {
 			if (stapnummer == 0) {
 				twoOpt = new TwoOpt(new ArrayList<>(coordinates)); //TODO hier
 			}
-			//			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, twoOpt.getARRAYSEPTION());
+			int alg = 2;
+			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("2-Opt");
 			eersteGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			eersteGrafischePanelPNL.add(grafiesch2, BorderLayout.SOUTH);
@@ -424,7 +428,9 @@ public class Scherm extends JFrame implements ActionListener {
 			if (stapnummer == 0) {
 				nearestNeighbor = new NearestNeighbor(new ArrayList<>(coordinates)); //TODO hier
 			}
-			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, nearestNeighbor.getARRAYSEPTION());
+			lijst1 = nearestNeighbor.getARRAYSEPTION();
+			int alg = 3;
+			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("Nearest Neighbor");
 			tweedeGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			tweedeGrafischePanelPNL.add(grafiesch3, BorderLayout.SOUTH);
