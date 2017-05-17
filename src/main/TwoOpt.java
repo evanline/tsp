@@ -15,11 +15,21 @@ public class TwoOpt implements AlgorithmInterface
 
 	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
-		Integer[] currentPos = new Integer[]{0, 0};
 
-		for (int i = 0; i < list.size(); i++)
+		for (int i = -1; i < list.size();)
 		{
-			i = ((i + 3) > list.size()) ? list.size() : (i + 3);
+			if ((i+4) > list.size())
+			{
+				for(int b = 1; (b+i) < list.size(); b++)
+				{
+					path.add(list.get(i+b));
+				}
+				break;
+			}
+			else
+			{
+				i += 4;
+			}
 
 			Integer[] x = list.get(i - 3);
 			Integer[] y = list.get(i - 2);
@@ -36,7 +46,22 @@ public class TwoOpt implements AlgorithmInterface
 
 			double costR2 = route3 + route4;
 
-
+			if(costR1 > costR2)
+			{
+				path.add(x);
+				path.add(u);
+				path.add(y);
+				path.add(v);
+				totalDistance += costR1;
+			}
+			else
+			{
+				path.add(x);
+				path.add(y);
+				path.add(u);
+				path.add(v);
+				totalDistance += costR2;
+			}
 		}
 
 		long endTime = System.nanoTime();
