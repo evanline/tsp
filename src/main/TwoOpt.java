@@ -44,7 +44,6 @@ public class TwoOpt implements AlgorithmInterface
 
 	private ArrayList<Integer[]> runTwoOpt (ArrayList<Integer[]> list)
 	{
-		System.out.println("hello!!");
 		newTotalDistance = 0;
 		ArrayList<Integer[]> tpath = new ArrayList<>();
 		for (int i = -1; i < list.size();)
