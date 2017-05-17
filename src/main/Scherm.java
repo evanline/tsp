@@ -1,13 +1,11 @@
 
 package main;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,7 +56,7 @@ public class Scherm extends JFrame implements ActionListener {
 	private static int aantalArtikelen = 0;
 	NearestNeighbor nearestNeighbor;
 	BruteForce bruteForce;
-	TwoOpt twoOpt;
+	Weirdorthm weirdorthm;
 	EigenAlgoritme eigenAlgoritme;
 
 	private int aantalSimulaties;
@@ -412,9 +410,9 @@ public class Scherm extends JFrame implements ActionListener {
 			System.out.println("nog een checkpoint");
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			if (stapnummer == 0) {
-				twoOpt = new TwoOpt(new ArrayList<>(coordinates)); //TODO hier
+				weirdorthm = new Weirdorthm(new ArrayList<>(coordinates)); //TODO hier
 			}
-			//			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, twoOpt.getARRAYSEPTION());
+			//			grafiesch2 = new GrafischeGeneratie(weirdorthm.getPath(), stapnummer, weirdorthm.getARRAYSEPTION());
 			JLabel l = new JLabel("2-Opt");
 			eersteGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			eersteGrafischePanelPNL.add(grafiesch2, BorderLayout.SOUTH);
@@ -483,7 +481,7 @@ public class Scherm extends JFrame implements ActionListener {
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+					Weirdorthm j = new Weirdorthm(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
 
 					pathlengthes2.add(j.getTotalDistance());
 					tijden2.add(j.getRunTime());
