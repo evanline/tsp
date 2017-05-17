@@ -1,6 +1,7 @@
 
 package main;
 
+import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -38,8 +39,11 @@ public class Scherm extends JFrame implements ActionListener {
 	private JPanel tijdgrafiekPNL = new JPanel(new BorderLayout());
 	private JPanel legendaPNL = new JPanel(new FlowLayout(FlowLayout.LEFT));
 	private JPanel eersteGrafischePanelPNL = new JPanel(new BorderLayout());
+	private JPanel tweedeGrafischePanelPNL = new JPanel(new BorderLayout());
+	private JPanel derdeGrafischePanelPNL = new JPanel(new BorderLayout());
 	private JPanel nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL = new JPanel(new BorderLayout());
 	private JPanel ditIsEchtDeLaatstePanelPNL = new JPanel(new BorderLayout());
+	private JPanel neeEchtPNL = new JPanel(new BorderLayout());
 
 	private JButton startBTN;
 	private JButton pauzeBTN;
@@ -53,6 +57,9 @@ public class Scherm extends JFrame implements ActionListener {
 
 	private static int aantalArtikelen = 0;
 	NearestNeighbor nearestNeighbor;
+	BruteForce bruteForce;
+	TwoOpt twoOpt;
+	EigenAlgoritme eigenAlgoritme;
 
 	private int aantalSimulaties;
 	private ArrayList<Checkbox> algoritmen = new ArrayList<>();
@@ -71,7 +78,10 @@ public class Scherm extends JFrame implements ActionListener {
 	private List<Double> tijden3 = new ArrayList<>();
 	private List<Double> tijden4 = new ArrayList<>();
 
+	GrafischeGeneratie grafiesch1;
+	GrafischeGeneratie grafiesch2;
 	GrafischeGeneratie grafiesch3;
+	GrafischeGeneratie grafiesch4;
 	int stapnummer = 0;
 //	Double totaleRekentijd1;
 //	Double totaleRekentijd2;
@@ -162,10 +172,16 @@ public class Scherm extends JFrame implements ActionListener {
 		// combineer de animatieregel en knoppenregel in een panel
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
-		// combineer alle panels in een panel. congrats, you created a mecha
-		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(eersteGrafischePanelPNL, BorderLayout.SOUTH);
-		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(totaalPNL, BorderLayout.NORTH);
-		getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
+
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(eersteGrafischePanelPNL, BorderLayout.WEST);
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(tweedeGrafischePanelPNL, BorderLayout.EAST);
+		ditIsEchtDeLaatstePanelPNL.add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL, BorderLayout.WEST);
+		ditIsEchtDeLaatstePanelPNL.add(derdeGrafischePanelPNL, BorderLayout.EAST);
+
+		// combineer alle panels in een panel.
+		neeEchtPNL.add(ditIsEchtDeLaatstePanelPNL, BorderLayout.SOUTH);
+		neeEchtPNL.add(totaalPNL, BorderLayout.NORTH);
+		getContentPane().add(neeEchtPNL);
 	}
 
 	private void simulatiemodusScherm() /* SK */ {
@@ -241,6 +257,7 @@ public class Scherm extends JFrame implements ActionListener {
 		} else {
 			if (grafisch) {
 				// het grafische scherm is geselecteerd
+				ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 				if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Start")) {
 					System.out.println("Start");
 					Boolean geenSelectie = true;
@@ -261,7 +278,7 @@ public class Scherm extends JFrame implements ActionListener {
 							aantaArtikelenlTXT.setText("");
 						}
 						System.out.println(aantalArtikelen);
-						tekendingenpofzo();
+						tekendingenpofzo(coordinates);
 //					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 
 						for (Checkbox c : algoritmen) {
@@ -273,7 +290,7 @@ public class Scherm extends JFrame implements ActionListener {
 					System.out.println("volgende");
 					stapnummer++;
 
-					tekendingenpofzo();
+					tekendingenpofzo(coordinates);
 /*vorige*/
 				} else if (e.getSource() == vorigeBTN) {
 					System.out.println("vorige");
@@ -330,7 +347,7 @@ public class Scherm extends JFrame implements ActionListener {
 						Legenda legendaOBJ = new Legenda(bruteForceCKBX, twoOptCKBX, nearestNeighborCKBX, eigenAlgoritmeCKBX);
 						legendaPNL.add(legendaOBJ);
 						ArrayList<ArrayList<Integer[]>> coordinateslist = new ArrayList<>();
-						for (int i = 0; i < aantalSimulaties; i++){
+						for (int i = 0; i < aantalSimulaties; i++) {
 							ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 							coordinateslist.add(coordinates);
 						}
@@ -435,36 +452,67 @@ public class Scherm extends JFrame implements ActionListener {
 		}
 	}
 
-	private void tekendingenpofzo() {
-		System.out.println(stapnummer);
+	private void tekendingenpofzo(ArrayList<Integer[]> coordinates) {
+		System.out.println(stapnummer + ", checkpoint");
 		eersteGrafischePanelPNL.removeAll();
+		tweedeGrafischePanelPNL.removeAll();
+		derdeGrafischePanelPNL.removeAll();
+
 		if (bruteForceCKBX.getState()) {
 			algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
+			/*
+			if (stapnummer == 0) {
+
+				bruteForce = new BruteForce(new ArrayList<>(coordinates));
+			}
+			for (Integer[] g : bruteForce.getPath()) {
+				System.out.println(Arrays.toString(g));
+			}
+		//	grafiesch3 = new GrafischeGeneratie(bruteForce.getPath(), stapnummer, bruteForce.getARRAYSEPTION());
+		} */
 		}
 		if (twoOptCKBX.getState()) {
+			System.out.println("nog een checkpoint");
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
+			if (stapnummer == 0) {
+				twoOpt = new TwoOpt(new ArrayList<>(coordinates)); //TODO hier
+			}
+			//			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, twoOpt.getARRAYSEPTION());
+			JLabel l = new JLabel("2-Opt");
+			eersteGrafischePanelPNL.add(l, BorderLayout.NORTH);
+			eersteGrafischePanelPNL.add(grafiesch2, BorderLayout.SOUTH);
 		}
 		if (nearestNeighborCKBX.getState()) {
 			algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 			if (stapnummer == 0) {
-				 ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 				nearestNeighbor = new NearestNeighbor(new ArrayList<>(coordinates)); //TODO hier
 			}
-			for (Integer[] g : nearestNeighbor.getPath()) {
-				System.out.println(Arrays.toString(g));
-			}
 			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, nearestNeighbor.getARRAYSEPTION());
-
-			eersteGrafischePanelPNL.add(grafiesch3);
+			JLabel l = new JLabel("Nearest Neighbor");
+			tweedeGrafischePanelPNL.add(l, BorderLayout.NORTH);
+			tweedeGrafischePanelPNL.add(grafiesch3, BorderLayout.SOUTH);
 		}
 		if (eigenAlgoritmeCKBX.getState()) {
 			algoritmenArrayList.add(Algoritmenenum.EIGENALG);
+			if (stapnummer == 0) {
+				eigenAlgoritme = new EigenAlgoritme(new ArrayList<>(coordinates)); //TODO hier
+			}
+			JLabel l = new JLabel("Eigen Algoritme");
+			//			grafiesch4 = new GrafischeGeneratie(eigenAlgoritme.getPath(), stapnummer, eigenAlgoritme.getARRAYSEPTION());
+			derdeGrafischePanelPNL.add(l, BorderLayout.NORTH);
+			derdeGrafischePanelPNL.add(grafiesch4, BorderLayout.SOUTH);
 		}
+
 		eersteGrafischePanelPNL.revalidate();
 		eersteGrafischePanelPNL.repaint();
+		tweedeGrafischePanelPNL.revalidate();
+		tweedeGrafischePanelPNL.repaint();
+		derdeGrafischePanelPNL.revalidate();
+		derdeGrafischePanelPNL.repaint();
 		getContentPane().revalidate();
 		getContentPane().repaint();
 	}
+
 
 	public ArrayList<Algoritmenenum> getAlgoritmenArrayList() {
 		return algoritmenArrayList;
