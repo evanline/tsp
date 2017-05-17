@@ -69,14 +69,7 @@ public class Scherm extends JFrame implements ActionListener {
 	}
 
 	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
-	private List<Double> pathlengthes1 = new ArrayList<>();
-	private List<Double> pathlengthes2 = new ArrayList<>();
-	private List<Double> pathlengthes3 = new ArrayList<>();
-	private List<Double> pathlengthes4 = new ArrayList<>();
-	private List<Double> tijden1 = new ArrayList<>();
-	private List<Double> tijden2 = new ArrayList<>();
-	private List<Double> tijden3 = new ArrayList<>();
-	private List<Double> tijden4 = new ArrayList<>();
+
 
 	GrafischeGeneratie grafiesch1;
 	GrafischeGeneratie grafiesch2;
@@ -233,6 +226,9 @@ public class Scherm extends JFrame implements ActionListener {
 		ditIsEchtDeLaatstePanelPNL.removeAll();
 		legendaPNL.removeAll();
 		eersteGrafischePanelPNL.removeAll();
+		tweedeGrafischePanelPNL.removeAll();
+		derdeGrafischePanelPNL.removeAll();
+		neeEchtPNL.removeAll();
 	}
 
 	@Override
@@ -256,7 +252,7 @@ public class Scherm extends JFrame implements ActionListener {
 			}
 		} else {
 			if (grafisch) {
-				// het grafische scherm is geselecteerd
+/*start*/                // het grafische scherm is geselecteerd
 				ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 				if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Start")) {
 					System.out.println("Start");
@@ -279,7 +275,6 @@ public class Scherm extends JFrame implements ActionListener {
 						}
 						System.out.println(aantalArtikelen);
 						tekendingenpofzo(coordinates);
-//					GenereerCoordinaten coordinaat = new GenereerCoordinaten();
 
 						for (Checkbox c : algoritmen) {
 							c.setEnabled(false);
@@ -294,14 +289,27 @@ public class Scherm extends JFrame implements ActionListener {
 /*vorige*/
 				} else if (e.getSource() == vorigeBTN) {
 					System.out.println("vorige");
+					if (stapnummer != 0) {
+						stapnummer--;
+						tekendingenpofzo(coordinates);
+					}
 /*reset*/
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
+					coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 					volgendeBTN.setText("Start");
 					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
 					aantaArtikelenlTXT.setText("");
+					aantalArtikelen = 0;
+					//	cleanup();
+					eersteGrafischePanelPNL.removeAll();
+					tweedeGrafischePanelPNL.removeAll();
+					derdeGrafischePanelPNL.removeAll();
+					getContentPane().revalidate();
+					getContentPane().repaint();
+
 				} else {
 					System.out.println("error: unknown source");
 				}
@@ -310,7 +318,6 @@ public class Scherm extends JFrame implements ActionListener {
 				// het simulatiescherm is geselecteerd.
 				if (e.getSource() == startBTN) {
 					System.out.println("start");
-
 
 					Boolean geenAlgoritme = true;
 					for (Checkbox c : algoritmen) {
@@ -346,82 +353,10 @@ public class Scherm extends JFrame implements ActionListener {
 						legendaPNL.add(legenda);
 						Legenda legendaOBJ = new Legenda(bruteForceCKBX, twoOptCKBX, nearestNeighborCKBX, eigenAlgoritmeCKBX);
 						legendaPNL.add(legendaOBJ);
-						ArrayList<ArrayList<Integer[]>> coordinateslist = new ArrayList<>();
-						for (int i = 0; i < aantalSimulaties; i++) {
-							ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
-							coordinateslist.add(coordinates);
-						}
-						if (bruteForceCKBX.getState()) {
-							algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
-							for (int i = 0; i < aantalSimulaties + 1; i++) {
-								if (!(i == 0)) {
-									BruteForce j = new BruteForce(new ArrayList<>(coordinateslist.get(i - 1))); //TODO hier
-
-									pathlengthes1.add(j.getTotalDistance());
-									tijden1.add(j.getRunTime());
-									//		totaleRekentijd1 = totaleRekentijd1 + (j.getRunTime());
-								} else {
-									pathlengthes1.add(0.0);
-									tijden1.add(0.0);
-								}
-							}
-						}
-						if (twoOptCKBX.getState()) {
-							algoritmenArrayList.add(Algoritmenenum.TWOOPT);
-							for (int i = 0; i < aantalSimulaties + 1; i++) {
-								if (!(i == 0)) {
-									TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
-
-									pathlengthes2.add(j.getTotalDistance());
-									tijden2.add(j.getRunTime());
-									//		totaleRekentijd2 = totaleRekentijd2 + (j.getRunTime());
-								} else {
-									pathlengthes2.add(0.0);
-									tijden2.add(0.0);
-								}
-							}
-						}
-						if (nearestNeighborCKBX.getState()) {
-							//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
-							for (int i = 0; i < aantalSimulaties + 1; i++) {
-								if (!(i == 0)) {
-									NearestNeighbor j = new NearestNeighbor(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
-
-									pathlengthes3.add(j.getTotalDistance());
-									tijden3.add(j.getRunTime());
-//									totaleRekentijd3 = totaleRekentijd3 + (j.getRunTime()); //TODO
-								} else {
-									pathlengthes3.add(0.0);
-									tijden3.add(0.0);
-								}
-							}
-						}
-						if (eigenAlgoritmeCKBX.getState()) {
-							algoritmenArrayList.add(Algoritmenenum.EIGENALG);
-							for (int i = 0; i < aantalSimulaties + 1; i++) {
-								if (!(i == 0)) {
-									EigenAlgoritme j = new EigenAlgoritme(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
-
-									pathlengthes4.add(j.getTotalDistance());
-									tijden4.add(j.getRunTime());
-									//		totaleRekentijd4 = totaleRekentijd4 + (j.getRunTime());
-								} else {
-									pathlengthes4.add(0.0);
-									tijden4.add(0.0);
-								}
-							}
-						}
-
-						Graph padlengteGraph = new Graph(pathlengthes1, pathlengthes2, pathlengthes3, pathlengthes4);
-						padgrafiekPNL.add(padlengte);
-						padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
-						grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
+						maakgrafieken();
 
 //		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes1));
-						Graph berekentijdGraph = new Graph(tijden1, tijden2, tijden3, tijden4);
-						tijdgrafiekPNL.add(berekentijd);
-						tijdgrafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
-						grafiekPNL.add(tijdgrafiekPNL, BorderLayout.EAST);
+
 
 						getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 						getContentPane().revalidate();
@@ -436,15 +371,17 @@ public class Scherm extends JFrame implements ActionListener {
 					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
-					aantalSimulatiesTXT.setEnabled(true);
-					aantaArtikelenlTXT.setEnabled(true);
-					grafiekPNL.removeAll();
-					getContentPane().revalidate();
-					getContentPane().repaint();
 					aantalSimulaties = 0;
 					aantalSimulatiesTXT.setText("");
 					aantalArtikelen = 0;
 					aantaArtikelenlTXT.setText("");
+					aantalSimulatiesTXT.setEnabled(true);
+					aantaArtikelenlTXT.setEnabled(true);
+					grafiekPNL.removeAll();
+					padgrafiekPNL.removeAll();
+					tijdgrafiekPNL.removeAll();
+					getContentPane().revalidate();
+					getContentPane().repaint();
 				} else {
 					System.out.println("error: unknown source");
 				}
@@ -511,6 +448,91 @@ public class Scherm extends JFrame implements ActionListener {
 		derdeGrafischePanelPNL.repaint();
 		getContentPane().revalidate();
 		getContentPane().repaint();
+	}
+
+	private void maakgrafieken() {
+		List<Double> pathlengthes1 = new ArrayList<>();
+		List<Double> pathlengthes2 = new ArrayList<>();
+		List<Double> pathlengthes3 = new ArrayList<>();
+		List<Double> pathlengthes4 = new ArrayList<>();
+		List<Double> tijden1 = new ArrayList<>();
+		List<Double> tijden2 = new ArrayList<>();
+		List<Double> tijden3 = new ArrayList<>();
+		List<Double> tijden4 = new ArrayList<>();
+		ArrayList<ArrayList<Integer[]>> coordinateslist = new ArrayList<>();
+		for (int i = 0; i < aantalSimulaties; i++) {
+			ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
+			coordinateslist.add(coordinates);
+		}
+		if (bruteForceCKBX.getState()) {
+			algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
+			for (int i = 0; i < aantalSimulaties + 1; i++) {
+				if (!(i == 0)) {
+					BruteForce j = new BruteForce(new ArrayList<>(coordinateslist.get(i - 1))); //TODO hier
+
+					pathlengthes1.add(j.getTotalDistance());
+					tijden1.add(j.getRunTime());
+					//		totaleRekentijd1 = totaleRekentijd1 + (j.getRunTime());
+				} else {
+					pathlengthes1.add(0.0);
+					tijden1.add(0.0);
+				}
+			}
+		}
+		if (twoOptCKBX.getState()) {
+			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
+			for (int i = 0; i < aantalSimulaties + 1; i++) {
+				if (!(i == 0)) {
+					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+
+					pathlengthes2.add(j.getTotalDistance());
+					tijden2.add(j.getRunTime());
+					//		totaleRekentijd2 = totaleRekentijd2 + (j.getRunTime());
+				} else {
+					pathlengthes2.add(0.0);
+					tijden2.add(0.0);
+				}
+			}
+		}
+		if (nearestNeighborCKBX.getState()) {
+			//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
+			for (int i = 0; i < aantalSimulaties + 1; i++) {
+				if (!(i == 0)) {
+					NearestNeighbor j = new NearestNeighbor(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+
+					pathlengthes3.add(j.getTotalDistance());
+					tijden3.add(j.getRunTime());
+//									totaleRekentijd3 = totaleRekentijd3 + (j.getRunTime()); //TODO
+				} else {
+					pathlengthes3.add(0.0);
+					tijden3.add(0.0);
+				}
+			}
+		}
+		if (eigenAlgoritmeCKBX.getState()) {
+			algoritmenArrayList.add(Algoritmenenum.EIGENALG);
+			for (int i = 0; i < aantalSimulaties + 1; i++) {
+				if (!(i == 0)) {
+					EigenAlgoritme j = new EigenAlgoritme(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+
+					pathlengthes4.add(j.getTotalDistance());
+					tijden4.add(j.getRunTime());
+					//		totaleRekentijd4 = totaleRekentijd4 + (j.getRunTime());
+				} else {
+					pathlengthes4.add(0.0);
+					tijden4.add(0.0);
+				}
+			}
+		}
+
+		Graph padlengteGraph = new Graph(pathlengthes1, pathlengthes2, pathlengthes3, pathlengthes4);
+		padgrafiekPNL.add(padlengte);
+		padgrafiekPNL.add(padlengteGraph, BorderLayout.EAST);
+		grafiekPNL.add(padgrafiekPNL, BorderLayout.WEST);
+		Graph berekentijdGraph = new Graph(tijden1, tijden2, tijden3, tijden4);
+		tijdgrafiekPNL.add(berekentijd);
+		tijdgrafiekPNL.add(berekentijdGraph, BorderLayout.EAST);
+		grafiekPNL.add(tijdgrafiekPNL, BorderLayout.EAST);
 	}
 
 
