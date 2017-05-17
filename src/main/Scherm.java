@@ -1,11 +1,13 @@
 
 package main;
 
+import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -56,7 +58,7 @@ public class Scherm extends JFrame implements ActionListener {
 	private static int aantalArtikelen = 0;
 	NearestNeighbor nearestNeighbor;
 	BruteForce bruteForce;
-	Weirdorthm weirdorthm;
+	TwoOpt twoOpt;
 	EigenAlgoritme eigenAlgoritme;
 
 	private int aantalSimulaties;
@@ -67,6 +69,9 @@ public class Scherm extends JFrame implements ActionListener {
 	}
 
 	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
+
+	static ArrayList<ArrayList<Integer[]>> lijst1;
+
 
 
 	GrafischeGeneratie grafiesch1;
@@ -410,9 +415,10 @@ public class Scherm extends JFrame implements ActionListener {
 			System.out.println("nog een checkpoint");
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			if (stapnummer == 0) {
-				weirdorthm = new Weirdorthm(new ArrayList<>(coordinates)); //TODO hier
+				twoOpt = new TwoOpt(new ArrayList<>(coordinates)); //TODO hier
 			}
-			//			grafiesch2 = new GrafischeGeneratie(weirdorthm.getPath(), stapnummer, weirdorthm.getARRAYSEPTION());
+			int alg = 2;
+			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("2-Opt");
 			eersteGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			eersteGrafischePanelPNL.add(grafiesch2, BorderLayout.SOUTH);
@@ -422,7 +428,9 @@ public class Scherm extends JFrame implements ActionListener {
 			if (stapnummer == 0) {
 				nearestNeighbor = new NearestNeighbor(new ArrayList<>(coordinates)); //TODO hier
 			}
-			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, nearestNeighbor.getARRAYSEPTION());
+			lijst1 = nearestNeighbor.getARRAYSEPTION();
+			int alg = 3;
+			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("Nearest Neighbor");
 			tweedeGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			tweedeGrafischePanelPNL.add(grafiesch3, BorderLayout.SOUTH);
@@ -481,7 +489,7 @@ public class Scherm extends JFrame implements ActionListener {
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					Weirdorthm j = new Weirdorthm(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
 
 					pathlengthes2.add(j.getTotalDistance());
 					tijden2.add(j.getRunTime());
