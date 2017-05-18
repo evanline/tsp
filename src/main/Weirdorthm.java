@@ -7,14 +7,14 @@ import java.util.Arrays;
  * Created by: Ian Hildebrand
  * Date: 12-May-17.
  */
-public class TwoOpt implements AlgorithmInterface
+public class Weirdorthm implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance = -1;
 	private double newTotalDistance;
 	private double timeSpend;
 
-	TwoOpt(ArrayList<Integer[]> list) {
+	Weirdorthm(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
 		boolean lol = true;
 		path = list;
