@@ -330,6 +330,7 @@ public class Scherm extends JFrame implements ActionListener {
 						}
 					}
 					if (!geenAlgoritme) {
+						startBTN.setEnabled(false);
 						String aantal = aantaArtikelenlTXT.getText();
 						aantalArtikelen = 0;
 						try {
@@ -367,13 +368,13 @@ public class Scherm extends JFrame implements ActionListener {
 						getContentPane().add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 					}
 
-					//	} else if (e.getSource() == pauzeBTN) {
-					//		System.out.println("pauze");
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
 					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
+					startBTN.setEnabled(true);
+					legendaPNL.removeAll();
 					aantalSimulaties = 0;
 					aantalSimulatiesTXT.setText("");
 					aantalArtikelen = 0;
@@ -397,27 +398,18 @@ public class Scherm extends JFrame implements ActionListener {
 		eersteGrafischePanelPNL.removeAll();
 		tweedeGrafischePanelPNL.removeAll();
 		derdeGrafischePanelPNL.removeAll();
-
+		//maak panels leeg want anders werkt dit maar 1 keer ivm graphics
 		if (bruteForceCKBX.getState()) {
 			algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
-			/*
-			if (stapnummer == 0) {
-
-				bruteForce = new BruteForce(new ArrayList<>(coordinates));
-			}
-			for (Integer[] g : bruteForce.getPath()) {
-				System.out.println(Arrays.toString(g));
-			}
-		//	grafiesch3 = new GrafischeGeneratie(bruteForce.getPath(), stapnummer, bruteForce.getARRAYSEPTION());
-		} */
+			//TODO: dit uit grafisch halen want niemand wil een paar honderd duizend keer op een knop klikken als het geen cookie clicker is.
 		}
 		if (twoOptCKBX.getState()) {
 			System.out.println("nog een checkpoint");
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			if (stapnummer == 0) {
-				twoOpt = new TwoOpt(new ArrayList<>(coordinates)); //TODO hier
-			}
-			int alg = 2;
+				twoOpt = new TwoOpt(new ArrayList<>(coordinates));
+			}//als je hier komt omdat je op start geklikt hebt, maak dan een object van het algoritme aan
+			int alg = 2; //want dit is het tweede algoritme uit de lijst
 			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("2-Opt");
 			eersteGrafischePanelPNL.add(l, BorderLayout.NORTH);
