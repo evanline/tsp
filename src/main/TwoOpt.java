@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,26 +10,32 @@ import java.util.Arrays;
  */
 public class TwoOpt implements AlgorithmInterface {
 	private ArrayList<Integer[]> path = new ArrayList<>();
-	private double totalDistance = -1;
-	private double newTotalDistance;
+	private double totalDistance;
 	private double timeSpend;
-	public TwoOpt(ArrayList<Integer[]> list) {
 
+	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
-		boolean lol = true;
-		path = list;
 
-		while (lol)
+		for (Integer[] a : list)
 		{
-			ArrayList<Integer[]> tempList = runTwoOpt(new ArrayList<>(path));
-			if (newTotalDistance < totalDistance || totalDistance == -1)
+			for (Integer[] b : list)
 			{
-				totalDistance =  newTotalDistance;
-				path = tempList;
-			}
-			else
-			{
-				lol = false;
+				if (a == b) continue;
+				Line2D line1 = new Line2D.Float(a[0], a[1], b[0], b[1]);
+
+				for (Integer[] c : list)
+				{
+					if (c == a || c == b) continue;
+					for (Integer[] d : list)
+					{
+						if (d == c || d == b || d == a) continue;
+						Line2D line2 = new Line2D.Float(c[0], c[1], d[0], d[1]);
+						if (line2.intersectsLine(line1))
+						{
+							//todo: this is wrong, it needs to select edges according to a path not make them!
+						}
+					}
+				}
 			}
 		}
 
@@ -41,61 +48,7 @@ public class TwoOpt implements AlgorithmInterface {
 		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
 	}
 
-	private ArrayList<Integer[]> runTwoOpt (ArrayList<Integer[]> list)
-	{
-		newTotalDistance = 0;
-		ArrayList<Integer[]> tpath = new ArrayList<>();
-		for (int i = -1; i < list.size();)
-		{
-			if ((i+4) > list.size())
-			{
-				for(int b = 1; (b+i) < list.size(); b++)
-				{
-					tpath.add(list.get(i+b));
-				}
-				break;
-			}
-			else
-			{
-				i += 4;
-			}
-
-			Integer[] x = list.get(i - 3);
-			Integer[] y = list.get(i - 2);
-			Integer[] u = list.get(i - 1);
-			Integer[] v = list.get(i);
-
-			double route1 = calculateDistance(x, y);
-			double route2 = calculateDistance(u, v);
-
-			double costR1 = route1 + route2;
-
-			double route3 = calculateDistance(x, u);
-			double route4 = calculateDistance(y, v);
-
-			double costR2 = route3 + route4;
-
-			if(costR1 > costR2)
-			{
-				tpath.add(x);
-				tpath.add(u);
-				tpath.add(y);
-				tpath.add(v);
-				newTotalDistance += costR1;
-			}
-			else
-			{
-				tpath.add(x);
-				tpath.add(y);
-				tpath.add(u);
-				tpath.add(v);
-				newTotalDistance += costR2;
-			}
-		}
-		return tpath;
-	}
-
-	public ArrayList<Integer[]> getPath()
+	ArrayList<Integer[]> getPath()
 	{
 		return path;
 	}
