@@ -49,15 +49,9 @@ public class TwoOpt implements AlgorithmInterface {
 			for(Integer[] c : list)
 			{
 				int indexc = list.indexOf(c);
-				if ((list.size()-1) < (indexc+1))
-				{
-					continue;
-				}
+				if ((list.size()-1) < (indexc+1)) continue;
 				Integer[] d = list.get(indexc+1);
-				if (c == a || c == b || d == a || d == b)
-				{
-					continue;
-				}
+				if (c == a || c == b || d == a || d == b) continue;
 
 				Line2D line1 = new Line2D.Float(a[0], a[1], b[0], b[1]);
 				Line2D line2 = new Line2D.Float(c[0], c[1], d[0], d[1]);
@@ -80,7 +74,7 @@ public class TwoOpt implements AlgorithmInterface {
 			}
 		}
 		calculateTotalDistance(list);
-		if((previousTotalDistance > totalDistance) || (previousTotalDistance == -1d))
+		if((previousTotalDistance > totalDistance) || previousTotalDistance == -1d)
 		{
 			this.path = list;
 		}

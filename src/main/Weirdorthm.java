@@ -21,7 +21,7 @@ public class Weirdorthm implements AlgorithmInterface
 
 		while (lol)
 		{
-			ArrayList<Integer[]> tempList = runTwoOpt(new ArrayList<>(path));
+			ArrayList<Integer[]> tempList = runWeird(new ArrayList<>(path));
 			if (newTotalDistance < totalDistance || totalDistance == -1)
 			{
 				totalDistance =  newTotalDistance;
@@ -42,8 +42,9 @@ public class Weirdorthm implements AlgorithmInterface
 		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
 	}
 
-	private ArrayList<Integer[]> runTwoOpt (ArrayList<Integer[]> list)
+	private ArrayList<Integer[]> runWeird (ArrayList<Integer[]> list)
 	{
+
 		newTotalDistance = 0;
 		ArrayList<Integer[]> tpath = new ArrayList<>();
 		for (int i = -1; i < list.size();)
