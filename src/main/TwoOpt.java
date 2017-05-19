@@ -3,6 +3,7 @@ package main;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by: Sanne Klaassen
@@ -16,28 +17,7 @@ public class TwoOpt implements AlgorithmInterface {
 	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
 
-		for (Integer[] a : list)
-		{
-			for (Integer[] b : list)
-			{
-				if (a == b) continue;
-				Line2D line1 = new Line2D.Float(a[0], a[1], b[0], b[1]);
-
-				for (Integer[] c : list)
-				{
-					if (c == a || c == b) continue;
-					for (Integer[] d : list)
-					{
-						if (d == c || d == b || d == a) continue;
-						Line2D line2 = new Line2D.Float(c[0], c[1], d[0], d[1]);
-						if (line2.intersectsLine(line1))
-						{
-							//todo: this is wrong, it needs to select edges according to a path not make them!
-						}
-					}
-				}
-			}
-		}
+		run2Opt(list);
 
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
@@ -46,6 +26,54 @@ public class TwoOpt implements AlgorithmInterface {
 	private double calculateDistance(Integer[] a,Integer[] b)
 	{
 		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
+	}
+
+	private void run2Opt(ArrayList<Integer[]> list)
+	{
+		for (Integer[] a : list)
+		{
+			int indexa = list.indexOf(a);
+			if ((list.size()-1) <= (indexa+1))
+			{
+				continue;
+			}
+
+			Integer[] b = list.get(indexa+1);
+
+			for(Integer[] c : list)
+			{
+				int indexc = list.indexOf(c);
+				if ((list.size()-1) <= (indexc+1))
+				{
+					continue;
+				}
+				Integer[] d = list.get(indexc+1);
+				if (c == a || c == b || d == a || d == b)
+				{
+					continue;
+				}
+
+				Line2D line1 = new Line2D.Float(a[0], a[1], b[0], b[1]);
+				Line2D line2 = new Line2D.Float(c[0], c[1], d[0], d[1]);
+
+				if (line2.intersectsLine(line1))
+				{
+					double path1 = calculateDistance(a, b);
+					double path2 = calculateDistance(c, d);
+					double path3 = calculateDistance(a, c);
+					double path4 = calculateDistance(b, d);
+
+					double route1 = path1 + path2;
+					double route2 = path3 + path4;
+
+					if (route1 > route2)
+					{
+						Collections.swap(list, indexa+1, indexc);
+					}
+				}
+			}
+		}
+		this.path = list;
 	}
 
 	ArrayList<Integer[]> getPath()
