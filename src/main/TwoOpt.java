@@ -57,8 +57,7 @@ public class TwoOpt implements AlgorithmInterface {
 		}
 		previousTotalDistance = calculateTotalDistance(path);
 		totalDistance = calculateTotalDistance(list);
-		if((previousTotalDistance > totalDistance))
-			this.path = list;
+		if((previousTotalDistance > totalDistance)) this.path = list;
 	}
 
 	private double calculateTotalDistance(ArrayList<Integer[]> list)
@@ -91,10 +90,7 @@ public class TwoOpt implements AlgorithmInterface {
 	public String toString()
 	{
 		StringBuilder pathyeey = new StringBuilder("path:");
-		for (Integer[] i : path)
-		{
-			pathyeey.append(Arrays.toString(i));
-		}
+		for (Integer[] i : path) pathyeey.append(Arrays.toString(i));
 		return String.valueOf(pathyeey);
 	}
 }
