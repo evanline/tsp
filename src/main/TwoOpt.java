@@ -20,6 +20,8 @@ public class TwoOpt implements AlgorithmInterface {
 		previousTotalDistance = -1d;
 		totalDistance = -1d;
 
+		list = new NearestNeighbor(list).getPath();
+
 		while (this.previousTotalDistance >= this.totalDistance || previousTotalDistance == -1d)
 		{
 			run2Opt(list);
