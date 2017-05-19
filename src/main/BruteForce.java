@@ -1,5 +1,7 @@
 package main;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -111,6 +113,7 @@ public class BruteForce implements AlgorithmInterface
 		return returnValue;
 	}
 
+	@Contract(pure = true)
 	static long getCount()
 	{
 		return count;

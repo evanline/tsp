@@ -12,12 +12,18 @@ import java.util.Collections;
 public class TwoOpt implements AlgorithmInterface {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
+	private double previousTotalDistance;
 	private double timeSpend;
 
 	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
+		previousTotalDistance = -1d;
+		totalDistance = -1d;
 
-		run2Opt(list);
+		while (this.previousTotalDistance >= this.totalDistance || previousTotalDistance == -1d)
+		{
+			run2Opt(list);
+		}
 
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
@@ -33,7 +39,7 @@ public class TwoOpt implements AlgorithmInterface {
 		for (Integer[] a : list)
 		{
 			int indexa = list.indexOf(a);
-			if ((list.size()-1) <= (indexa+1))
+			if ((list.size()-1) < (indexa+1))
 			{
 				continue;
 			}
@@ -43,7 +49,7 @@ public class TwoOpt implements AlgorithmInterface {
 			for(Integer[] c : list)
 			{
 				int indexc = list.indexOf(c);
-				if ((list.size()-1) <= (indexc+1))
+				if ((list.size()-1) < (indexc+1))
 				{
 					continue;
 				}
@@ -73,7 +79,25 @@ public class TwoOpt implements AlgorithmInterface {
 				}
 			}
 		}
-		this.path = list;
+		calculateTotalDistance(list);
+		if((previousTotalDistance > totalDistance) || (previousTotalDistance == -1d))
+		{
+			this.path = list;
+		}
+	}
+
+	private void calculateTotalDistance(ArrayList<Integer[]> list)
+	{
+		previousTotalDistance = totalDistance;
+		for(Integer[] i : list)
+		{
+			int index = list.indexOf(i);
+			if ((list.size()-1) < (index+1))
+			{
+				continue;
+			}
+			totalDistance += calculateDistance(i, list.get(index+1));
+		}
 	}
 
 	ArrayList<Integer[]> getPath()
