@@ -17,18 +17,14 @@ public class TwoOpt implements AlgorithmInterface {
 
 	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
-		previousTotalDistance = -1d;
-		totalDistance = -1d;
-
 		NearestNeighbor nn = new NearestNeighbor(list);
-		list = nn.getPath();
-		path = nn.getPath();
+		path = list = nn.getPath();
 		previousTotalDistance = nn.getTotalDistance();
 
 		while (true)
 		{
-			if (!(previousTotalDistance > totalDistance || previousTotalDistance == -1d)) break;
-			run2Opt(list);
+			if (!(previousTotalDistance > totalDistance)) break;
+			run2Opt(new ArrayList<>(list));
 		}
 
 		long endTime = System.nanoTime();
@@ -68,14 +64,10 @@ public class TwoOpt implements AlgorithmInterface {
 	private double calculateTotalDistance(ArrayList<Integer[]> list)
 	{
 		double x = 0;
-		for(Integer[] i : list)
+		for (int i1 = 0; i1 < list.size()-1; i1++)
 		{
-			int index = list.indexOf(i);
-			if ((list.size()-1) < (index+1))
-			{
-				continue;
-			}
-			x += calculateDistance(i, list.get(index+1));
+			Integer[] i = list.get(i1);
+			x += calculateDistance(i, list.get(i1 + 1));
 		}
 		return x;
 	}
