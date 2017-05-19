@@ -3,6 +3,8 @@ package main;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static main.Calculate.calculateDistance;
+
 /**
  * Created by: Ian Hildebrand
  * Date: 12-May-17.
@@ -35,11 +37,6 @@ public class Weirdorthm implements AlgorithmInterface
 
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
-	}
-
-	private double calculateDistance(Integer[] a,Integer[] b)
-	{
-		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
 	}
 
 	private ArrayList<Integer[]> runWeird (ArrayList<Integer[]> list)

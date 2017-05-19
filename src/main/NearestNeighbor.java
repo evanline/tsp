@@ -29,7 +29,7 @@ class NearestNeighbor implements AlgorithmInterface
 			for (Integer[] i : list)
 			{
 				ARRAYSEPTIONINTESIFYS.add(i);
-				double dist = Math.sqrt((Math.pow((Math.abs(i[0] - currentPos[0]) ), 2) + Math.pow(Math.abs(i[1] - currentPos[1]), 2)));
+				double dist = Calculate.calculateDistance(i, currentPos);
 				// √((|x - y|)² + (|a - i|)²)
 				if (dist < Ndistance || Ndistance == -1)
 				{
@@ -43,6 +43,8 @@ class NearestNeighbor implements AlgorithmInterface
 			currentPos = nearest;
 			ARRAYSEPTION.add(ARRAYSEPTIONINTESIFYS);
 		}
+		totalDistance = Calculate.calculateTotalDistance(path);
+
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}

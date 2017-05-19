@@ -28,7 +28,7 @@ public class BruteForce implements AlgorithmInterface
 			{
 				Integer[] startLoc = i.get(a);
 				Integer[] secondLoc = i.get(a+1);
-				total += Math.sqrt((Math.pow((Math.abs(secondLoc[0] - startLoc[0]) ), 2) + Math.pow(Math.abs(secondLoc[1] - startLoc[1]), 2)));
+				total += Calculate.calculateDistance(startLoc, secondLoc);
 			}
 
 			if(shortestRouteLength == -1d || total < shortestRouteLength){
@@ -37,7 +37,7 @@ public class BruteForce implements AlgorithmInterface
 				totalDistance = total;
 			}
 		}
-
+		totalDistance = Calculate.calculateTotalDistance(path);
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}

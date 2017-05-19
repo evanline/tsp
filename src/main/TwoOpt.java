@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static main.Calculate.calculateTotalDistance;
+
 /**
  * Created by: Ian Hildebrand
  * Date: 19-05-17.
@@ -58,17 +60,6 @@ public class TwoOpt implements AlgorithmInterface {
 		previousTotalDistance = calculateTotalDistance(path);
 		totalDistance = calculateTotalDistance(list);
 		if((previousTotalDistance > totalDistance)) this.path = list;
-	}
-
-	private double calculateTotalDistance(ArrayList<Integer[]> list)
-	{
-		double x = 0;
-		for (int i1 = 0; i1 < list.size()-1; i1++)
-		{
-			Integer[] i = list.get(i1);
-			x += calculateDistance(i, list.get(i1 + 1));
-		}
-		return x;
 	}
 
 	ArrayList<Integer[]> getPath()
