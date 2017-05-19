@@ -20,7 +20,10 @@ public class TwoOpt implements AlgorithmInterface {
 		previousTotalDistance = -1d;
 		totalDistance = -1d;
 
-		list = new NearestNeighbor(list).getPath();
+		NearestNeighbor nn = new NearestNeighbor(list);
+		list = nn.getPath();
+		path = nn.getPath();
+		previousTotalDistance = nn.getTotalDistance();
 
 		while (true)
 		{
@@ -56,14 +59,15 @@ public class TwoOpt implements AlgorithmInterface {
 						Collections.swap(list, indexa + 1, indexc);
 			}
 		}
-		calculateTotalDistance(list);
-		if((previousTotalDistance > totalDistance) || previousTotalDistance == -1d)
+		previousTotalDistance = calculateTotalDistance(path);
+		totalDistance = calculateTotalDistance(list);
+		if((previousTotalDistance > totalDistance))
 			this.path = list;
 	}
 
-	private void calculateTotalDistance(ArrayList<Integer[]> list)
+	private double calculateTotalDistance(ArrayList<Integer[]> list)
 	{
-		previousTotalDistance = totalDistance;
+		double x = 0;
 		for(Integer[] i : list)
 		{
 			int index = list.indexOf(i);
@@ -71,8 +75,9 @@ public class TwoOpt implements AlgorithmInterface {
 			{
 				continue;
 			}
-			totalDistance += calculateDistance(i, list.get(index+1));
+			x += calculateDistance(i, list.get(index+1));
 		}
+		return x;
 	}
 
 	ArrayList<Integer[]> getPath()
