@@ -57,9 +57,17 @@ public class TwoOpt implements AlgorithmInterface {
 						Collections.swap(list, indexa + 1, indexc);
 			}
 		}
+
 		previousTotalDistance = calculateTotalDistance(path);
-		totalDistance = calculateTotalDistance(list);
-		if((previousTotalDistance > totalDistance)) this.path = list;
+		if((previousTotalDistance > calculateTotalDistance(list)))
+		{
+			this.path = list;
+			totalDistance = calculateTotalDistance(list);
+		}
+		else
+		{
+			totalDistance = previousTotalDistance;
+		}
 	}
 
 	ArrayList<Integer[]> getPath()
