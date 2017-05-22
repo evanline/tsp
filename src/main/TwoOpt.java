@@ -11,7 +11,7 @@ import static main.Calculate.calculateTotalDistance;
  * Created by: Ian Hildebrand
  * Date: 19-05-17.
  */
-public class TwoOpt implements AlgorithmInterface {
+public class TwoOpt extends Calculate implements AlgorithmInterface {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
 	private double previousTotalDistance;
@@ -31,11 +31,6 @@ public class TwoOpt implements AlgorithmInterface {
 
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
-	}
-
-	private double calculateDistance(Integer[] a,Integer[] b)
-	{
-		return Math.sqrt((Math.pow((Math.abs(b[0] - a[0]) ), 2) + Math.pow(Math.abs(b[1] - a[1]), 2)));
 	}
 
 	private void run2Opt(ArrayList<Integer[]> list)

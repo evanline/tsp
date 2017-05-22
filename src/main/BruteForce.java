@@ -1,7 +1,5 @@
 package main;
 
-import org.jetbrains.annotations.Contract;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,7 +7,7 @@ import java.util.Arrays;
  * Created by: Ian Hildebrand & Sjoerd Dekker(hulp)
  * Date: 15-May-17.
  */
-public class BruteForce implements AlgorithmInterface
+public class BruteForce extends Calculate implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 
@@ -28,7 +26,7 @@ public class BruteForce implements AlgorithmInterface
 			{
 				Integer[] startLoc = i.get(a);
 				Integer[] secondLoc = i.get(a+1);
-				total += Calculate.calculateDistance(startLoc, secondLoc);
+				total += calculateDistance(startLoc, secondLoc);
 			}
 
 			if(shortestRouteLength == -1d || total < shortestRouteLength){
@@ -37,7 +35,7 @@ public class BruteForce implements AlgorithmInterface
 				totalDistance = total;
 			}
 		}
-		totalDistance = Calculate.calculateTotalDistance(path);
+		totalDistance = calculateTotalDistance(path);
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
@@ -68,7 +66,6 @@ public class BruteForce implements AlgorithmInterface
 		return String.valueOf(pathyeey);
 	}
 
-	private static long count = 0;
 	// return all possible location orders from an ArrayList with locations
 	private static ArrayList<ArrayList<Integer[]>> runBruteForce(ArrayList<Integer[]> original)
 	{
@@ -97,8 +94,6 @@ public class BruteForce implements AlgorithmInterface
 			// for every Integer[] ...
 			for (int i = 0; i <= smallerPermutated.size(); i++)
 			{
-
-				count++;
 				// create a new ArrayList from the smaller
 				ArrayList<Integer[]> temp = new ArrayList<>(smallerPermutated);
 
@@ -111,11 +106,5 @@ public class BruteForce implements AlgorithmInterface
 		}
 
 		return returnValue;
-	}
-
-	@Contract(pure = true)
-	static long getCount()
-	{
-		return count;
 	}
 }

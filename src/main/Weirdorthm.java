@@ -9,7 +9,7 @@ import static main.Calculate.calculateDistance;
  * Created by: Ian Hildebrand
  * Date: 12-May-17.
  */
-public class Weirdorthm implements AlgorithmInterface
+public class Weirdorthm extends Calculate implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance = -1;

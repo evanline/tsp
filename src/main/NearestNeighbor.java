@@ -6,7 +6,7 @@ import java.util.*;
  * Created by: Ian Hildebrand
  * Date: 08-May-17.
  */
-class NearestNeighbor implements AlgorithmInterface
+class NearestNeighbor extends Calculate implements AlgorithmInterface
 {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
@@ -29,7 +29,7 @@ class NearestNeighbor implements AlgorithmInterface
 			for (Integer[] i : list)
 			{
 				ARRAYSEPTIONINTESIFYS.add(i);
-				double dist = Calculate.calculateDistance(i, currentPos);
+				double dist = calculateDistance(i, currentPos);
 				// √((|x - y|)² + (|a - i|)²)
 				if (dist < Ndistance || Ndistance == -1)
 				{
@@ -43,7 +43,7 @@ class NearestNeighbor implements AlgorithmInterface
 			currentPos = nearest;
 			ARRAYSEPTION.add(ARRAYSEPTIONINTESIFYS);
 		}
-		totalDistance = Calculate.calculateTotalDistance(path);
+		totalDistance = calculateTotalDistance(path);
 
 		long endTime = System.nanoTime();
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
