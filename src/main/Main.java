@@ -1,7 +1,6 @@
 package main;
 
 import javax.swing.*;
-import java.util.Arrays;
 
 /**
  * @author Sanne Klaassen & Ian Hildebrand

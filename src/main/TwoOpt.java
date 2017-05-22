@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static main.Calculate.calculateTotalDistance;
-
 /**
  * Created by: Ian Hildebrand
  * Date: 19-05-17.
