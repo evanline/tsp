@@ -1,13 +1,11 @@
 
 package main;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -53,7 +51,7 @@ public class Scherm extends JFrame implements ActionListener {
 	private JButton grafischemodusBTN;
 
 	private JButton simulatiemodusBTN; //
-	private boolean grafisch = true;
+	boolean grafisch = true;
 
 	private static int aantalArtikelen = 0;
 	NearestNeighbor nearestNeighbor;
@@ -299,13 +297,14 @@ public class Scherm extends JFrame implements ActionListener {
 /*reset*/
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
-					coordinates = new GenereerCoordinaten().getLijstCoordinaten();
+//					coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 					volgendeBTN.setText("Start");
 					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
 					aantaArtikelenlTXT.setText("");
 					aantalArtikelen = 0;
+					stapnummer = 0;
 					//	cleanup();
 					eersteGrafischePanelPNL.removeAll();
 					tweedeGrafischePanelPNL.removeAll();
@@ -358,10 +357,6 @@ public class Scherm extends JFrame implements ActionListener {
 						Legenda legendaOBJ = new Legenda(bruteForceCKBX, twoOptCKBX, nearestNeighborCKBX, eigenAlgoritmeCKBX);
 						legendaPNL.add(legendaOBJ);
 						maakgrafieken();
-
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes1));
-
-
 						getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 						getContentPane().revalidate();
 						getContentPane().repaint();
@@ -407,7 +402,7 @@ public class Scherm extends JFrame implements ActionListener {
 			System.out.println("nog een checkpoint");
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			if (stapnummer == 0) {
-				twoOpt = new TwoOpt(new ArrayList<>(coordinates));
+				twoOpt = new TwoOpt(new ArrayList<>(coordinates), grafisch);
 			}//als je hier komt omdat je op start geklikt hebt, maak dan een object van het algoritme aan
 			int alg = 2; //want dit is het tweede algoritme uit de lijst
 			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, alg);
@@ -418,6 +413,7 @@ public class Scherm extends JFrame implements ActionListener {
 		if (nearestNeighborCKBX.getState()) {
 			algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 			if (stapnummer == 0) {
+				System.out.println(coordinates.size() + ", scherm");
 				nearestNeighbor = new NearestNeighbor(new ArrayList<>(coordinates)); //TODO hier
 			}
 			lijst1 = nearestNeighbor.getARRAYSEPTION();
@@ -433,7 +429,7 @@ public class Scherm extends JFrame implements ActionListener {
 				eigenAlgoritme = new EigenAlgoritme(new ArrayList<>(coordinates)); //TODO hier
 			}
 			JLabel l = new JLabel("Eigen Algoritme");
-			//			grafiesch4 = new GrafischeGeneratie(eigenAlgoritme.getPath(), stapnummer, eigenAlgoritme.getARRAYSEPTION());
+			//			grafiesch4 = new GrafischeGeneratie(eigenAlgoritme.getList(), stapnummer, eigenAlgoritme.getARRAYSEPTION());
 			derdeGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			derdeGrafischePanelPNL.add(grafiesch4, BorderLayout.SOUTH);
 		}
@@ -481,7 +477,7 @@ public class Scherm extends JFrame implements ActionListener {
 			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)), grafisch);//TODO hier
 
 					pathlengthes2.add(j.getTotalDistance());
 					tijden2.add(j.getRunTime());

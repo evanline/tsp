@@ -84,12 +84,13 @@ public class GrafischeGeneratie extends JPanel {
 		}
 
 		graphpoints = maakGrafiekpunten(coordinaat);
+		System.out.println(coordinaat.size());
 		switch (algoritme){
 			case 2 :
 				twoopt();
 			break;
 			case 3 :
-				neareseneighbor();
+				nearestneighbor();
 			break;
 		}
 
@@ -106,7 +107,7 @@ public class GrafischeGeneratie extends JPanel {
 
 	}
 
-	private void neareseneighbor(){
+	private void nearestneighbor(){
 		List<Point> b = null;
 		if (stapnummer < 1) {
 			int e = getHeight() - BORDER_GAP;

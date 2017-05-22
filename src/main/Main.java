@@ -11,6 +11,6 @@ public class Main {
 	{
 		new Scherm().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-		System.out.println(new Weirdorthm(new GenereerCoordinaten().getLijstCoordinaten()));
+		//System.out.println(new Weirdorthm(new GenereerCoordinaten().getLijstCoordinaten()));
 	}
 }

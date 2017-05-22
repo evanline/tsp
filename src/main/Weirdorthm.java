@@ -7,8 +7,8 @@ import java.util.Arrays;
  * Created by: Ian Hildebrand
  * Date: 12-May-17.
  */
-public class Weirdorthm implements AlgorithmInterface
-{
+/*
+public class Weirdorthm implements AlgorithmInterface {
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance = -1;
 	private double newTotalDistance;
@@ -96,7 +96,7 @@ public class Weirdorthm implements AlgorithmInterface
 		return tpath;
 	}
 
-	public ArrayList<Integer[]> getPath()
+	public ArrayList<Integer[]> getList()
 	{
 		return path;
 	}
@@ -121,4 +121,5 @@ public class Weirdorthm implements AlgorithmInterface
 		}
 		return String.valueOf(pathyeey);
 	}
-}
+
+}*/
