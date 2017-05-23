@@ -13,6 +13,10 @@ public class EigenAlgoritme implements AlgorithmInterface
 	private double totalDistance;
 	private double timeSpend;
 
+	/**
+	 * constructor, selects what algorithm to use according to the list size.
+	 * @param list the list of coördinates it needs to run the algorithm on.
+	 */
 	EigenAlgoritme(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
 
@@ -33,6 +37,10 @@ public class EigenAlgoritme implements AlgorithmInterface
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
+	/**
+	 * returns the path that is calculated.
+	 * @return the path that is calculated.
+	 */
 	public ArrayList<Integer[]> getPath()
 	{
 		return path;

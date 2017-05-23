@@ -15,6 +15,10 @@ public class TwoOpt extends Calculate implements AlgorithmInterface {
 	private double previousTotalDistance;
 	private double timeSpend;
 
+	/**
+	 * TwoOpt runs run2Opt as long as it improves the path.
+	 * @param list the list of coördinates it needs to run the algorithm on.
+	 */
 	TwoOpt(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
 		NearestNeighbor nn = new NearestNeighbor(list);
@@ -31,6 +35,10 @@ public class TwoOpt extends Calculate implements AlgorithmInterface {
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
+	/**
+	 * run2Opt checks for lines that are crossed and tries to find a more optimal route for them.
+	 * @param list the list of coördinates it needs to run the algorithm on.
+	 */
 	private void run2Opt(ArrayList<Integer[]> list)
 	{
 		for (Integer[] a : list)
@@ -63,6 +71,10 @@ public class TwoOpt extends Calculate implements AlgorithmInterface {
 		}
 	}
 
+	/**
+	 * returns the path that is calculated.
+	 * @return the path that is calculated.
+	 */
 	ArrayList<Integer[]> getPath()
 	{
 		return path;

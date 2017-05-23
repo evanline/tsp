@@ -8,10 +8,13 @@ import java.util.Random;
  * Created by: Sanne Klaassen & Ian Hildebrand
  * Date: 08/05/17.
  */
-
 class GenereerCoordinaten {
 	private ArrayList<Integer[]> lijstCoordinaten = new ArrayList<>();
 
+	/**
+	 * GenereerCoördinaten generates a radomised list of coördinates.
+	 * The amount of coördinates it generates is based on the amount set in the screen or it's 9.
+	 */
 	GenereerCoordinaten()
 	{
 		ArrayList<Integer[]> hashes = new ArrayList<>();

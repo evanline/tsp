@@ -13,6 +13,10 @@ class NearestNeighbor extends Calculate implements AlgorithmInterface
 	private double timeSpend;
 	private ArrayList<ArrayList<Integer[]>> ARRAYSEPTION = new ArrayList<>();
 
+	/**
+	 * NearestNeighbor looks for the point that is closest to the current position of the robot and adds that to the path.
+	 * @param list the list of coördinates it needs to run the algorithm on.
+	 */
 	NearestNeighbor(ArrayList<Integer[]> list)
 	{
 		long startTime = System.nanoTime();
@@ -30,7 +34,7 @@ class NearestNeighbor extends Calculate implements AlgorithmInterface
 			{
 				ARRAYSEPTIONINTESIFYS.add(i);
 				double dist = calculateDistance(i, currentPos);
-				// √((|x - y|)² + (|a - i|)²)
+
 				if (dist < Ndistance || Ndistance == -1)
 				{
 					Ndistance = dist;
@@ -49,11 +53,19 @@ class NearestNeighbor extends Calculate implements AlgorithmInterface
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
+	/**
+	 * returns the path that is calculated.
+	 * @return the path that is calculated.
+	 */
 	ArrayList<Integer[]> getPath()
 	{
 		return path;
 	}
 
+	/**
+	 * getARRAYSEPTION returns all the steps this algothm makes
+	 * @return a list with all the steps this algorithm took.
+	 */
 	ArrayList<ArrayList<Integer[]>> getARRAYSEPTION()
 	{
 		return ARRAYSEPTION;

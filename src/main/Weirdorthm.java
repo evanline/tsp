@@ -94,6 +94,10 @@ public class Weirdorthm extends Calculate implements AlgorithmInterface
 		return tpath;
 	}
 
+	/**
+	 * returns the path that is calculated.
+	 * @return the path that is calculated.
+	 */
 	public ArrayList<Integer[]> getPath()
 	{
 		return path;
