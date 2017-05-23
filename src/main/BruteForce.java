@@ -14,6 +14,10 @@ public class BruteForce extends Calculate implements AlgorithmInterface
 	private double totalDistance;
 	private double timeSpend;
 
+	/**
+	 * BruteForce itterates through all possible paths and gives back the most optimal one.
+	 * @param coordinates the list of coördinates it needs to run the algorithm on.
+	 */
 	BruteForce(ArrayList<Integer[]> coordinates) {
 		long startTime = System.nanoTime();
 
@@ -40,6 +44,10 @@ public class BruteForce extends Calculate implements AlgorithmInterface
 		timeSpend = (endTime - startTime) / (1 * Math.pow(10, 6));
 	}
 
+	/**
+	 * returns the path that is calculated.
+	 * @return the path that is calculated.
+	 */
 	ArrayList<Integer[]> getPath()
 	{
 		return path;
@@ -66,7 +74,12 @@ public class BruteForce extends Calculate implements AlgorithmInterface
 		return String.valueOf(pathyeey);
 	}
 
-	// return all possible location orders from an ArrayList with locations
+
+	/**
+	 * return all possible location orders from an ArrayList with locations
+	 * @param original the original list
+	 * @return all the paths
+	 */
 	private static ArrayList<ArrayList<Integer[]>> runBruteForce(ArrayList<Integer[]> original)
 	{
 		// only if the original array is empty
