@@ -12,6 +12,7 @@ public class EigenAlgoritme implements AlgorithmInterface
 	private ArrayList<Integer[]> path = new ArrayList<>();
 	private double totalDistance;
 	private double timeSpend;
+	private ArrayList<ArrayList<Integer[]>> ARRAYSEPTION = new ArrayList<>();
 
 	EigenAlgoritme(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
@@ -21,6 +22,7 @@ public class EigenAlgoritme implements AlgorithmInterface
 			NearestNeighbor nn = new NearestNeighbor(list);
 			path = nn.getPath();
 			totalDistance = nn.getTotalDistance();
+			ARRAYSEPTION =nn.getARRAYSEPTION();
 		}
 		else
 		{
@@ -57,5 +59,9 @@ public class EigenAlgoritme implements AlgorithmInterface
 			pathyeey.append(Arrays.toString(i));
 		}
 		return String.valueOf(pathyeey);
+	}
+
+	public ArrayList<ArrayList<Integer[]>> getARRAYSEPTION() {
+		return ARRAYSEPTION;
 	}
 }

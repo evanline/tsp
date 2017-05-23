@@ -33,6 +33,7 @@ public class Graph extends JPanel {
 	private double xScale;
 	private double yScale;
 	private int MAX_SIZE = 1;
+
 	static Color getGraphColor1() {
 		return GRAPH_COLOR1;
 	}
@@ -108,7 +109,6 @@ public class Graph extends JPanel {
 		MAX_SIZE = Math.max(MAX_SIZE, size3);
 		MAX_SIZE = Math.max(MAX_SIZE, size4);
 	}
-
 
 
 	@Override
@@ -207,7 +207,7 @@ public class Graph extends JPanel {
 		return graphPoints;
 	}
 
-	 static void tekenlijn(List<Point> graphPoints) {
+	static void tekenlijn(List<Point> graphPoints) {
 		for (int i = 0; i < graphPoints.size() - 1; i++) {
 			int x1 = graphPoints.get(i).x;
 			int y1 = graphPoints.get(i).y;

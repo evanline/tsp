@@ -1,13 +1,11 @@
 
 package main;
 
-import javax.imageio.plugins.jpeg.JPEGHuffmanTable;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,12 +39,13 @@ public class Scherm extends JFrame implements ActionListener {
 	private JPanel eersteGrafischePanelPNL = new JPanel(new BorderLayout());
 	private JPanel tweedeGrafischePanelPNL = new JPanel(new BorderLayout());
 	private JPanel derdeGrafischePanelPNL = new JPanel(new BorderLayout());
+	private JPanel nuldeGrafischePanelPNL = new JPanel(new BorderLayout());
 	private JPanel nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL = new JPanel(new BorderLayout());
 	private JPanel ditIsEchtDeLaatstePanelPNL = new JPanel(new BorderLayout());
 	private JPanel neeEchtPNL = new JPanel(new BorderLayout());
+	private JPanel nuEchtPNL = new JPanel(new BorderLayout());
 
 	private JButton startBTN;
-	private JButton pauzeBTN;
 	private JButton resetBTN;
 	private JButton volgendeBTN; //
 	private JButton vorigeBTN; //
@@ -56,41 +55,24 @@ public class Scherm extends JFrame implements ActionListener {
 	private boolean grafisch = true;
 
 	private static int aantalArtikelen = 0;
-	NearestNeighbor nearestNeighbor;
-	BruteForce bruteForce;
-	TwoOpt twoOpt;
-	EigenAlgoritme eigenAlgoritme;
+	private NearestNeighbor nearestNeighbor;
+	private BruteForce bruteForce;
+	private TwoOpt twoOpt;
+	private EigenAlgoritme eigenAlgoritme;
 
 	private int aantalSimulaties;
 	private ArrayList<Checkbox> algoritmen = new ArrayList<>();
 
-	enum Algoritmenenum {
-		BRUTEFORCE, TWOOPT, NEARESTNEIGHBOR, EIGENALG
-	}
-
-	private ArrayList<Algoritmenenum> algoritmenArrayList = new ArrayList<>();
-
 	static ArrayList<ArrayList<Integer[]>> lijst1;
 
 
-
-	GrafischeGeneratie grafiesch1;
-	GrafischeGeneratie grafiesch2;
-	GrafischeGeneratie grafiesch3;
-	GrafischeGeneratie grafiesch4;
-	int stapnummer = 0;
-//	Double totaleRekentijd1;
-//	Double totaleRekentijd2;
-//	Double totaleRekentijd3;
-//	Double totaleRekentijd4;
-
-//	Graph padlengteGraph;
-//	Graph berekentijdGraph;
+	private int stapnummer = 0;
 
 	Scherm() /* SK */ {
+		//maak de schermdingen die altijd nodug zijn.
+
 		setTitle("Algoritmes voor TSP");
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-
 		setLayout(new FlowLayout());
 		getContentPane().setBackground(Color.gray);
 		// standaard noodzakelijke instellingen
@@ -114,8 +96,6 @@ public class Scherm extends JFrame implements ActionListener {
 		// reset/start, berekenen, pauze/doorgaan
 		startBTN = new JButton("Start");
 		startBTN.addActionListener(this);
-		pauzeBTN = new JButton("Pauze");
-		pauzeBTN.addActionListener(this);
 		resetBTN = new JButton("Reset");
 		resetBTN.addActionListener(this);
 		volgendeBTN = new JButton("Start");
@@ -131,12 +111,9 @@ public class Scherm extends JFrame implements ActionListener {
 		grafischemodusBTN.addActionListener(this);
 		simulatiemodusBTN = new JButton("Simulatiemodus");
 		simulatiemodusBTN.addActionListener(this);
-		//
-
+		//maak een ding waarmee je tussen grafisch en simulatie kan switchen
 		graphicmodusScherm();
 		grafisch = true;
-		// simulatiemodusScherm();
-		// grafisch = false;
 		setVisible(true);
 	}
 
@@ -147,7 +124,7 @@ public class Scherm extends JFrame implements ActionListener {
 
 		for (Checkbox c : algoritmen) {
 			algoritmesPNL.add(c);
-		}
+		} //zet de checkboxes van de algortimen in een array, want makkelijk.
 
 		// zet alles van de algoritme regel in een panel
 		aantalPNL.add(aantalArtikelenlbl);
@@ -169,19 +146,21 @@ public class Scherm extends JFrame implements ActionListener {
 		totaalPNL.add(noordPNL, BorderLayout.NORTH);
 		totaalPNL.add(zuidPNL, BorderLayout.SOUTH);
 
-		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(eersteGrafischePanelPNL, BorderLayout.WEST);
-		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(tweedeGrafischePanelPNL, BorderLayout.EAST);
-		ditIsEchtDeLaatstePanelPNL.add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL, BorderLayout.WEST);
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(nuldeGrafischePanelPNL, BorderLayout.WEST);
+		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.add(eersteGrafischePanelPNL, BorderLayout.EAST);
+		ditIsEchtDeLaatstePanelPNL.add(tweedeGrafischePanelPNL, BorderLayout.WEST);
 		ditIsEchtDeLaatstePanelPNL.add(derdeGrafischePanelPNL, BorderLayout.EAST);
+		nuEchtPNL.add(ditIsEchtDeLaatstePanelPNL, BorderLayout.SOUTH);
+		nuEchtPNL.add(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL, BorderLayout.NORTH);
 
 		// combineer alle panels in een panel.
-		neeEchtPNL.add(ditIsEchtDeLaatstePanelPNL, BorderLayout.SOUTH);
+		neeEchtPNL.add(nuEchtPNL, BorderLayout.SOUTH);
 		neeEchtPNL.add(totaalPNL, BorderLayout.NORTH);
 		getContentPane().add(neeEchtPNL);
 	}
 
 	private void simulatiemodusScherm() /* SK */ {
-
+//basically hetzelfde als grafischemodusschern, maar dan voor de simulaties.
 		setTitle("Algoritmes voor TSP (Simulatie modus)");
 		System.out.println("simulatie scherm");
 		grafisch = false;
@@ -216,6 +195,7 @@ public class Scherm extends JFrame implements ActionListener {
 	}
 
 	private void cleanup() {
+		//maak alles schoon. dit is nodig bij het wisselen tussen de modussen
 		noordPNL.removeAll();
 		algoritmesPNL.removeAll();
 		aantalPNL.removeAll();
@@ -223,7 +203,6 @@ public class Scherm extends JFrame implements ActionListener {
 		noordPNL.removeAll();
 		zuidPNL.removeAll();
 		totaalPNL.removeAll();
-		algoritmenArrayList.clear();
 		grafiekPNL.removeAll();
 		nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL.removeAll();
 		ditIsEchtDeLaatstePanelPNL.removeAll();
@@ -231,14 +210,14 @@ public class Scherm extends JFrame implements ActionListener {
 		eersteGrafischePanelPNL.removeAll();
 		tweedeGrafischePanelPNL.removeAll();
 		derdeGrafischePanelPNL.removeAll();
+		nuldeGrafischePanelPNL.removeAll();
 		neeEchtPNL.removeAll();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// System.out.println(e.getSource());
 		if (e.getSource() == simulatiemodusBTN || e.getSource() == grafischemodusBTN) {
-
+			//als er op de knop geklikt wordt om te wisselen van modus.
 			if (e.getSource() == simulatiemodusBTN) {
 				cleanup();
 				getContentPane().remove(totaalPNL);
@@ -257,6 +236,7 @@ public class Scherm extends JFrame implements ActionListener {
 			if (grafisch) {
 /*start*/                // het grafische scherm is geselecteerd
 				ArrayList<Integer[]> coordinates = new GenereerCoordinaten().getLijstCoordinaten();
+				//maak een lijst coordinaten.
 				if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Start")) {
 					System.out.println("Start");
 					Boolean geenSelectie = true;
@@ -277,11 +257,15 @@ public class Scherm extends JFrame implements ActionListener {
 							aantaArtikelenlTXT.setText("");
 						}
 						System.out.println(aantalArtikelen);
+						coordinates = new GenereerCoordinaten().getLijstCoordinaten();
+						//maak een lijst coordinaten.
 						tekendingenpofzo(coordinates);
 
 						for (Checkbox c : algoritmen) {
 							c.setEnabled(false);
 						}
+						aantaArtikelenlTXT.setEnabled(false);
+						//zet alle checkboxes disabled.
 					}
 /*volgende*/
 				} else if (e.getSource() == volgendeBTN && Objects.equals(volgendeBTN.getText(), "Volgende")) {
@@ -305,19 +289,20 @@ public class Scherm extends JFrame implements ActionListener {
 						c.setEnabled(true);
 					}
 					aantaArtikelenlTXT.setText("");
+					aantaArtikelenlTXT.setEnabled(true);
 					aantalArtikelen = 0;
 					stapnummer = 0;
-					//	cleanup();
 					eersteGrafischePanelPNL.removeAll();
+					nuldeGrafischePanelPNL.removeAll();
 					tweedeGrafischePanelPNL.removeAll();
 					derdeGrafischePanelPNL.removeAll();
 					getContentPane().revalidate();
 					getContentPane().repaint();
-
+					//maak alles schoon
 				} else {
 					System.out.println("error: unknown source");
+					//als ik niet weet op welke knop er geklikt is
 				}
-
 			} else if (!grafisch) {
 				// het simulatiescherm is geselecteerd.
 				if (e.getSource() == startBTN) {
@@ -360,9 +345,6 @@ public class Scherm extends JFrame implements ActionListener {
 						legendaPNL.add(legendaOBJ);
 						maakgrafieken();
 
-//		SwingUtilities.invokeLater(() -> Graph.createAndShowGui(pathlengthes1));
-
-
 						getContentPane().remove(nogEenPanelWantDatWasWatIkNodigHadInMijnLevenPNL);
 						getContentPane().revalidate();
 						getContentPane().repaint();
@@ -401,44 +383,56 @@ public class Scherm extends JFrame implements ActionListener {
 		derdeGrafischePanelPNL.removeAll();
 		//maak panels leeg want anders werkt dit maar 1 keer ivm graphics
 		if (bruteForceCKBX.getState()) {
-			algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
-			//TODO: dit uit grafisch halen want niemand wil een paar honderd duizend keer op een knop klikken als het geen cookie clicker is.
+			//als brute force geselecteerd is
+			if (stapnummer == 0) {
+				bruteForce = new BruteForce(new ArrayList<>(coordinates));
+			}//als je hier komt omdat je op start geklikt hebt, maak dan een object van het algoritme aan
+			int alg = 1; //want dit is het eerste algoritme uit de lijst
+
+			GrafischeGeneratie grafiesch1 = new GrafischeGeneratie(bruteForce.getPath(), stapnummer, alg);
+
+			JLabel l = new JLabel("Brute Force");
+			nuldeGrafischePanelPNL.add(l, BorderLayout.NORTH);
+			nuldeGrafischePanelPNL.add(grafiesch1, BorderLayout.SOUTH);
 		}
 		if (twoOptCKBX.getState()) {
 			System.out.println("nog een checkpoint");
-			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			if (stapnummer == 0) {
 				twoOpt = new TwoOpt(new ArrayList<>(coordinates));
 			}//als je hier komt omdat je op start geklikt hebt, maak dan een object van het algoritme aan
 			int alg = 2; //want dit is het tweede algoritme uit de lijst
-			grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, alg);
+			GrafischeGeneratie grafiesch2 = new GrafischeGeneratie(twoOpt.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("2-Opt");
 			eersteGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			eersteGrafischePanelPNL.add(grafiesch2, BorderLayout.SOUTH);
 		}
 		if (nearestNeighborCKBX.getState()) {
-			algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 			if (stapnummer == 0) {
-				nearestNeighbor = new NearestNeighbor(new ArrayList<>(coordinates)); //TODO hier
+				nearestNeighbor = new NearestNeighbor(new ArrayList<>(coordinates));
 			}
 			lijst1 = nearestNeighbor.getARRAYSEPTION();
 			int alg = 3;
-			grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, alg);
+			GrafischeGeneratie grafiesch3 = new GrafischeGeneratie(nearestNeighbor.getPath(), stapnummer, alg);
 			JLabel l = new JLabel("Nearest Neighbor");
 			tweedeGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			tweedeGrafischePanelPNL.add(grafiesch3, BorderLayout.SOUTH);
 		}
 		if (eigenAlgoritmeCKBX.getState()) {
-			algoritmenArrayList.add(Algoritmenenum.EIGENALG);
 			if (stapnummer == 0) {
-				eigenAlgoritme = new EigenAlgoritme(new ArrayList<>(coordinates)); //TODO hier
+				eigenAlgoritme = new EigenAlgoritme(new ArrayList<>(coordinates));
 			}
 			JLabel l = new JLabel("Eigen Algoritme");
-			//			grafiesch4 = new GrafischeGeneratie(eigenAlgoritme.getPath(), stapnummer, eigenAlgoritme.getARRAYSEPTION());
+			int alg = 4;
+			if (aantalArtikelen > 9) {
+				lijst1 = eigenAlgoritme.getARRAYSEPTION();
+			}
+			GrafischeGeneratie grafiesch4 = new GrafischeGeneratie(eigenAlgoritme.getPath(), stapnummer, alg);
 			derdeGrafischePanelPNL.add(l, BorderLayout.NORTH);
 			derdeGrafischePanelPNL.add(grafiesch4, BorderLayout.SOUTH);
 		}
 
+		nuldeGrafischePanelPNL.revalidate();
+		nuldeGrafischePanelPNL.repaint();
 		eersteGrafischePanelPNL.revalidate();
 		eersteGrafischePanelPNL.repaint();
 		tweedeGrafischePanelPNL.revalidate();
@@ -464,14 +458,12 @@ public class Scherm extends JFrame implements ActionListener {
 			coordinateslist.add(coordinates);
 		}
 		if (bruteForceCKBX.getState()) {
-			algoritmenArrayList.add(Algoritmenenum.BRUTEFORCE);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					BruteForce j = new BruteForce(new ArrayList<>(coordinateslist.get(i - 1))); //TODO hier
+					BruteForce j = new BruteForce(new ArrayList<>(coordinateslist.get(i - 1)));
 
 					pathlengthes1.add(j.getTotalDistance());
 					tijden1.add(j.getRunTime());
-					//		totaleRekentijd1 = totaleRekentijd1 + (j.getRunTime());
 				} else {
 					pathlengthes1.add(0.0);
 					tijden1.add(0.0);
@@ -479,14 +471,12 @@ public class Scherm extends JFrame implements ActionListener {
 			}
 		}
 		if (twoOptCKBX.getState()) {
-			algoritmenArrayList.add(Algoritmenenum.TWOOPT);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+					TwoOpt j = new TwoOpt(new ArrayList<>(coordinateslist.get(i - 1)));
 
 					pathlengthes2.add(j.getTotalDistance());
 					tijden2.add(j.getRunTime());
-					//		totaleRekentijd2 = totaleRekentijd2 + (j.getRunTime());
 				} else {
 					pathlengthes2.add(0.0);
 					tijden2.add(0.0);
@@ -494,14 +484,12 @@ public class Scherm extends JFrame implements ActionListener {
 			}
 		}
 		if (nearestNeighborCKBX.getState()) {
-			//	algoritmenArrayList.add(Algoritmenenum.NEARESTNEIGHBOR);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					NearestNeighbor j = new NearestNeighbor(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+					NearestNeighbor j = new NearestNeighbor(new ArrayList<>(coordinateslist.get(i - 1)));
 
 					pathlengthes3.add(j.getTotalDistance());
 					tijden3.add(j.getRunTime());
-//									totaleRekentijd3 = totaleRekentijd3 + (j.getRunTime()); //TODO
 				} else {
 					pathlengthes3.add(0.0);
 					tijden3.add(0.0);
@@ -509,14 +497,12 @@ public class Scherm extends JFrame implements ActionListener {
 			}
 		}
 		if (eigenAlgoritmeCKBX.getState()) {
-			algoritmenArrayList.add(Algoritmenenum.EIGENALG);
 			for (int i = 0; i < aantalSimulaties + 1; i++) {
 				if (!(i == 0)) {
-					EigenAlgoritme j = new EigenAlgoritme(new ArrayList<>(coordinateslist.get(i - 1)));//TODO hier
+					EigenAlgoritme j = new EigenAlgoritme(new ArrayList<>(coordinateslist.get(i - 1)));
 
 					pathlengthes4.add(j.getTotalDistance());
 					tijden4.add(j.getRunTime());
-					//		totaleRekentijd4 = totaleRekentijd4 + (j.getRunTime());
 				} else {
 					pathlengthes4.add(0.0);
 					tijden4.add(0.0);
@@ -534,10 +520,6 @@ public class Scherm extends JFrame implements ActionListener {
 		grafiekPNL.add(tijdgrafiekPNL, BorderLayout.EAST);
 	}
 
-
-	public ArrayList<Algoritmenenum> getAlgoritmenArrayList() {
-		return algoritmenArrayList;
-	}
 
 	public int getAantalSimulaties() {
 		return aantalSimulaties;
