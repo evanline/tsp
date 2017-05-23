@@ -33,19 +33,19 @@ public class Graph extends JPanel {
 	private double xScale;
 	private double yScale;
 	private int MAX_SIZE = 1;
-	public static Color getGraphColor1() {
+	static Color getGraphColor1() {
 		return GRAPH_COLOR1;
 	}
 
-	public static Color getGraphColor2() {
+	static Color getGraphColor2() {
 		return GRAPH_COLOR2;
 	}
 
-	public static Color getGraphColor3() {
+	static Color getGraphColor3() {
 		return GRAPH_COLOR3;
 	}
 
-	public static Color getGraphColor4() {
+	static Color getGraphColor4() {
 		return GRAPH_COLOR4;
 	}
 
