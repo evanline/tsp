@@ -10,14 +10,11 @@ import java.util.List;
  * Date: 15/05/17.
  */
 public class GrafischeGeneratie extends JPanel {
-	private static final int PREF_W = 800; //breedte tenzij anders nodig
-	private static final int PREF_H = 800; //hoogte tenzij anders nodig
+	private static final int PREF_W = 400; //breedte tenzij anders nodig
+	private static final int PREF_H = 400; //hoogte tenzij anders nodig
 	private static final int BORDER_GAP = 50; //nodig bij schaal berekening ed.
 	private static final Color GRAPH_COLOR1 = new Color(11, 180, 7, 255); //kleur lijnen
 	private static final Color GRAPH_COLOR2 = new Color(119, 0, 9, 247);
-	private static final Color GRAPH_COLOR3 = new Color(144, 84, 0, 247);
-	private static final Color GRAPH_COLORa = new Color(182, 31, 167, 247);
-	private static final Color GRAPH_COLORb = new Color(35, 168, 163, 247);
 	private static final Color GRAPH_POINT_COLOR = new Color(0, 0, 0, 148); //kleur punten
 	private static final Stroke GRAPH_STROKE = new BasicStroke(3f); //vorm lijn(breedte lijn)
 	private static final int GRAPH_POINT_WIDTH = 12; //grootte punten
@@ -27,14 +24,14 @@ public class GrafischeGeneratie extends JPanel {
 	private int stapnummer = 0;
 	private ArrayList<ArrayList<Integer[]>> allemogelijkheden = Scherm.lijst1;
 	private List<Point> graphpoints = new ArrayList<>();
-	int algoritme;
+	private int algoritme;
 
 	GrafischeGeneratie(ArrayList<Integer[]> coordinaat, int stapnummer, int algoritme) {
 		this.coordinaat = coordinaat;
 		this.stapnummer = stapnummer;
 		if (stapnummer > coordinaat.size()){
 			this.stapnummer = coordinaat.size();
-		}
+		}//zorg ervoor dat het stapnnummer niet groter is dan het maximaal aantal stappen/
 		this.algoritme = algoritme;
 	}
 
@@ -84,37 +81,46 @@ public class GrafischeGeneratie extends JPanel {
 		}
 
 		graphpoints = maakGrafiekpunten(coordinaat);
-		switch (algoritme){
-			case 2 :
-				twoopt();
-			break;
-			case 3 :
+		//kijk welk algoritme geselecteerd is.
+		if (algoritme == 1 || algoritme == 2) {
+			standaard();
+		} else if (algoritme == 3) {
+			neareseneighbor();
+		} else if (algoritme == 4){
+			if(coordinaat.size() > 9){
 				neareseneighbor();
-			break;
+			} else {
+				standaard();
+			}
 		}
 
 	}
-	private void twoopt(){
+
+	private void standaard(){
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(GRAPH_STROKE);
-		g2.setColor(GRAPH_COLOR3);
+		g2.setColor(GRAPH_COLOR1);
 
 		tekenlijnandersOMDATJAVA(graphpoints);
 		g2.setStroke(oldStroke);
 		g2.setColor(GRAPH_POINT_COLOR);
 		tekenpunten(graphpoints);
-
+		//teken de route
 	}
 
 	private void neareseneighbor(){
+		//maak een manier op de overworgen opties te simuleren
 		List<Point> b = null;
+		//voor de overwogen opties
 		if (stapnummer < 1) {
 			int e = getHeight() - BORDER_GAP;
+			//0
 			b = new ArrayList<>();
 			b.add(new Point(BORDER_GAP, e));
+			//0,0
 		} else if (stapnummer - 1 < allemogelijkheden.size()) {
 			b = maakGrafiekpunten(allemogelijkheden.get(stapnummer - 1));
-		}
+		}//zorg dat de lijst met overwogen opties vanuit 0,0 begint
 
 		int x1;
 		int y1;
@@ -128,7 +134,7 @@ public class GrafischeGeneratie extends JPanel {
 		} else {
 			x1 = graphpoints.get(stapnummer - 1).x;
 			y1 = graphpoints.get(stapnummer - 1).y;
-		}
+		}//teken de overwogen opties
 
 		Stroke oldStroke = g2.getStroke();
 		g2.setStroke(GRAPH_STROKE);
@@ -139,6 +145,7 @@ public class GrafischeGeneratie extends JPanel {
 		g2.setStroke(oldStroke);
 		g2.setColor(GRAPH_POINT_COLOR);
 		tekenpunten(graphpoints);
+		//teken wat dingen
 	}
 
 	@Override
@@ -162,6 +169,7 @@ public class GrafischeGeneratie extends JPanel {
 			int x2 = graphPoints.get(i + 1).x;
 			int y2 = graphPoints.get(i + 1).y;
 			g2.drawLine(x1, y1, x2, y2);
+			//ik weet dat dit dubbel is. hij wilde anders niet.
 		}
 	}
 
@@ -187,40 +195,7 @@ public class GrafischeGeneratie extends JPanel {
 		for (Point graphPoint : graphPoints) {
 			int x2 = graphPoint.x;
 			int y2 = graphPoint.y;
-
 			g2.drawLine(a, b, x2, y2);
 		}
 	}
-	public static void tekenmogelijkheden(Integer[] a, Integer[] b, Integer[] c, Integer[] d){
-		ArrayList<Integer[]> punten = new ArrayList<>();
-		punten.add(a);
-		punten.add(b);
-		punten.add(c);
-		punten.add(d);
-		List<Point> coords = maakGrafiekpunten(punten);
-		g2.setStroke(GRAPH_STROKE);
-		g2.setColor(GRAPH_COLORa);
-		int x1 = coords.get(1).x;
-		int y1 = coords.get(1).y;
-		int x2 = coords.get(2).x;
-		int y2 = coords.get(2).y;
-		g2.drawLine(x1, y1, x2, y2);
-		x1 = coords.get(3).x;
-		y1 = coords.get(3).y;
-		x2 = coords.get(4).x;
-		y2 = coords.get(4).y;
-		g2.drawLine(x1, y1, x2, y2);
-		g2.setColor(GRAPH_COLORb);
-		x1 = coords.get(1).x;
-		y1 = coords.get(1).y;
-		x2 = coords.get(3).x;
-		y2 = coords.get(3).y;
-		g2.drawLine(x1, y1, x2, y2);
-		x1 = coords.get(2).x;
-		y1 = coords.get(2).y;
-		x2 = coords.get(4).x;
-		y2 = coords.get(4).y;
-		g2.drawLine(x1, y1, x2, y2);
-	}
-
 }
