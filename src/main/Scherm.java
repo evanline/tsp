@@ -299,13 +299,14 @@ public class Scherm extends JFrame implements ActionListener {
 /*reset*/
 				} else if (e.getSource() == resetBTN) {
 					System.out.println("reset");
-					coordinates = new GenereerCoordinaten().getLijstCoordinaten();
+//					coordinates = new GenereerCoordinaten().getLijstCoordinaten();
 					volgendeBTN.setText("Start");
 					for (Checkbox c : algoritmen) {
 						c.setEnabled(true);
 					}
 					aantaArtikelenlTXT.setText("");
 					aantalArtikelen = 0;
+					stapnummer = 0;
 					//	cleanup();
 					eersteGrafischePanelPNL.removeAll();
 					tweedeGrafischePanelPNL.removeAll();
