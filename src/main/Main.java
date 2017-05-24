@@ -18,19 +18,19 @@ public class Main {
 		new Scherm().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		new JFXPanel();
 
-//		new Thread(() ->
-//		{
-//			try
-//			{
-//				String bip = "src/main/meep.mp3";
-//				Media hit = new Media(new File(bip).toURI().toString());
-//				MediaPlayer mediaPlayer = new MediaPlayer(hit);
-//				mediaPlayer.play();
-//			}
-//			catch (Exception e)
-//			{
-//				e.printStackTrace();
-//			}
-//		}).start();
+		new Thread(() ->
+		{
+			try
+			{
+				String bip = "src/main/meep.mp3";
+				Media hit = new Media(new File(bip).toURI().toString());
+				MediaPlayer mediaPlayer = new MediaPlayer(hit);
+				mediaPlayer.play();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}).start();
 	}
 }
