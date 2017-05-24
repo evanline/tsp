@@ -16,14 +16,14 @@ public class BruteForce extends Calculate implements AlgorithmInterface
 
 	/**
 	 * BruteForce itterates through all possible paths and gives back the most optimal one.
-	 * @param coordinates the list of coördinates it needs to run the algorithm on.
+	 * @param list the list of coördinates it needs to run the algorithm on.
 	 */
-	BruteForce(ArrayList<Integer[]> coordinates) {
+	BruteForce(ArrayList<Integer[]> list) {
 		long startTime = System.nanoTime();
 
-		ArrayList<ArrayList<Integer[]>> returnValue = runBruteForce(coordinates);
+		ArrayList<ArrayList<Integer[]>> Value = runBruteForce(list);
 		double shortestRouteLength = -1d;
-		for (ArrayList<Integer[]> i : returnValue)
+		for (ArrayList<Integer[]> i : Value)
 		{
 			double total = 0d;
 			for (int a = 0; a < i.size()-1; a++)
@@ -74,50 +74,31 @@ public class BruteForce extends Calculate implements AlgorithmInterface
 		return String.valueOf(pathyeey);
 	}
 
-
 	/**
 	 * return all possible location orders from an ArrayList with locations
-	 * @param original the original list
+	 * @param originalList the original list
 	 * @return all the paths
 	 */
-	private static ArrayList<ArrayList<Integer[]>> runBruteForce(ArrayList<Integer[]> original)
+	private static ArrayList<ArrayList<Integer[]>> runBruteForce(ArrayList<Integer[]> originalList)
 	{
-		// only if the original array is empty
-		if (original.size() == 0)
+		if (originalList.size() == 0)
 		{
-			// create/add/return an empty result
 			ArrayList<ArrayList<Integer[]>> result = new ArrayList<>();
 			result.add(new ArrayList<>());
 			return result;
 		}
-
-		// remove first element
-		Integer[] firstElement = original.remove(0);
-
-		// create a return list of ArrayLists
-		ArrayList<ArrayList<Integer[]>> returnValue = new ArrayList<>();
-
-		// recursively return the possibilities so far
-		ArrayList<ArrayList<Integer[]>> permutations = runBruteForce(original);
-
-		// for each arrayList ...
-		for (ArrayList<Integer[]> smallerPermutated : permutations)
+		Integer[] firstInteger = originalList.remove(0);
+		ArrayList<ArrayList<Integer[]>> Value = new ArrayList<>();
+		ArrayList<ArrayList<Integer[]>> thingy = runBruteForce(originalList);
+		for (ArrayList<Integer[]> smallerThingy : thingy)
 		{
-
-			// for every Integer[] ...
-			for (int i = 0; i <= smallerPermutated.size(); i++)
+			for (int i = 0; i <= smallerThingy.size(); i++)
 			{
-				// create a new ArrayList from the smaller
-				ArrayList<Integer[]> temp = new ArrayList<>(smallerPermutated);
-
-				// add the first element at the index position
-				temp.add(i, firstElement);
-
-				// add this possibility to the result
-				returnValue.add(temp);
+				ArrayList<Integer[]> templist = new ArrayList<>(smallerThingy);
+				templist.add(i, firstInteger);
+				Value.add(templist);
 			}
 		}
-
-		return returnValue;
+		return Value;
 	}
 }
