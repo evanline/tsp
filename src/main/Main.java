@@ -22,7 +22,7 @@ public class Main {
 		{
 			try
 			{
-				String bip = "src/main/meep.mp3";
+				String bip = "src/audio/meep.mp3";
 				Media hit = new Media(new File(bip).toURI().toString());
 				MediaPlayer mediaPlayer = new MediaPlayer(hit);
 				mediaPlayer.play();
