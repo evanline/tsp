@@ -19,6 +19,7 @@ public class Main {
 				hoofdscherm.setVisible(false);
 				System.out.println("test 1");
 				new Paasei().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
 			}
 		});
 	/*	if (!hoofdscherm.isVisible()){
